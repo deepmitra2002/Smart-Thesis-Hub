@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Thesis Hub — UI Diagram</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f0f2f8;
+      color: #1e1b4b;
+      padding: 32px 24px 64px;
+    }
+
+    /* ── Tokens ── */
+    :root {
+      --lav: #7c3aed;
+      --lav-l: #ede9fe;
+      --lav-m: #a78bfa;
+      --border: #d1d5db;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --rose: #f43f5e;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --blue: #3b82f6;
+      --r: 12px;
+      --shadow: 0 2px 8px rgba(0,0,0,.08);
+      --shadow-lg: 0 6px 24px rgba(0,0,0,.12);
+    }
+
+    /* ── Layout ── */
+    .diagram-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--lav);
+      margin-bottom: 4px;
+      letter-spacing: -.3px;
+    }
+    .diagram-sub {
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    /* ── Section headings ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .section-label::before, .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Flow arrow ── */
+    .flow-arrow {
+      text-align: center;
+      font-size: 24px;
+      color: var(--lav-m);
+      margin: 10px 0;
+      line-height: 1;
+    }
+
+    /* ── Screen cards ── */
+    .screens-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    .screen {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      width: 220px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .screen:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .screen-header {
+      padding: 10px 14px 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid var(--border);
+    }
+    .screen-icon { font-size: 16px; }
+    .screen-route {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: auto;
+      font-family: monospace;
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .screen-body {
+      padding: 10px 14px 14px;
+    }
+
+    /* ── UI element mockup blocks ── */
+    .ui-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+      align-items: center;
+    }
+    .ui-block {
+      border-radius: 5px;
+      height: 10px;
+    }
+    .w-full  { flex: 1; }
+    .w-half  { width: 48%; }
+    .w-third { width: 30%; }
+    .w-two   { width: 65%; }
+    .w-sm    { width: 50px; }
+    .w-xs    { width: 30px; }
+
+    .bg-lav  { background: var(--lav-l); }
+    .bg-dark { background: #c4b5fd; }
+    .bg-gray { background: #e5e7eb; }
+    .bg-lt   { background: #f3f4f6; }
+    .bg-rose { background: #fecdd3; }
+    .bg-green { background: #d1fae5; }
+    .bg-amber { background: #fef3c7; }
+    .bg-blue  { background: #dbeafe; }
+
+    .card-mock {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 8px;
+      margin-bottom: 6px;
+    }
+    .pill-mock {
+      display: inline-block;
+      height: 8px;
+      border-radius: 20px;
+    }
+    .btn-mock {
+      display: inline-block;
+      height: 16px;
+      border-radius: 20px;
+    }
+    .btn-primary { background: var(--lav); }
+    .btn-outline { background: transparent; border: 1.5px solid var(--lav-m); }
+    .btn-green   { background: var(--green); }
+    .btn-rose    { background: var(--rose); }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 32px;
+      margin-bottom: 6px;
+    }
+    .bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--lav), var(--lav-m));
+      border-radius: 3px 3px 0 0;
+      min-width: 6px;
+    }
+
+    /* ── Role badge ── */
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .badge-student    { background: var(--lav-l); color: var(--lav); }
+    .badge-supervisor { background: #fdf4ff; color: #9333ea; }
+    .badge-admin      { background: #f0fdf4; color: var(--green); }
+    .badge-public     { background: #fff7ed; color: #ea580c; }
+
+    /* ── App Shell ── */
+    .app-shell {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      max-width: 860px;
+      margin: 0 auto 32px;
+    }
+    .app-topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .app-sidebar-layout {
+      display: flex;
+      min-height: 320px;
+    }
+    .app-sidebar {
+      width: 160px;
+      background: linear-gradient(180deg, #faf8ff 0%, #f5f3ff 100%);
+      border-right: 1px solid var(--border);
+      padding: 14px 10px;
+      flex-shrink: 0;
+    }
+    .sidebar-logo-mock {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--lav);
+      margin-bottom: 10px;
+    }
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 8px;
+      border-radius: 7px;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .sidebar-nav-item.active {
+      background: var(--lav-l);
+      color: var(--lav);
+      font-weight: 600;
+    }
+    .nav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+    .app-main-area {
+      flex: 1;
+      padding: 14px;
+      background: #f9fafb;
+    }
+
+    /* ── Stat grid mock ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .stat-mock {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .stat-val-mock {
+      height: 14px;
+      background: #c4b5fd;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      width: 60%;
+    }
+    .stat-lbl-mock {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      width: 80%;
+    }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* ── Flow section ── */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      max-width: 860px;
+      margin: 0 auto 10px;
+    }
+    .flow-node {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+    .flow-node-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .flow-node ul {
+      list-style: none;
+      padding: 0;
+    }
+    .flow-node ul li {
+      font-size: 11.5px;
+      color: var(--muted);
+      padding: 2px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .flow-node ul li::before {
+      content: '›';
+      color: var(--lav-m);
+      font-weight: 700;
+    }
+
+    /* ── Connection lines ── */
+    .connections {
+      max-width: 860px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+    .conn-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 10px;
+    }
+    .conn-node {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 11.5px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .conn-line {
+      flex: 1;
+      height: 2px;
+      background: var(--lav-m);
+      max-width: 48px;
+    }
+    .conn-label {
+      font-size: 9.5px;
+      color: var(--muted);
+      text-align: center;
+      position: relative;
+      top: -10px;
+    }
+
+    /* ── Color accent ── */
+    .accent-lav    { border-top: 3px solid var(--lav); }
+    .accent-rose   { border-top: 3px solid var(--rose); }
+    .accent-green  { border-top: 3px solid var(--green); }
+    .accent-amber  { border-top: 3px solid var(--amber); }
+    .accent-blue   { border-top: 3px solid var(--blue); }
+
+    hr.divider { border: none; border-top: 1.5px dashed #e0d7ff; margin: 28px auto; max-width: 860px; }
+  </style>
+</head>
+<body>
+
+  <div class="diagram-title">🎓 Smart Thesis Hub — UI Diagram</div>
+  <div class="diagram-sub">Daffodil International University · Frontend Architecture &amp; Screen Map</div>
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- LEGEND -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#ea580c"></div> Public Route</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--lav)"></div> Student Only</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9333ea"></div> Supervisor Only</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Admin Only</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#374151"></div> All Authenticated</div>
+  </div>
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- 1. PUBLIC SCREENS -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="section-label"><span>Public Screens (unauthenticated)</span></div>
+  <div class="screens-row">
+
+    <!-- Landing Page -->
+    <div class="screen accent-amber">
+      <div class="screen-header">
+        <span class="screen-icon">🏠</span> Landing Page
+        <span class="screen-route">/</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-public">Public</span>
+        <!-- Nav -->
+        <div class="card-mock">
+          <div class="ui-row">
+            <div class="ui-block w-sm bg-dark" style="height:8px"></div>
+            <div class="ui-block w-full bg-lt"></div>
+            <div class="btn-mock btn-outline" style="width:44px"></div>
+            <div class="btn-mock btn-primary" style="width:44px"></div>
+          </div>
+        </div>
+        <!-- Hero text -->
+        <div class="ui-row"><div class="ui-block w-two bg-lav" style="height:12px; margin:0 auto"></div></div>
+        <div class="ui-row"><div class="ui-block w-full bg-gray" style="height:8px"></div></div>
+        <div class="ui-row"><div class="ui-block w-two bg-gray" style="height:8px; margin:0 auto"></div></div>
+        <div class="ui-row" style="justify-content:center; gap:8px; margin-top:4px">
+          <div class="btn-mock btn-primary" style="width:70px"></div>
+          <div class="btn-mock btn-outline" style="width:55px"></div>
+        </div>
+        <!-- Stats row -->
+        <div class="ui-row" style="margin-top:8px; justify-content:space-around">
+          <div style="text-align:center"><div class="ui-block bg-dark" style="width:28px;height:10px;margin:0 auto 3px"></div><div class="ui-block bg-gray" style="width:40px;height:7px;margin:0 auto"></div></div>
+          <div style="text-align:center"><div class="ui-block bg-dark" style="width:20px;height:10px;margin:0 auto 3px"></div><div class="ui-block bg-gray" style="width:40px;height:7px;margin:0 auto"></div></div>
+          <div style="text-align:center"><div class="ui-block bg-dark" style="width:24px;height:10px;margin:0 auto 3px"></div><div class="ui-block bg-gray" style="width:40px;height:7px;margin:0 auto"></div></div>
+        </div>
+        <!-- Role cards -->
+        <div class="ui-row" style="margin-top:8px">
+          <div class="card-mock" style="flex:1"><div class="ui-block bg-lav" style="width:24px;height:8px;margin-bottom:4px"></div><div class="ui-block bg-gray" style="width:100%;height:7px"></div></div>
+          <div class="card-mock" style="flex:1"><div class="ui-block bg-rose" style="width:24px;height:8px;margin-bottom:4px"></div><div class="ui-block bg-gray" style="width:100%;height:7px"></div></div>
+          <div class="card-mock" style="flex:1"><div class="ui-block bg-green" style="width:24px;height:8px;margin-bottom:4px"></div><div class="ui-block bg-gray" style="width:100%;height:7px"></div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:6px">Hero · Stats · Role Cards (Student / Supervisor / Admin)</p>
+      </div>
+    </div>
+
+    <!-- Login -->
+    <div class="screen accent-amber">
+      <div class="screen-header">
+        <span class="screen-icon">🔐</span> Login
+        <span class="screen-route">/login</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-public">Public</span>
+        <div class="card-mock">
+          <div class="ui-row"><div class="ui-block w-full bg-lav" style="height:10px"></div></div>
+          <div class="ui-row"><div class="ui-block w-full bg-lt" style="height:24px; border-radius:6px; border:1px solid #d1d5db"></div></div>
+          <div class="ui-row"><div class="ui-block w-full bg-lt" style="height:24px; border-radius:6px; border:1px solid #d1d5db"></div></div>
+          <div class="ui-row" style="margin-top:6px">
+            <div class="btn-mock btn-primary" style="width:100%; border-radius:6px"></div>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:6px">Email + Password · Sign In · Register link</p>
+      </div>
+    </div>
+
+    <!-- Register -->
+    <div class="screen accent-amber">
+      <div class="screen-header">
+        <span class="screen-icon">📝</span> Register
+        <span class="screen-route">/register</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-public">Public</span>
+        <div class="card-mock">
+          <div class="ui-row"><div class="ui-block w-full bg-lav" style="height:10px"></div></div>
+          <div class="ui-row"><div class="ui-block w-full bg-lt" style="height:24px; border-radius:6px; border:1px solid #d1d5db"></div></div>
+          <div class="ui-row"><div class="ui-block w-full bg-lt" style="height:24px; border-radius:6px; border:1px solid #d1d5db"></div></div>
+          <div class="ui-row"><div class="ui-block w-half bg-lt" style="height:24px; border-radius:6px; border:1px solid #d1d5db"></div><div class="ui-block w-half bg-lt" style="height:24px; border-radius:6px; border:1px solid #d1d5db"></div></div>
+          <!-- Role selector -->
+          <div class="ui-row" style="gap:5px">
+            <div class="btn-mock" style="width:50px;height:20px;background:var(--lav-l);border:1.5px solid var(--lav);border-radius:6px"></div>
+            <div class="btn-mock" style="width:58px;height:20px;background:#f3e8ff;border:1px solid #e9d5ff;border-radius:6px"></div>
+          </div>
+          <div class="ui-row" style="margin-top:4px">
+            <div class="btn-mock btn-primary" style="width:100%; border-radius:6px"></div>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:6px">Name · Email · Password · Role (Student / Supervisor)</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="flow-arrow">↓ <span style="font-size:11px;color:var(--muted)">Authentication</span> ↓</div>
+
+  <hr class="divider" />
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- 2. APP SHELL -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="section-label"><span>Authenticated App Shell (AppLayout)</span></div>
+
+  <div class="app-shell">
+    <!-- Topbar -->
+    <div class="app-topbar">
+      <div style="font-size:13px">☰</div>
+      <div style="font-size:11.5px;font-weight:600;color:var(--lav)">Dashboard</div>
+      <div style="flex:1;background:#f3f4f6;border-radius:20px;height:22px;display:flex;align-items:center;padding:0 10px;gap:6px;max-width:260px;">
+        <span style="font-size:10px">🔍</span>
+        <div style="flex:1;height:8px;background:#e5e7eb;border-radius:4px"></div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <div style="font-size:13px;position:relative">🔔 <div style="position:absolute;top:-2px;right:-2px;width:6px;height:6px;background:var(--rose);border-radius:50%"></div></div>
+        <div style="font-size:13px">👤</div>
+      </div>
+    </div>
+
+    <div class="app-sidebar-layout">
+      <!-- Sidebar -->
+      <div class="app-sidebar">
+        <div class="sidebar-logo-mock">Smart<span style="color:#a78bfa">Thesis</span>Hub</div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:12px">Daffodil Intl. University</div>
+        <!-- User card -->
+        <div style="background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;margin-bottom:12px;display:flex;align-items:center;gap:8px">
+          <div style="width:24px;height:24px;background:var(--lav-l);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px">🎓</div>
+          <div><div style="height:7px;background:#c4b5fd;border-radius:3px;width:60px;margin-bottom:3px"></div><div style="height:6px;background:#e5e7eb;border-radius:3px;width:40px"></div></div>
+        </div>
+        <!-- Nav items (showing student nav as example) -->
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.5px;margin-bottom:6px">Navigation</div>
+        <div class="sidebar-nav-item active"><div class="nav-dot"></div> Dashboard</div>
+        <div class="sidebar-nav-item"><div class="nav-dot"></div> Find Supervisors</div>
+        <div class="sidebar-nav-item"><div class="nav-dot"></div> Project Ideas</div>
+        <div class="sidebar-nav-item"><div class="nav-dot"></div> Video Resources</div>
+        <div class="sidebar-nav-item"><div class="nav-dot"></div> My Requests</div>
+        <div class="sidebar-nav-item"><div class="nav-dot"></div> Feedback</div>
+        <div class="sidebar-nav-item"><div class="nav-dot"></div> My Profile</div>
+        <div style="margin-top:auto;padding-top:12px">
+          <div style="background:#fee2e2;border-radius:6px;padding:5px 8px;font-size:10px;color:#ef4444;font-weight:600;cursor:pointer">🚪 Sign Out</div>
+        </div>
+      </div>
+
+      <!-- Main area preview -->
+      <div class="app-main-area">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.5px;margin-bottom:8px">Page Content (Outlet)</div>
+        <!-- Stat cards -->
+        <div class="stat-row">
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+        </div>
+        <!-- Content area -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="card-mock" style="height:100px">
+            <div style="font-size:9px;font-weight:700;color:var(--muted);margin-bottom:6px">Latest Request</div>
+            <div class="ui-row"><div class="ui-block w-full bg-lav" style="height:8px"></div></div>
+            <div class="ui-row"><div class="ui-block w-two bg-gray" style="height:7px"></div></div>
+          </div>
+          <div class="card-mock" style="height:100px">
+            <div style="font-size:9px;font-weight:700;color:var(--muted);margin-bottom:6px">Quick Actions</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+              <div style="background:var(--lav-l);border-radius:5px;height:30px"></div>
+              <div style="background:#fff0f6;border-radius:5px;height:30px"></div>
+              <div style="background:#f0fdf4;border-radius:5px;height:30px"></div>
+              <div style="background:#fffbeb;border-radius:5px;height:30px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:-20px;margin-bottom:32px">
+    Sidebar shows <strong>role-based navigation</strong>. Topbar has search, notifications 🔔, and profile 👤.
+  </p>
+
+  <hr class="divider" />
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- 3. STUDENT SCREENS -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="section-label"><span>Student Screens</span></div>
+  <div class="screens-row">
+
+    <!-- Student Dashboard -->
+    <div class="screen accent-lav">
+      <div class="screen-header">
+        <span class="screen-icon">📊</span> Dashboard
+        <span class="screen-route">/dashboard</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-student">🎓 Student</span>
+        <div class="stat-row" style="grid-template-columns:1fr 1fr; gap:5px; margin-bottom:8px">
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock"></div><div class="stat-lbl-mock"></div></div>
+        </div>
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div class="ui-block w-full bg-lav" style="height:7px"></div></div>
+          <div class="ui-row"><div class="ui-block w-two bg-gray" style="height:7px"></div></div>
+          <div class="pill-mock bg-amber" style="width:40px;margin-top:4px"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+          <div style="background:var(--lav-l);border-radius:6px;padding:8px"><div class="ui-block bg-dark" style="width:16px;height:10px;margin-bottom:4px"></div><div class="ui-block bg-gray" style="width:100%;height:7px"></div></div>
+          <div style="background:#fff0f6;border-radius:6px;padding:8px"><div class="ui-block bg-rose" style="width:16px;height:10px;margin-bottom:4px"></div><div class="ui-block bg-gray" style="width:100%;height:7px"></div></div>
+          <div style="background:#f0fdf4;border-radius:6px;padding:8px"><div class="ui-block bg-green" style="width:16px;height:10px;margin-bottom:4px"></div><div class="ui-block bg-gray" style="width:100%;height:7px"></div></div>
+          <div style="background:#fffbeb;border-radius:6px;padding:8px"><div class="ui-block bg-amber" style="width:16px;height:10px;margin-bottom:4px"></div><div class="ui-block bg-gray" style="width:100%;height:7px"></div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Stats · Last Request status · Quick Actions grid</p>
+      </div>
+    </div>
+
+    <!-- Supervisors -->
+    <div class="screen accent-lav">
+      <div class="screen-header">
+        <span class="screen-icon">👨‍🏫</span> Find Supervisors
+        <span class="screen-route">/supervisors</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-student">🎓 Student + Admin</span>
+        <!-- Search + filter -->
+        <div class="card-mock">
+          <div class="ui-row">
+            <div class="ui-block w-full bg-lt" style="height:22px;border-radius:6px;border:1px solid #d1d5db"></div>
+          </div>
+          <div class="ui-row" style="gap:4px;margin-top:4px">
+            <div class="btn-mock" style="width:42px;height:18px;background:var(--lav-l);border-radius:12px"></div>
+            <div class="btn-mock" style="width:42px;height:18px;background:#e5e7eb;border-radius:12px"></div>
+            <div class="btn-mock" style="width:42px;height:18px;background:#e5e7eb;border-radius:12px"></div>
+          </div>
+        </div>
+        <!-- Supervisor cards -->
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div style="width:28px;height:28px;background:var(--lav-l);border-radius:50%;margin-right:6px"></div><div style="flex:1"><div class="ui-block w-two bg-dark" style="height:8px;margin-bottom:3px"></div><div class="ui-block w-full bg-gray" style="height:7px"></div></div></div>
+          <div class="ui-row" style="margin-top:5px">
+            <div class="pill-mock bg-lav" style="width:45px"></div>
+            <div class="pill-mock bg-blue" style="width:40px"></div>
+            <div class="btn-mock btn-primary" style="width:52px;height:18px;margin-left:auto"></div>
+          </div>
+        </div>
+        <div class="card-mock">
+          <div class="ui-row"><div style="width:28px;height:28px;background:#fdf4ff;border-radius:50%;margin-right:6px"></div><div style="flex:1"><div class="ui-block w-two bg-dark" style="height:8px;margin-bottom:3px"></div><div class="ui-block w-full bg-gray" style="height:7px"></div></div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Search · Dept filter · Supervisor cards · Send Request</p>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div class="screen accent-lav">
+      <div class="screen-header">
+        <span class="screen-icon">📁</span> Project Ideas
+        <span class="screen-route">/projects</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-student">All Roles</span>
+        <!-- Search + filter -->
+        <div class="card-mock">
+          <div class="ui-block w-full bg-lt" style="height:22px;border-radius:6px;border:1px solid #d1d5db"></div>
+          <div class="ui-row" style="gap:4px;margin-top:6px;flex-wrap:wrap">
+            <div class="btn-mock" style="width:36px;height:16px;background:var(--lav-l);border-radius:10px"></div>
+            <div class="btn-mock" style="width:36px;height:16px;background:#e5e7eb;border-radius:10px"></div>
+            <div class="btn-mock" style="width:36px;height:16px;background:#e5e7eb;border-radius:10px"></div>
+          </div>
+        </div>
+        <!-- Project cards (2-col grid) -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px">
+          <div class="card-mock"><div class="ui-block bg-dark" style="height:7px;width:60%;margin-bottom:3px"></div><div class="ui-block bg-gray" style="height:6px;width:100%;margin-bottom:3px"></div><div class="pill-mock bg-lav" style="width:30px"></div></div>
+          <div class="card-mock"><div class="ui-block bg-dark" style="height:7px;width:60%;margin-bottom:3px"></div><div class="ui-block bg-gray" style="height:6px;width:100%;margin-bottom:3px"></div><div class="pill-mock bg-rose" style="width:30px"></div></div>
+          <div class="card-mock"><div class="ui-block bg-dark" style="height:7px;width:60%;margin-bottom:3px"></div><div class="ui-block bg-gray" style="height:6px;width:100%;margin-bottom:3px"></div><div class="pill-mock bg-green" style="width:30px"></div></div>
+          <div class="card-mock"><div class="ui-block bg-dark" style="height:7px;width:60%;margin-bottom:3px"></div><div class="ui-block bg-gray" style="height:6px;width:100%;margin-bottom:3px"></div><div class="pill-mock bg-amber" style="width:30px"></div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">50+ project ideas · Search · Category filter · Save</p>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="screen accent-lav">
+      <div class="screen-header">
+        <span class="screen-icon">🎬</span> Video Resources
+        <span class="screen-route">/resources</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-student">🎓 Student + Admin</span>
+        <!-- Video cards -->
+        <div class="card-mock" style="margin-bottom:5px">
+          <div style="background:#e5e7eb;border-radius:6px;height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;font-size:16px">▶️</div>
+          <div class="ui-block w-two bg-dark" style="height:7px;margin-bottom:3px"></div>
+          <div class="ui-block w-full bg-gray" style="height:6px"></div>
+        </div>
+        <div class="card-mock">
+          <div style="background:#e5e7eb;border-radius:6px;height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;font-size:16px">▶️</div>
+          <div class="ui-block w-two bg-dark" style="height:7px;margin-bottom:3px"></div>
+          <div class="ui-block w-full bg-gray" style="height:6px"></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">15 tutorial videos · Thesis writing guides</p>
+      </div>
+    </div>
+
+    <!-- Requests (Student) -->
+    <div class="screen accent-lav">
+      <div class="screen-header">
+        <span class="screen-icon">📨</span> My Requests
+        <span class="screen-route">/requests</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-student">All Roles</span>
+        <!-- Tabs -->
+        <div class="ui-row" style="gap:5px;margin-bottom:8px">
+          <div class="btn-mock" style="width:48px;height:18px;background:var(--lav);border-radius:10px"></div>
+          <div class="btn-mock" style="width:48px;height:18px;background:#e5e7eb;border-radius:10px"></div>
+          <div class="btn-mock" style="width:48px;height:18px;background:#e5e7eb;border-radius:10px"></div>
+        </div>
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div class="ui-block w-two bg-dark" style="height:8px"></div><div class="pill-mock bg-amber" style="width:36px;margin-left:auto"></div></div>
+          <div class="ui-row" style="margin-top:4px"><div class="ui-block w-full bg-gray" style="height:6px"></div></div>
+        </div>
+        <div class="card-mock">
+          <div class="ui-row"><div class="ui-block w-two bg-dark" style="height:8px"></div><div class="pill-mock bg-green" style="width:36px;margin-left:auto"></div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">All / Pending / Accepted / Rejected tabs · Status pills</p>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="screen accent-lav">
+      <div class="screen-header">
+        <span class="screen-icon">💬</span> Feedback
+        <span class="screen-route">/feedback</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-student">All Roles</span>
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div class="ui-block w-full bg-lt" style="height:50px;border-radius:6px;border:1px solid #d1d5db"></div></div>
+          <!-- Star rating -->
+          <div class="ui-row" style="gap:4px;margin-top:5px">
+            <span style="font-size:14px">★★★★☆</span>
+          </div>
+          <div class="btn-mock btn-primary" style="width:70px;height:18px;margin-top:6px;border-radius:6px"></div>
+        </div>
+        <div class="card-mock">
+          <div class="ui-row"><div class="ui-block w-two bg-gray" style="height:7px"></div></div>
+          <div class="ui-row"><div class="ui-block w-full bg-lt" style="height:6px"></div></div>
+          <div style="font-size:12px;color:var(--amber);margin-top:4px">★★★★★</div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Submit feedback · Star rating · Previous feedback list</p>
+      </div>
+    </div>
+
+    <!-- Profile -->
+    <div class="screen accent-lav">
+      <div class="screen-header">
+        <span class="screen-icon">👤</span> My Profile
+        <span class="screen-route">/profile</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-student">All Roles</span>
+        <div class="card-mock" style="text-align:center;margin-bottom:6px">
+          <div style="width:40px;height:40px;background:var(--lav-l);border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:18px">🎓</div>
+          <div class="ui-block bg-dark" style="width:80px;height:9px;margin:0 auto 3px;border-radius:4px"></div>
+          <div class="ui-block bg-gray" style="width:60px;height:7px;margin:0 auto;border-radius:4px"></div>
+        </div>
+        <div class="card-mock">
+          <div class="ui-row"><div class="ui-block w-third bg-gray" style="height:7px"></div><div class="ui-block w-two bg-lt" style="height:7px;border-bottom:1px solid #d1d5db"></div></div>
+          <div class="ui-row"><div class="ui-block w-third bg-gray" style="height:7px"></div><div class="ui-block w-two bg-lt" style="height:7px;border-bottom:1px solid #d1d5db"></div></div>
+          <div class="ui-row"><div class="ui-block w-third bg-gray" style="height:7px"></div><div class="ui-block w-two bg-lt" style="height:7px;border-bottom:1px solid #d1d5db"></div></div>
+        </div>
+        <div class="btn-mock btn-primary" style="width:80px;height:18px;margin-top:6px;border-radius:6px"></div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Avatar · Name/Email/Dept · Edit profile · Change password</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- 4. SUPERVISOR SCREENS -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="section-label"><span>Supervisor Screens</span></div>
+  <div class="screens-row">
+
+    <!-- Supervisor Dashboard -->
+    <div class="screen accent-rose">
+      <div class="screen-header">
+        <span class="screen-icon">📊</span> Dashboard
+        <span class="screen-route">/dashboard</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-supervisor">👨‍🏫 Supervisor</span>
+        <div class="stat-row" style="grid-template-columns:1fr 1fr; gap:5px; margin-bottom:8px">
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#d8b4fe"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#d8b4fe"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#d8b4fe"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#d8b4fe"></div><div class="stat-lbl-mock"></div></div>
+        </div>
+        <!-- Pending request card -->
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div class="ui-block w-two bg-dark" style="height:8px"></div><div class="pill-mock bg-amber" style="width:36px;margin-left:auto"></div></div>
+          <div class="ui-row" style="margin-top:4px"><div class="ui-block w-full bg-lt" style="height:22px;border-radius:5px"></div></div>
+          <div class="ui-row" style="gap:5px;margin-top:5px">
+            <div class="btn-mock btn-green" style="width:44px;height:16px;border-radius:4px"></div>
+            <div class="btn-mock btn-rose" style="width:44px;height:16px;border-radius:4px"></div>
+          </div>
+        </div>
+        <!-- My students -->
+        <div class="card-mock">
+          <div class="ui-row"><div style="width:22px;height:22px;background:var(--lav-l);border-radius:50%"></div><div style="flex:1;margin-left:6px"><div class="ui-block w-two bg-dark" style="height:7px;margin-bottom:3px"></div><div class="ui-block w-full bg-gray" style="height:6px"></div></div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Stats · Pending requests (Accept/Reject) · My Students list</p>
+      </div>
+    </div>
+
+    <!-- Student Requests (Supervisor view) -->
+    <div class="screen accent-rose">
+      <div class="screen-header">
+        <span class="screen-icon">📨</span> Student Requests
+        <span class="screen-route">/requests</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-supervisor">👨‍🏫 Supervisor</span>
+        <div class="ui-row" style="gap:5px;margin-bottom:8px">
+          <div class="btn-mock" style="width:50px;height:18px;background:var(--lav);border-radius:10px"></div>
+          <div class="btn-mock" style="width:50px;height:18px;background:#e5e7eb;border-radius:10px"></div>
+          <div class="btn-mock" style="width:50px;height:18px;background:#e5e7eb;border-radius:10px"></div>
+        </div>
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div class="ui-block w-two bg-dark" style="height:8px"></div><div class="pill-mock bg-amber" style="width:36px;margin-left:auto"></div></div>
+          <div class="ui-row" style="margin-top:4px"><div class="ui-block w-full bg-lt" style="height:22px;border-radius:5px"></div></div>
+          <div class="ui-row" style="gap:5px;margin-top:5px">
+            <div class="btn-mock btn-green" style="width:44px;height:16px;border-radius:4px"></div>
+            <div class="btn-mock btn-rose" style="width:44px;height:16px;border-radius:4px"></div>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Pending / Accepted / Rejected · Accept & Reject actions</p>
+      </div>
+    </div>
+
+    <!-- My Students -->
+    <div class="screen accent-rose">
+      <div class="screen-header">
+        <span class="screen-icon">🎓</span> My Students
+        <span class="screen-route">/students</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-supervisor">👨‍🏫 Supervisor + Admin</span>
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div style="width:24px;height:24px;background:var(--lav-l);border-radius:50%"></div><div style="flex:1;margin-left:6px"><div class="ui-block w-two bg-dark" style="height:7px;margin-bottom:3px"></div><div class="ui-block w-full bg-gray" style="height:6px"></div></div><div style="font-size:9px;font-weight:700;color:var(--green)">GPA 3.8</div></div>
+          <div class="ui-row" style="margin-top:5px;gap:4px">
+            <div class="pill-mock bg-lav" style="width:40px"></div>
+            <div class="pill-mock bg-blue" style="width:35px"></div>
+          </div>
+        </div>
+        <div class="card-mock" style="margin-bottom:5px">
+          <div class="ui-row"><div style="width:24px;height:24px;background:#fdf4ff;border-radius:50%"></div><div style="flex:1;margin-left:6px"><div class="ui-block w-two bg-dark" style="height:7px;margin-bottom:3px"></div><div class="ui-block w-full bg-gray" style="height:6px"></div></div><div style="font-size:9px;font-weight:700;color:var(--green)">GPA 3.5</div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Student list · Dept · Year · GPA · Rate student</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- 5. ADMIN SCREENS -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="section-label"><span>Admin Screens</span></div>
+  <div class="screens-row">
+
+    <!-- Admin Dashboard -->
+    <div class="screen accent-green">
+      <div class="screen-header">
+        <span class="screen-icon">📊</span> Dashboard
+        <span class="screen-route">/dashboard</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-admin">🛠️ Admin</span>
+        <div class="stat-row" style="grid-template-columns:1fr 1fr; gap:5px; margin-bottom:8px">
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#6ee7b7"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#6ee7b7"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#6ee7b7"></div><div class="stat-lbl-mock"></div></div>
+          <div class="stat-mock"><div class="stat-val-mock" style="background:#6ee7b7"></div><div class="stat-lbl-mock"></div></div>
+        </div>
+        <!-- Bar chart -->
+        <div class="card-mock">
+          <div style="font-size:9px;font-weight:700;color:var(--muted);margin-bottom:5px">Weekly Signups</div>
+          <div class="bar-chart">
+            <div class="bar" style="height:40%"></div>
+            <div class="bar" style="height:65%"></div>
+            <div class="bar" style="height:50%"></div>
+            <div class="bar" style="height:80%"></div>
+            <div class="bar" style="height:70%"></div>
+            <div class="bar" style="height:90%"></div>
+            <div class="bar" style="height:60%"></div>
+          </div>
+        </div>
+        <!-- Match rate + system health -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px">
+          <div class="card-mock" style="text-align:center"><div style="font-size:16px;font-weight:700;color:var(--lav)">94%</div><div class="ui-block bg-gray" style="height:6px;margin:3px auto 0;width:70%"></div></div>
+          <div class="card-mock"><div class="ui-row"><div class="ui-block w-half bg-gray" style="height:6px"></div><div class="ui-block w-half bg-green" style="height:6px"></div></div><div class="ui-row"><div class="ui-block w-half bg-gray" style="height:6px"></div><div class="ui-block w-half bg-green" style="height:6px"></div></div></div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">4 stat cards · Bar chart · Match rate · System health</p>
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="screen accent-green">
+      <div class="screen-header">
+        <span class="screen-icon">📈</span> Analytics
+        <span class="screen-route">/admin/analytics</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-admin">🛠️ Admin</span>
+        <!-- Multiple charts -->
+        <div class="card-mock" style="margin-bottom:5px">
+          <div style="font-size:9px;font-weight:700;color:var(--muted);margin-bottom:5px">Requests Over Time</div>
+          <div class="bar-chart" style="height:40px">
+            <div class="bar" style="height:50%"></div>
+            <div class="bar" style="height:75%"></div>
+            <div class="bar" style="height:60%"></div>
+            <div class="bar" style="height:90%"></div>
+            <div class="bar" style="height:80%"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+          <div class="card-mock">
+            <div style="font-size:9px;color:var(--muted);margin-bottom:4px">Dept Breakdown</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:conic-gradient(var(--lav) 0 40%,var(--lav-m) 40% 70%,#e5e7eb 70% 100%);margin:0 auto"></div>
+          </div>
+          <div class="card-mock">
+            <div style="font-size:9px;color:var(--muted);margin-bottom:4px">Status %</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:conic-gradient(var(--green) 0 50%,var(--rose) 50% 70%,var(--amber) 70% 100%);margin:0 auto"></div>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Trend charts · Dept pie chart · Request status breakdown</p>
+      </div>
+    </div>
+
+    <!-- User Management -->
+    <div class="screen accent-green">
+      <div class="screen-header">
+        <span class="screen-icon">👥</span> User Management
+        <span class="screen-route">/admin/users</span>
+      </div>
+      <div class="screen-body">
+        <span class="role-badge badge-admin">🛠️ Admin</span>
+        <div class="ui-row" style="gap:5px;margin-bottom:8px">
+          <div class="ui-block w-full bg-lt" style="height:22px;border-radius:6px;border:1px solid #d1d5db"></div>
+          <div class="btn-mock btn-primary" style="width:36px;height:22px;border-radius:6px"></div>
+        </div>
+        <!-- Users table -->
+        <div class="card-mock" style="padding:5px">
+          <div class="ui-row" style="background:#f3f4f6;padding:4px 6px;border-radius:4px;gap:6px">
+            <div class="ui-block bg-gray" style="width:40px;height:6px"></div>
+            <div class="ui-block bg-gray" style="flex:1;height:6px"></div>
+            <div class="ui-block bg-gray" style="width:30px;height:6px"></div>
+            <div class="ui-block bg-gray" style="width:30px;height:6px"></div>
+          </div>
+          <div class="ui-row" style="padding:4px 6px;gap:6px">
+            <div class="ui-block bg-lt" style="width:40px;height:6px"></div>
+            <div class="ui-block bg-lt" style="flex:1;height:6px"></div>
+            <div class="pill-mock bg-lav" style="width:30px"></div>
+            <div style="display:flex;gap:3px"><div class="btn-mock" style="width:16px;height:14px;background:#fef3c7;border-radius:3px"></div><div class="btn-mock" style="width:16px;height:14px;background:#fee2e2;border-radius:3px"></div></div>
+          </div>
+          <div class="ui-row" style="padding:4px 6px;gap:6px">
+            <div class="ui-block bg-lt" style="width:40px;height:6px"></div>
+            <div class="ui-block bg-lt" style="flex:1;height:6px"></div>
+            <div class="pill-mock" style="width:30px;background:#d8b4fe"></div>
+            <div style="display:flex;gap:3px"><div class="btn-mock" style="width:16px;height:14px;background:#fef3c7;border-radius:3px"></div><div class="btn-mock" style="width:16px;height:14px;background:#fee2e2;border-radius:3px"></div></div>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--muted);margin-top:7px">Search · Users table · Role pills · Edit/Delete actions</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- 6. NAVIGATION FLOW -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="section-label"><span>Navigation Flow &amp; Role Access</span></div>
+
+  <div class="flow-grid">
+    <div class="flow-node accent-amber">
+      <div class="flow-node-title"><span class="role-badge badge-public" style="margin:0">Public</span></div>
+      <ul>
+        <li>Landing Page (/)</li>
+        <li>Login (/login)</li>
+        <li>Register (/register)</li>
+      </ul>
+    </div>
+
+    <div class="flow-node accent-lav">
+      <div class="flow-node-title"><span class="role-badge badge-student" style="margin:0">🎓 Student</span></div>
+      <ul>
+        <li>Dashboard</li>
+        <li>Find Supervisors</li>
+        <li>Project Ideas (50+)</li>
+        <li>Video Resources (15)</li>
+        <li>My Requests</li>
+        <li>Feedback</li>
+        <li>My Profile</li>
+      </ul>
+    </div>
+
+    <div class="flow-node accent-rose">
+      <div class="flow-node-title"><span class="role-badge badge-supervisor" style="margin:0">👨‍🏫 Supervisor</span></div>
+      <ul>
+        <li>Dashboard</li>
+        <li>Student Requests</li>
+        <li>My Students</li>
+        <li>Project Topics</li>
+        <li>My Profile</li>
+        <li>Feedback</li>
+      </ul>
+    </div>
+
+    <div class="flow-node accent-green">
+      <div class="flow-node-title"><span class="role-badge badge-admin" style="margin:0">🛠️ Admin</span></div>
+      <ul>
+        <li>Dashboard</li>
+        <li>Analytics</li>
+        <li>User Management</li>
+        <li>Supervisors (read)</li>
+        <li>Students (read)</li>
+        <li>Project Topics</li>
+        <li>All Requests</li>
+        <li>Feedback</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ───────────────────────────────────────────── -->
+  <!-- 7. SYSTEM TOPOLOGY -->
+  <!-- ───────────────────────────────────────────── -->
+  <div class="section-label"><span>System Component Topology</span></div>
+
+  <div style="max-width:860px;margin:0 auto 32px">
+    <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:6px">
+      <div class="conn-node" style="background:var(--lav-l);border-color:var(--lav-m);color:var(--lav)">🌐 Browser</div>
+      <div class="conn-line"></div>
+      <div class="conn-node">React SPA<br><small style="color:var(--muted);font-weight:400">React Router v6</small></div>
+      <div class="conn-line"></div>
+      <div class="conn-node">AuthContext<br><small style="color:var(--muted);font-weight:400">JWT token</small></div>
+      <div class="conn-line"></div>
+      <div class="conn-node" style="background:#f0fdf4;border-color:#86efac;color:var(--green)">Express API<br><small style="color:var(--muted);font-weight:400">REST /api/v1</small></div>
+      <div class="conn-line"></div>
+      <div class="conn-node" style="background:#fffbeb;border-color:#fde68a;color:var(--amber)">MongoDB<br><small style="color:var(--muted);font-weight:400">Mongoose ODM</small></div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:14px">
+      <div class="conn-node" style="font-size:11px">AppLayout<br><small style="color:var(--muted)">Sidebar + Topbar</small></div>
+      <div style="color:var(--lav-m);font-size:18px">→</div>
+      <div class="conn-node" style="font-size:11px">ProtectedRoute<br><small style="color:var(--muted)">Role guard</small></div>
+      <div style="color:var(--lav-m);font-size:18px">→</div>
+      <div class="conn-node" style="font-size:11px">Page Component<br><small style="color:var(--muted)">via &lt;Outlet /&gt;</small></div>
+      <div style="color:var(--lav-m);font-size:18px">→</div>
+      <div class="conn-node" style="font-size:11px">utils/api.js<br><small style="color:var(--muted)">Axios + JWT</small></div>
+      <div style="color:var(--lav-m);font-size:18px">→</div>
+      <div class="conn-node" style="font-size:11px">Backend REST<br><small style="color:var(--muted)">/api/v1/*</small></div>
+    </div>
+  </div>
+
+  <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:-16px;margin-bottom:32px">
+    Generated for <strong>Smart Thesis Hub</strong> · Daffodil International University · 2024
+  </p>
+
+</body>
+</html>
