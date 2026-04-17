@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Thesis Hub — Daffodil International University</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --lav-50:#f5f3ff;--lav-100:#ede9fe;--lav-200:#ddd6fe;--lav-300:#c4b5fd;
+  --lav-400:#a78bfa;--lav-500:#8b5cf6;--lav-600:#7c3aed;--lav-700:#6d28d9;
+  --lav-800:#5b21b6;--lav-900:#4c1d95;
+  --rose:#f472b6;--rose-d:#db2777;
+  --mint:#34d399;--mint-d:#059669;
+  --amber:#fbbf24;--amber-d:#d97706;
+  --sky:#38bdf8;--sky-d:#0284c7;
+  --bg:#faf9ff;--bg2:#f1eeff;--bg3:#e8e2ff;
+  --surface:#fff;--text:#1e1b4b;--text2:#4338ca;--text3:#6d5abe;--text-muted:#7c6eb0;
+  --border:#e0d9ff;--border2:#c4b5fd;
+  --shadow:0 2px 16px rgba(109,40,217,.08);--shadow2:0 8px 40px rgba(109,40,217,.13);
+  --r:14px;--r2:10px;--ff:"DM Sans",sans-serif;--ff2:"Fraunces",serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--lav-300);border-radius:10px}
+.screen{display:none;min-height:100vh}.screen.active{display:block}
+
+/* LANDING */
+#landing{background:linear-gradient(135deg,#f5f3ff 0%,#ede9fe 40%,#fdf4ff 100%);position:relative;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35}
+.orb1{width:500px;height:500px;background:#a78bfa;top:-120px;right:-80px}
+.orb2{width:350px;height:350px;background:#f472b6;bottom:-60px;left:-60px}
+.orb3{width:250px;height:250px;background:#38bdf8;top:40%;left:30%}
+.landing-nav{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:20px 48px}
+.logo{font-family:var(--ff2);font-size:22px;font-weight:500;color:var(--lav-800)}
+.logo span{color:var(--lav-500)}
+.logo-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
+.nav-cta{background:var(--lav-600);color:#fff;border:none;padding:10px 24px;border-radius:50px;font-family:var(--ff);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s}
+.nav-cta:hover{background:var(--lav-700);transform:translateY(-1px)}
+.landing-hero{position:relative;z-index:2;text-align:center;padding:70px 24px 36px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(167,139,250,.15);border:1px solid var(--lav-300);color:var(--lav-700);font-size:12px;font-weight:500;padding:6px 16px;border-radius:50px;margin-bottom:24px;text-transform:uppercase;letter-spacing:.3px}
+h1.hero-title{font-family:var(--ff2);font-size:clamp(34px,5vw,62px);font-weight:500;line-height:1.1;color:var(--lav-900);max-width:760px;margin:0 auto 16px;letter-spacing:-.5px}
+h1.hero-title em{font-style:italic;color:var(--lav-500)}
+.hero-sub{font-size:16px;color:var(--text-muted);max-width:520px;margin:0 auto 40px;line-height:1.65;font-weight:300}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--lav-600);color:#fff;border:none;padding:13px 32px;border-radius:50px;font-family:var(--ff);font-size:15px;font-weight:500;cursor:pointer;transition:all .22s;box-shadow:0 4px 20px rgba(109,40,217,.3)}
+.btn-primary:hover{background:var(--lav-700);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--lav-700);border:1.5px solid var(--lav-300);padding:13px 28px;border-radius:50px;font-family:var(--ff);font-size:15px;font-weight:500;cursor:pointer;transition:all .22s}
+.btn-ghost:hover{background:var(--lav-50)}
+.landing-stats{display:flex;justify-content:center;gap:48px;padding:32px 24px;position:relative;z-index:2;flex-wrap:wrap}
+.stat-num{font-family:var(--ff2);font-size:34px;font-weight:500;color:var(--lav-700)}
+.stat-lbl{font-size:13px;color:var(--text-muted);margin-top:2px;text-align:center}
+.landing-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:980px;margin:0 auto;padding:0 24px 60px;position:relative;z-index:2}
+.role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;cursor:pointer;transition:all .22s}
+.role-card:hover{border-color:var(--lav-400);transform:translateY(-4px);box-shadow:var(--shadow2)}
+.role-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.role-card h3{font-family:var(--ff2);font-size:20px;font-weight:500;color:var(--lav-900);margin-bottom:8px}
+.role-card p{font-size:13.5px;color:var(--text-muted);line-height:1.6;margin-bottom:20px}
+.role-link{font-size:13px;font-weight:500;color:var(--lav-600)}
+
+/* LOGIN */
+#login-screen{display:none;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#f5f3ff,#ede9fe,#fdf4ff);padding:24px}
+#login-screen.active{display:flex}
+.login-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;width:100%;max-width:460px;box-shadow:var(--shadow2)}
+.login-logo{font-family:var(--ff2);font-size:20px;font-weight:500;color:var(--lav-800);text-align:center;margin-bottom:4px}
+.login-logo span{color:var(--lav-500)}
+.login-uni{font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:6px}
+.login-sub{text-align:center;color:var(--text-muted);font-size:13px;margin-bottom:24px}
+.role-tabs{display:flex;background:var(--bg2);border-radius:10px;padding:3px;gap:2px;margin-bottom:22px}
+.role-tabs button{flex:1;padding:8px;border:none;background:none;border-radius:8px;font-family:var(--ff);font-size:13px;color:var(--text-muted);cursor:pointer;transition:all .18s;font-weight:500}
+.role-tabs button.active{background:var(--surface);color:var(--lav-700);box-shadow:0 1px 4px rgba(109,40,217,.12)}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:13px;font-weight:500;color:var(--text3);margin-bottom:5px}
+.form-group input,.form-group select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r2);font-family:var(--ff);font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color .18s}
+.form-group input:focus,.form-group select:focus{border-color:var(--lav-400)}
+.teacher-code-note{font-size:11.5px;color:var(--text-muted);margin-top:5px;background:var(--lav-50);padding:7px 10px;border-radius:6px;border-left:3px solid var(--lav-400)}
+.btn-login{width:100%;background:var(--lav-600);color:#fff;border:none;padding:13px;border-radius:50px;font-family:var(--ff);font-size:15px;font-weight:500;cursor:pointer;transition:all .2s;margin-top:6px}
+.btn-login:hover{background:var(--lav-700)}
+.login-back{text-align:center;margin-top:16px;font-size:13px;color:var(--text-muted);cursor:pointer}
+.login-back span{color:var(--lav-600);font-weight:500}
+.demo-hint{background:var(--lav-50);border:1px solid var(--lav-200);border-radius:8px;padding:10px 12px;margin-top:14px;font-size:12px;color:var(--lav-700)}
+.demo-hint b{display:block;margin-bottom:4px}
+
+/* APP LAYOUT */
+#app{display:none;min-height:100vh;background:var(--bg)}
+#app.active{display:flex}
+.sidebar{width:240px;min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:20px 0;flex-shrink:0;position:fixed;top:0;left:0;height:100%;overflow-y:auto;z-index:100;transition:transform .3s}
+.sidebar-logo{font-family:var(--ff2);font-size:17px;font-weight:500;color:var(--lav-800);padding:0 20px 6px;border-bottom:1px solid var(--border);margin-bottom:4px}
+.sidebar-logo span{color:var(--lav-500)}
+.sidebar-uni{font-size:10px;color:var(--text-muted);padding:0 20px 14px}
+.sidebar-user{display:flex;align-items:center;gap:10px;padding:10px 20px;margin:6px 12px;background:var(--bg2);border-radius:var(--r2)}
+.user-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.user-name{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:11px;color:var(--text-muted)}
+.nav-section{padding:6px 12px 2px}
+.nav-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);padding:0 8px;margin-bottom:3px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:var(--r2);cursor:pointer;transition:all .18s;color:var(--text-muted);font-size:13.5px;font-weight:500;margin-bottom:1px;position:relative}
+.nav-item:hover{background:var(--bg2);color:var(--lav-700)}
+.nav-item.active{background:var(--lav-100);color:var(--lav-700)}
+.nav-item.active::before{content:'';position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:3px;height:20px;background:var(--lav-500);border-radius:0 3px 3px 0}
+.nav-icon{font-size:15px;width:20px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--rose);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:50px}
+.sidebar-footer{margin-top:auto;padding:12px;border-top:1px solid var(--border)}
+.logout-btn{display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:var(--r2);cursor:pointer;color:var(--text-muted);font-size:13.5px;font-weight:500;transition:all .18s;width:100%;background:none;border:none;font-family:var(--ff)}
+.logout-btn:hover{background:#fff0f0;color:#dc2626}
+.main{flex:1;margin-left:240px;overflow-y:auto;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;gap:12px}
+.topbar-title{font-family:var(--ff2);font-size:19px;font-weight:500;color:var(--lav-900);white-space:nowrap}
+.topbar-search{flex:1;max-width:340px;position:relative}
+.topbar-search input{width:100%;padding:8px 14px 8px 34px;border:1.5px solid var(--border);border-radius:50px;font-family:var(--ff);font-size:13px;background:var(--bg);outline:none;color:var(--text);transition:border-color .18s}
+.topbar-search input:focus{border-color:var(--lav-400)}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:13px}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:36px;height:36px;border:1.5px solid var(--border);border-radius:50%;background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .18s;position:relative}
+.icon-btn:hover{border-color:var(--lav-400);background:var(--lav-50)}
+.notif-dot{position:absolute;top:3px;right:3px;width:8px;height:8px;background:var(--rose);border-radius:50%;border:2px solid var(--surface)}
+.page{padding:24px;display:none}
+.page.active{display:block}
+.page-header{margin-bottom:20px}
+.page-header h2{font-family:var(--ff2);font-size:24px;font-weight:500;color:var(--lav-900)}
+.page-header p{font-size:13.5px;color:var(--text-muted);margin-top:3px}
+
+/* CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:24px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;cursor:pointer;transition:all .2s}
+.stat-card:hover{border-color:var(--lav-400);transform:translateY(-2px);box-shadow:var(--shadow)}
+.stat-card-icon{font-size:20px;margin-bottom:10px}
+.stat-card-val{font-family:var(--ff2);font-size:28px;font-weight:500;color:var(--lav-900)}
+.stat-card-lbl{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.stat-card-trend{font-size:11.5px;font-weight:500;margin-top:6px}
+.trend-up{color:var(--mint-d)}.trend-down{color:var(--rose-d)}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:all .2s}
+.card:hover{border-color:var(--lav-300);box-shadow:var(--shadow)}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.card-title{font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:2px}
+.card-sub{font-size:12px;color:var(--text-muted)}
+.tag{display:inline-flex;padding:3px 9px;border-radius:50px;font-size:11px;font-weight:500}
+.tag.lav{background:var(--lav-100);color:var(--lav-700)}
+.tag.rose{background:#fff0f6;color:var(--rose-d)}
+.tag.mint{background:#f0fdf4;color:var(--mint-d)}
+.tag.amber{background:#fffbeb;color:var(--amber-d)}
+.tag.sky{background:#f0f9ff;color:var(--sky-d)}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.card-meta{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.card-actions{display:flex;gap:7px;flex-wrap:wrap}
+.btn-sm{padding:6px 14px;border-radius:50px;font-family:var(--ff);font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;border:1.5px solid}
+.btn-sm.primary{background:var(--lav-600);color:#fff;border-color:var(--lav-600)}
+.btn-sm.primary:hover{background:var(--lav-700)}
+.btn-sm.outline{background:transparent;color:var(--lav-600);border-color:var(--lav-300)}
+.btn-sm.outline:hover{background:var(--lav-50)}
+.btn-sm.danger{background:transparent;color:#dc2626;border-color:#fca5a5}
+.btn-sm.danger:hover{background:#fff0f0}
+.btn-sm.success{background:transparent;color:var(--mint-d);border-color:#86efac}
+.btn-sm.success:hover{background:#f0fdf4}
+
+/* SUPERVISOR CARDS */
+.sv-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;display:flex;gap:16px;align-items:flex-start;transition:all .2s;cursor:pointer}
+.sv-card:hover{border-color:var(--lav-300);box-shadow:var(--shadow);transform:translateY(-2px)}
+.sv-avatar{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sv-name{font-size:14.5px;font-weight:600;color:var(--text);margin-bottom:2px}
+.sv-dept{font-size:12px;color:var(--text-muted);margin-bottom:7px}
+.sv-stats{display:flex;gap:12px;font-size:12px;color:var(--text-muted);margin-bottom:8px;flex-wrap:wrap}
+.stars{color:var(--amber);font-size:11px}
+.progress-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--lav-400),var(--lav-600));border-radius:2px}
+
+/* TABLE */
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th{padding:11px 14px;font-size:11.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;background:var(--bg2);text-align:left;border-bottom:1px solid var(--border)}
+td{padding:12px 14px;font-size:13px;color:var(--text);border-bottom:1px solid var(--border2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.status-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:50px;font-size:11px;font-weight:600}
+.status-pill::before{content:'';width:5px;height:5px;border-radius:50%}
+.sp-pending{background:#fff7ed;color:#c2410c}.sp-pending::before{background:#fb923c}
+.sp-accepted{background:#f0fdf4;color:#15803d}.sp-accepted::before{background:#4ade80}
+.sp-rejected{background:#fff0f0;color:#dc2626}.sp-rejected::before{background:#f87171}
+.sp-active{background:var(--lav-100);color:var(--lav-700)}.sp-active::before{background:var(--lav-500)}
+
+/* NOTIF PANEL */
+.notif-panel{position:fixed;top:60px;right:16px;width:320px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow2);z-index:200;display:none;max-height:480px;overflow-y:auto}
+.notif-panel.open{display:block}
+.notif-header{padding:12px 16px;border-bottom:1px solid var(--border);font-weight:600;font-size:13.5px;display:flex;justify-content:space-between}
+.notif-clear{font-size:12px;color:var(--lav-600);cursor:pointer;font-weight:400}
+.notif-item{padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.notif-item:hover{background:var(--bg)}.notif-item.unread{background:var(--lav-50)}
+.ni-title{font-size:13px;font-weight:500;margin-bottom:2px}
+.ni-body{font-size:12px;color:var(--text-muted);line-height:1.5}
+.ni-time{font-size:11px;color:var(--lav-400);margin-top:3px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(30,27,75,.35);backdrop-filter:blur(4px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:18px;width:100%;max-width:520px;box-shadow:var(--shadow2);max-height:90vh;overflow-y:auto;animation:mIn .2s ease}
+@keyframes mIn{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:none}}
+.modal-header{padding:22px 26px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);z-index:1}
+.modal-title{font-family:var(--ff2);font-size:19px;font-weight:500;color:var(--lav-900)}
+.modal-close{width:28px;height:28px;border:none;background:var(--bg2);border-radius:50%;cursor:pointer;font-size:15px;color:var(--text-muted);display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--bg3)}
+.modal-body{padding:20px 26px}
+.modal-footer{padding:14px 26px 20px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border)}
+textarea{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--r2);font-family:var(--ff);font-size:13.5px;color:var(--text);background:var(--surface);outline:none;resize:vertical;min-height:80px}
+textarea:focus{border-color:var(--lav-400)}
+select{appearance:none}
+
+/* VIDEO */
+.video-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all .2s}
+.video-card:hover{border-color:var(--lav-300);box-shadow:var(--shadow);transform:translateY(-2px)}
+.video-thumb{height:140px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.play-btn{width:46px;height:46px;background:rgba(255,255,255,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;transition:transform .2s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.video-card:hover .play-btn{transform:scale(1.1)}
+.video-duration{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.65);color:#fff;font-size:11px;padding:2px 7px;border-radius:4px}
+.video-info{padding:13px}
+.video-title{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.4}
+.video-meta{font-size:11.5px;color:var(--text-muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* MISC */
+.filter-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.filter-chip{padding:6px 14px;border-radius:50px;border:1.5px solid var(--border);background:var(--surface);color:var(--text-muted);font-size:12.5px;font-weight:500;cursor:pointer;transition:all .18s}
+.filter-chip:hover{border-color:var(--lav-400);color:var(--lav-600)}
+.filter-chip.active{background:var(--lav-100);border-color:var(--lav-400);color:var(--lav-700)}
+.section-title{font-family:var(--ff2);font-size:17px;font-weight:500;color:var(--lav-900);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.see-all{font-size:12.5px;font-weight:400;color:var(--lav-600);cursor:pointer;font-family:var(--ff)}
+.see-all:hover{text-decoration:underline}
+.activity-list{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.activity-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);align-items:flex-start}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px}
+.activity-title{font-size:13px;font-weight:500;color:var(--text)}
+.activity-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+.activity-time{font-size:11px;color:var(--lav-400);margin-top:3px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;font-weight:500;z-index:500;transform:translateY(60px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:none;opacity:1}
+.toast.success{background:#15803d}.toast.error{background:#dc2626}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.profile-banner{height:100px;background:linear-gradient(135deg,var(--lav-300),var(--lav-500),var(--rose));border-radius:var(--r) var(--r) 0 0}
+.hamburger{display:none;font-size:20px;cursor:pointer;padding:4px;color:var(--lav-700)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(30,27,75,.25);z-index:99}
+.rec-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,var(--lav-100),#fdf4ff);border:1px solid var(--lav-300);color:var(--lav-700);font-size:11.5px;font-weight:500;padding:3px 10px;border-radius:50px}
+
+/* STUDENT PROFILE CARD */
+.student-mini-card{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:8px;cursor:pointer;transition:all .18s}
+.student-mini-card:hover{border-color:var(--lav-300);background:var(--lav-50)}
+.smc-ava{width:38px;height:38px;border-radius:50%;background:var(--lav-100);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.smc-name{font-size:13.5px;font-weight:600;color:var(--text)}
+.smc-sub{font-size:11.5px;color:var(--text-muted)}
+.rating-stars{display:flex;gap:2px}
+.star{font-size:16px;cursor:pointer;transition:color .15s;color:#d1d5db}
+.star.filled,.star:hover~.star,.star:hover{color:var(--amber)}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none;box-shadow:var(--shadow2)}
+  .sidebar-overlay.open{display:block}
+  .main{margin-left:0}
+  .hamburger{display:flex}
+  .form-row{grid-template-columns:1fr}
+  .topbar{padding:12px 14px}
+  .page{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LANDING ═══ -->
+<div id="landing" class="screen active">
+  <div style="position:absolute;inset:0;pointer-events:none;z-index:0">
+    <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+  </div>
+  <nav class="landing-nav" style="position:relative;z-index:2">
+    <div><div class="logo">Smart<span>Thesis</span>Hub</div><div class="logo-sub">Daffodil International University</div></div>
+    <button class="nav-cta" onclick="showScreen('login-screen')">Sign In →</button>
+  </nav>
+  <div class="landing-hero" style="position:relative;z-index:2">
+    <div class="hero-badge">✦ DIU Thesis Management Platform</div>
+    <h1 class="hero-title">Where Great Research Meets <em>Expert Guidance</em></h1>
+    <p class="hero-sub">The official thesis supervision platform for Daffodil International University — connecting students with expert faculty across CSE, ICT, SWE, and more.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="showScreen('login-screen')">Get Started</button>
+      <button class="btn-ghost" onclick="loginAs('admin')">Admin Demo</button>
+    </div>
+  </div>
+  <div class="landing-stats" style="position:relative;z-index:2">
+    <div><div class="stat-num">2,400+</div><div class="stat-lbl">Students Enrolled</div></div>
+    <div><div class="stat-num">48</div><div class="stat-lbl">Expert Supervisors</div></div>
+    <div><div class="stat-num">94%</div><div class="stat-lbl">Match Success Rate</div></div>
+    <div><div class="stat-num">8</div><div class="stat-lbl">Departments</div></div>
+  </div>
+  <div class="landing-cards" style="position:relative;z-index:2">
+    <div class="role-card" onclick="showScreen('login-screen');setTimeout(()=>setRole('student',document.querySelector('.role-tabs button')),100)">
+      <div class="role-icon" style="background:var(--lav-100)">🎓</div>
+      <h3>For Students</h3>
+      <p>Discover DIU supervisors by department, browse 50+ project ideas, watch video guides, and submit supervision requests.</p>
+      <div class="role-link">Student Portal →</div>
+    </div>
+    <div class="role-card" onclick="showScreen('login-screen');setTimeout(()=>setRole('supervisor',document.querySelectorAll('.role-tabs button')[1]),100)">
+      <div class="role-icon" style="background:#fdf4ff">👨‍🏫</div>
+      <h3>For Supervisors</h3>
+      <p>Manage student requests, view assigned groups, update availability, and track your students' progress.</p>
+      <div class="role-link">Supervisor Portal →</div>
+    </div>
+    <div class="role-card" onclick="loginAs('admin')">
+      <div class="role-icon" style="background:#f0fdf4">🛠️</div>
+      <h3>For Admins</h3>
+      <p>Full control over the platform — users, assignments, categories, analytics, and system configuration.</p>
+      <div class="role-link">Admin Console →</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login-screen" class="screen">
+  <div class="login-box">
+    <div class="login-logo">Smart<span>Thesis</span>Hub</div>
+    <div class="login-uni">Daffodil International University</div>
+    <div class="login-sub">Sign in to your portal</div>
+    <div class="role-tabs" id="role-tabs">
+      <button class="active" onclick="setRole('student',this)">🎓 Student</button>
+      <button onclick="setRole('supervisor',this)">👨‍🏫 Supervisor</button>
+      <button onclick="setRole('admin',this)">🛠️ Admin</button>
+    </div>
+    <div id="login-fields"></div>
+    <button class="btn-login" onclick="doLogin()">Sign In Securely</button>
+    <div class="demo-hint" id="demo-hint"></div>
+    <div class="login-back" onclick="showScreen('landing')">← <span>Back to home</span></div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app" class="screen">
+  <div class="sidebar-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+    <div style="padding:0 0 0">
+      <div class="sidebar-logo">Smart<span>Thesis</span>Hub</div>
+      <div class="sidebar-uni">Daffodil International University</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="user-ava" style="background:var(--lav-100);color:var(--lav-700)">ST</div>
+      <div style="min-width:0">
+        <div class="user-name" id="user-name-display">Student</div>
+        <div class="user-role" id="user-role-display">Student</div>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-lbl">Navigation</div>
+      <div id="nav-items"></div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">🚪 Sign Out</button>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="hamburger" onclick="openSidebar()">☰</span>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+      </div>
+      <div class="topbar-search">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="Search…" id="global-search" oninput="handleSearch(this.value)">
+      </div>
+      <div class="topbar-actions">
+        <div class="icon-btn" onclick="toggleNotif()">🔔<div class="notif-dot" id="notif-dot"></div></div>
+        <div class="icon-btn" onclick="showPage('profile')">👤</div>
+      </div>
+    </div>
+    <div class="notif-panel" id="notif-panel">
+      <div class="notif-header">Notifications <span class="notif-clear" onclick="clearNotifs()">Clear all</span></div>
+      <div id="notif-list"></div>
+    </div>
+    <div id="page-dashboard" class="page active"></div>
+    <div id="page-supervisors" class="page"></div>
+    <div id="page-projects" class="page"></div>
+    <div id="page-resources" class="page"></div>
+    <div id="page-requests" class="page"></div>
+    <div id="page-students" class="page"></div>
+    <div id="page-profile" class="page"></div>
+    <div id="page-feedback" class="page"></div>
+    <div id="page-users" class="page"></div>
+    <div id="page-categories" class="page"></div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOut(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const SUPERVISOR_CODE = 'DIU@2024'; // supervisor access code
+const ADMIN_CODE = 'ADMIN#DIU';
+
+const SUPERVISORS = [
+  {id:1,name:'Dr. Md. Ariful Islam',title:'Professor',dept:'CSE',uni:'Daffodil International University',areas:['Machine Learning','Deep Learning','NLP'],exp:18,students:[1,2,3],maxSlots:5,rating:4.9,pubs:54,avatar:'👨‍💻',email:'ariful@diu.edu.bd',phone:'+880 1711-000001'},
+  {id:2,name:'Dr. Shawkat Ali',title:'Professor',dept:'CSE',uni:'Daffodil International University',areas:['Computer Vision','Image Processing','AI'],exp:16,students:[4,5],maxSlots:5,rating:4.8,pubs:48,avatar:'🧑‍🔬',email:'shawkat@diu.edu.bd',phone:'+880 1711-000002'},
+  {id:3,name:'Dr. Faisal Ahmed',title:'Associate Professor',dept:'SWE',uni:'Daffodil International University',areas:['Software Engineering','Agile','Cloud Computing'],exp:12,students:[6,7,8],maxSlots:5,rating:4.7,pubs:32,avatar:'👨‍🏫',email:'faisal@diu.edu.bd',phone:'+880 1711-000003'},
+  {id:4,name:'Dr. Nazmun Nessa Moon',title:'Associate Professor',dept:'CSE',uni:'Daffodil International University',areas:['IoT','Embedded Systems','Robotics'],exp:11,students:[9,10],maxSlots:4,rating:4.8,pubs:29,avatar:'👩‍💻',email:'moon@diu.edu.bd',phone:'+880 1711-000004'},
+  {id:5,name:'Dr. Mohammad Shorif Uddin',title:'Professor',dept:'ICT',uni:'Daffodil International University',areas:['Blockchain','Cybersecurity','Cryptography'],exp:20,students:[11,12,13,14],maxSlots:5,rating:4.9,pubs:67,avatar:'👨‍🔐',email:'shorif@diu.edu.bd',phone:'+880 1711-000005'},
+  {id:6,name:'Dr. Imran Mahmud',title:'Assistant Professor',dept:'CSE',uni:'Daffodil International University',areas:['Big Data','Data Mining','Cloud'],exp:8,students:[15],maxSlots:4,rating:4.6,pubs:19,avatar:'📊',email:'imran@diu.edu.bd',phone:'+880 1711-000006'},
+  {id:7,name:'Dr. Arafatur Rahman',title:'Associate Professor',dept:'ICE',uni:'Daffodil International University',areas:['Wireless Networks','5G','Network Security'],exp:13,students:[16,17],maxSlots:4,rating:4.7,pubs:35,avatar:'📡',email:'arafatur@diu.edu.bd',phone:'+880 1711-000007'},
+  {id:8,name:'Dr. Fokhray Hossain',title:'Professor',dept:'MCT',uni:'Daffodil International University',areas:['Multimedia Systems','AR/VR','HCI'],exp:15,students:[18,19,20],maxSlots:5,rating:4.7,pubs:41,avatar:'🎨',email:'fokhray@diu.edu.bd',phone:'+880 1711-000008'},
+  {id:9,name:'Dr. Md. Mahbubur Rahman',title:'Assistant Professor',dept:'SWE',uni:'Daffodil International University',areas:['Mobile App Dev','React Native','Flutter'],exp:7,students:[],maxSlots:4,rating:4.5,pubs:14,avatar:'📱',email:'mahbubur@diu.edu.bd',phone:'+880 1711-000009'},
+  {id:10,name:'Dr. Tanvir Ahmed',title:'Associate Professor',dept:'ETE',uni:'Daffodil International University',areas:['Signal Processing','Communication Systems','VLSI'],exp:10,students:[21,22],maxSlots:4,rating:4.6,pubs:26,avatar:'⚡',email:'tanvir@diu.edu.bd',phone:'+880 1711-000010'},
+];
+
+const STUDENTS_DB = [
+  {id:1,name:'Rafiq Hasan',email:'rafiq@s.diu.edu.bd',dept:'CSE',year:4,gpa:3.8,supervisor:1,status:'assigned',roll:'191-35-1001'},
+  {id:2,name:'Sabrina Khanam',email:'sabrina@s.diu.edu.bd',dept:'CSE',year:4,gpa:3.7,supervisor:1,status:'assigned',roll:'191-35-1002'},
+  {id:3,name:'Tanvir Islam',email:'tanvir@s.diu.edu.bd',dept:'CSE',year:4,gpa:3.9,supervisor:1,status:'assigned',roll:'191-35-1003'},
+  {id:4,name:'Nadia Sultana',email:'nadia@s.diu.edu.bd',dept:'CSE',year:3,gpa:3.6,supervisor:2,status:'assigned',roll:'201-35-1004'},
+  {id:5,name:'Jubayer Ahmed',email:'jubayer@s.diu.edu.bd',dept:'CSE',year:4,gpa:3.5,supervisor:2,status:'assigned',roll:'191-35-1005'},
+  {id:6,name:'Mitu Akter',email:'mitu@s.diu.edu.bd',dept:'SWE',year:4,gpa:3.7,supervisor:3,status:'assigned',roll:'191-52-1006'},
+  {id:7,name:'Raju Mia',email:'raju@s.diu.edu.bd',dept:'SWE',year:4,gpa:3.4,supervisor:3,status:'assigned',roll:'191-52-1007'},
+  {id:8,name:'Fariha Binte Nur',email:'fariha@s.diu.edu.bd',dept:'SWE',year:3,gpa:3.8,supervisor:3,status:'assigned',roll:'201-52-1008'},
+  {id:9,name:'Shakil Mahmud',email:'shakil@s.diu.edu.bd',dept:'CSE',year:4,gpa:3.6,supervisor:4,status:'assigned',roll:'191-35-1009'},
+  {id:10,name:'Sumaiya Jannat',email:'sumaiya@s.diu.edu.bd',dept:'CSE',year:4,gpa:3.9,supervisor:4,status:'assigned',roll:'191-35-1010'},
+  {id:11,name:'Arif Billah',email:'arif@s.diu.edu.bd',dept:'ICT',year:4,gpa:3.7,supervisor:5,status:'assigned',roll:'191-40-1011'},
+  {id:12,name:'Mehrin Sultana',email:'mehrin@s.diu.edu.bd',dept:'ICT',year:4,gpa:3.8,supervisor:5,status:'assigned',roll:'191-40-1012'},
+  {id:13,name:'Zahid Hasan',email:'zahid@s.diu.edu.bd',dept:'ICT',year:3,gpa:3.5,supervisor:5,status:'assigned',roll:'201-40-1013'},
+  {id:14,name:'Sanzida Rahman',email:'sanzida@s.diu.edu.bd',dept:'ICT',year:4,gpa:3.9,supervisor:5,status:'assigned',roll:'191-40-1014'},
+  {id:15,name:'Emon Hossain',email:'emon@s.diu.edu.bd',dept:'CSE',year:3,gpa:3.6,supervisor:6,status:'assigned',roll:'201-35-1015'},
+  {id:16,name:'Bristy Akter',email:'bristy@s.diu.edu.bd',dept:'ICE',year:4,gpa:3.7,supervisor:7,status:'assigned',roll:'191-25-1016'},
+  {id:17,name:'Shojib Rahman',email:'shojib@s.diu.edu.bd',dept:'ICE',year:4,gpa:3.5,supervisor:7,status:'assigned',roll:'191-25-1017'},
+  {id:18,name:'Keya Moni',email:'keya@s.diu.edu.bd',dept:'MCT',year:4,gpa:3.6,supervisor:8,status:'assigned',roll:'191-65-1018'},
+  {id:19,name:'Rajon Ali',email:'rajon@s.diu.edu.bd',dept:'MCT',year:4,gpa:3.4,supervisor:8,status:'assigned',roll:'191-65-1019'},
+  {id:20,name:'Priya Das',email:'priya@s.diu.edu.bd',dept:'MCT',year:3,gpa:3.8,supervisor:8,status:'assigned',roll:'201-65-1020'},
+  {id:21,name:'Sharif Hossain',email:'sharif@s.diu.edu.bd',dept:'ETE',year:4,gpa:3.5,supervisor:10,status:'assigned',roll:'191-20-1021'},
+  {id:22,name:'Nahar Mim',email:'nahar@s.diu.edu.bd',dept:'ETE',year:4,gpa:3.7,supervisor:10,status:'assigned',roll:'191-20-1022'},
+];
+
+let REQUESTS = [
+  {id:1,studentId:null,studentName:'Nadia Islam',supervisor:'Dr. Md. Ariful Islam',svId:1,area:'Machine Learning',date:'2024-01-15',status:'pending',msg:'I want to work on emotion detection using NLP for Bangla text.'},
+  {id:2,studentId:null,studentName:'Arman Hossain',supervisor:'Dr. Shawkat Ali',svId:2,area:'Computer Vision',date:'2024-01-14',status:'pending',msg:'Interested in real-time face mask detection using CNN.'},
+  {id:3,studentId:null,studentName:'Mariam Khanam',supervisor:'Dr. Faisal Ahmed',svId:3,area:'Cloud Computing',date:'2024-01-13',status:'accepted',msg:'Serverless architecture for university ERP.'},
+  {id:4,studentId:null,studentName:'Mizan Rahaman',supervisor:'Dr. Imran Mahmud',svId:6,area:'Big Data',date:'2024-01-12',status:'rejected',msg:'Big data analytics for traffic management.'},
+];
+let STUDENT_REQUESTS = []; // logged-in student's own requests
+let SAVED_PROJECTS = [];
+let STUDENT_RATINGS = {}; // studentId -> rating
+let currentLoggedRole = 'student';
+let currentSupervisorId = 1; // which supervisor is logged in (for supervisor panel)
+let currentStudentName = '';
+
+const PROJECTS = [
+  // AI/ML (10)
+  {id:1,title:'Bangla Sign Language Recognition using CNN',category:'AI/ML',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Advanced',views:234,slots:2,tags:['Deep Learning','CNN','Python']},
+  {id:2,title:'Fake News Detection using NLP & BERT',category:'AI/ML',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Advanced',views:189,slots:2,tags:['NLP','BERT','Python']},
+  {id:3,title:'Emotion Recognition from Facial Expressions',category:'AI/ML',svId:2,supervisor:'Dr. Shawkat Ali',difficulty:'Advanced',views:210,slots:1,tags:['OpenCV','CNN','TensorFlow']},
+  {id:4,title:'Crop Disease Detection using Transfer Learning',category:'AI/ML',svId:2,supervisor:'Dr. Shawkat Ali',difficulty:'Intermediate',views:167,slots:2,tags:['ResNet','PyTorch','Agriculture']},
+  {id:5,title:'Students Performance Prediction using ML',category:'AI/ML',svId:6,supervisor:'Dr. Imran Mahmud',difficulty:'Intermediate',views:198,slots:3,tags:['Scikit-learn','Pandas','Python']},
+  // IoT (7)
+  {id:6,title:'Smart Campus Energy Management with IoT',category:'IoT',svId:4,supervisor:'Dr. Nazmun Nessa Moon',difficulty:'Intermediate',views:156,slots:2,tags:['Arduino','Raspberry Pi','MQTT']},
+  {id:7,title:'Smart Home Automation using ESP32 & AI',category:'IoT',svId:4,supervisor:'Dr. Nazmun Nessa Moon',difficulty:'Intermediate',views:143,slots:2,tags:['ESP32','Node.js','MQTT']},
+  {id:8,title:'IoT-based Patient Health Monitoring System',category:'IoT',svId:4,supervisor:'Dr. Nazmun Nessa Moon',difficulty:'Advanced',views:178,slots:1,tags:['Sensor','Firebase','Android']},
+  {id:9,title:'Automated Irrigation System using Soil Sensors',category:'IoT',svId:4,supervisor:'Dr. Nazmun Nessa Moon',difficulty:'Beginner',views:134,slots:3,tags:['Arduino','Python','Sensors']},
+  // Blockchain (5)
+  {id:10,title:'Blockchain-based Academic Certificate Verification',category:'Blockchain',svId:5,supervisor:'Dr. Mohammad Shorif Uddin',difficulty:'Advanced',views:201,slots:2,tags:['Solidity','Ethereum','Web3.js']},
+  {id:11,title:'Decentralized Voting System using Blockchain',category:'Blockchain',svId:5,supervisor:'Dr. Mohammad Shorif Uddin',difficulty:'Advanced',views:175,slots:2,tags:['Smart Contract','React','IPFS']},
+  {id:12,title:'Supply Chain Transparency with Hyperledger',category:'Blockchain',svId:5,supervisor:'Dr. Mohammad Shorif Uddin',difficulty:'Advanced',views:148,slots:1,tags:['Hyperledger','Node.js','Docker']},
+  // Web Dev (8)
+  {id:13,title:'University Thesis Hub Web Application (React)',category:'Web Dev',svId:3,supervisor:'Dr. Faisal Ahmed',difficulty:'Intermediate',views:298,slots:3,tags:['React','Node.js','MongoDB']},
+  {id:14,title:'E-Commerce Platform with AI Recommendations',category:'Web Dev',svId:3,supervisor:'Dr. Faisal Ahmed',difficulty:'Intermediate',views:267,slots:2,tags:['Django','PostgreSQL','ML']},
+  {id:15,title:'Online Learning Management System (LMS)',category:'Web Dev',svId:3,supervisor:'Dr. Faisal Ahmed',difficulty:'Intermediate',views:231,slots:2,tags:['Laravel','Vue.js','MySQL']},
+  {id:16,title:'Real-Time Collaborative Code Editor',category:'Web Dev',svId:9,supervisor:'Dr. Md. Mahbubur Rahman',difficulty:'Advanced',views:187,slots:2,tags:['WebSocket','React','Node.js']},
+  {id:17,title:'Hospital Queue Management System',category:'Web Dev',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Intermediate',views:213,slots:2,tags:['Django','React','PostgreSQL']},
+  {id:18,title:'Food Delivery App with Real-time Tracking',category:'Web Dev',svId:9,supervisor:'Dr. Md. Mahbubur Rahman',difficulty:'Beginner',views:245,slots:3,tags:['Flutter','Firebase','Google Maps']},
+  // Mobile Dev (5)
+  {id:19,title:'Mental Health App for University Students',category:'Mobile Dev',svId:9,supervisor:'Dr. Md. Mahbubur Rahman',difficulty:'Intermediate',views:198,slots:3,tags:['Flutter','Firebase','Psychology']},
+  {id:20,title:'Bangla OCR Mobile App using TensorFlow Lite',category:'Mobile Dev',svId:2,supervisor:'Dr. Shawkat Ali',difficulty:'Advanced',views:176,slots:2,tags:['Android','TensorFlow Lite','Bangla']},
+  {id:21,title:'Campus Navigation App using AR',category:'Mobile Dev',svId:8,supervisor:'Dr. Fokhray Hossain',difficulty:'Advanced',views:163,slots:1,tags:['ARCore','Unity3D','Kotlin']},
+  {id:22,title:'DIU Student Companion App',category:'Mobile Dev',svId:9,supervisor:'Dr. Md. Mahbubur Rahman',difficulty:'Beginner',views:289,slots:4,tags:['Flutter','REST API','Firebase']},
+  // Cybersecurity (5)
+  {id:23,title:'Intrusion Detection System using ML',category:'Cybersecurity',svId:5,supervisor:'Dr. Mohammad Shorif Uddin',difficulty:'Advanced',views:194,slots:2,tags:['Python','Scikit-learn','Networking']},
+  {id:24,title:'Phishing Website Detection using Random Forest',category:'Cybersecurity',svId:5,supervisor:'Dr. Mohammad Shorif Uddin',difficulty:'Intermediate',views:167,slots:2,tags:['ML','URL Analysis','Python']},
+  {id:25,title:'Secure Messaging App with End-to-End Encryption',category:'Cybersecurity',svId:5,supervisor:'Dr. Mohammad Shorif Uddin',difficulty:'Advanced',views:143,slots:1,tags:['Cryptography','React Native','Node.js']},
+  // Networks (4)
+  {id:26,title:'SDN-based Network Monitoring Dashboard',category:'Networks',svId:7,supervisor:'Dr. Arafatur Rahman',difficulty:'Advanced',views:145,slots:2,tags:['OpenFlow','Python','SDN']},
+  {id:27,title:'5G Network Performance Analysis Tool',category:'Networks',svId:7,supervisor:'Dr. Arafatur Rahman',difficulty:'Advanced',views:132,slots:1,tags:['5G','NS3','Simulation']},
+  {id:28,title:'WiFi Congestion Predictor using ML',category:'Networks',svId:7,supervisor:'Dr. Arafatur Rahman',difficulty:'Intermediate',views:158,slots:2,tags:['Python','ML','Networking']},
+  // Robotics (4)
+  {id:29,title:'Autonomous Line Following Robot',category:'Robotics',svId:4,supervisor:'Dr. Nazmun Nessa Moon',difficulty:'Intermediate',views:178,slots:2,tags:['Arduino','C++','Sensors']},
+  {id:30,title:'Humanoid Robot Hand Control using EMG Signal',category:'Robotics',svId:10,supervisor:'Dr. Tanvir Ahmed',difficulty:'Advanced',views:156,slots:1,tags:['EMG','Arduino','Servo']},
+  {id:31,title:'Drone-based Agricultural Monitoring System',category:'Robotics',svId:4,supervisor:'Dr. Nazmun Nessa Moon',difficulty:'Advanced',views:143,slots:2,tags:['Drone','OpenCV','GPS']},
+  // Big Data & Cloud (5)
+  {id:32,title:'Real-time Twitter Sentiment Analysis with Spark',category:'Big Data',svId:6,supervisor:'Dr. Imran Mahmud',difficulty:'Advanced',views:187,slots:2,tags:['Spark','Kafka','Python']},
+  {id:33,title:'Cloud-based Student Analytics Dashboard',category:'Big Data',svId:6,supervisor:'Dr. Imran Mahmud',difficulty:'Intermediate',views:165,slots:2,tags:['AWS','Hadoop','React']},
+  {id:34,title:'COVID-19 Data Visualization Platform',category:'Big Data',svId:6,supervisor:'Dr. Imran Mahmud',difficulty:'Beginner',views:221,slots:3,tags:['D3.js','Python','Data Viz']},
+  // Multimedia & AR/VR (4)
+  {id:35,title:'Virtual Campus Tour using Unity3D',category:'AR/VR',svId:8,supervisor:'Dr. Fokhray Hossain',difficulty:'Advanced',views:198,slots:2,tags:['Unity3D','VR','C#']},
+  {id:36,title:'Sign Language Interpreter using AR Glasses',category:'AR/VR',svId:8,supervisor:'Dr. Fokhray Hossain',difficulty:'Advanced',views:167,slots:1,tags:['ARKit','ML','HCI']},
+  {id:37,title:'Interactive 3D Medical Visualization Tool',category:'AR/VR',svId:8,supervisor:'Dr. Fokhray Hossain',difficulty:'Advanced',views:145,slots:2,tags:['Three.js','WebXR','Python']},
+  // Signal Processing (3)
+  {id:38,title:'EEG Signal Classification for Brain-Computer Interface',category:'Signal Processing',svId:10,supervisor:'Dr. Tanvir Ahmed',difficulty:'Advanced',views:134,slots:1,tags:['BCI','MATLAB','Deep Learning']},
+  {id:39,title:'Speech to Bangla Text Converter',category:'Signal Processing',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Advanced',views:212,slots:2,tags:['DSP','RNN','Python']},
+  // Healthcare (3)
+  {id:40,title:'AI-based Skin Disease Diagnosis App',category:'Healthcare',svId:2,supervisor:'Dr. Shawkat Ali',difficulty:'Advanced',views:234,slots:1,tags:['CNN','Mobile App','Healthcare']},
+  {id:41,title:'Diabetes Prediction System using Ensemble ML',category:'Healthcare',svId:6,supervisor:'Dr. Imran Mahmud',difficulty:'Intermediate',views:198,slots:2,tags:['XGBoost','Python','Health']},
+  {id:42,title:'Telemedicine Platform for Rural Bangladesh',category:'Healthcare',svId:3,supervisor:'Dr. Faisal Ahmed',difficulty:'Intermediate',views:176,slots:2,tags:['React','WebRTC','Node.js']},
+  // Education Tech (3)
+  {id:43,title:'Adaptive Learning System using Reinforcement Learning',category:'EdTech',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Advanced',views:165,slots:2,tags:['RL','Python','EdTech']},
+  {id:44,title:'Automated Essay Grading System',category:'EdTech',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Advanced',views:178,slots:2,tags:['NLP','BERT','Python']},
+  // Transport & Smart City (3)
+  {id:45,title:'Smart Traffic Light Control with Deep RL',category:'Smart City',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Advanced',views:189,slots:2,tags:['RL','OpenCV','Simulation']},
+  {id:46,title:'Public Bus Route Optimization using Genetic Algorithm',category:'Smart City',svId:7,supervisor:'Dr. Arafatur Rahman',difficulty:'Intermediate',views:156,slots:2,tags:['GA','Python','Maps API']},
+  {id:47,title:'Smart Parking System with IoT & Mobile App',category:'Smart City',svId:4,supervisor:'Dr. Nazmun Nessa Moon',difficulty:'Intermediate',views:143,slots:2,tags:['IoT','Flutter','Firebase']},
+  // Game Dev & Misc (3)
+  {id:48,title:'2D Platformer Game using Unity with AI Enemies',category:'Game Dev',svId:8,supervisor:'Dr. Fokhray Hossain',difficulty:'Intermediate',views:187,slots:2,tags:['Unity3D','C#','AI']},
+  {id:49,title:'Natural Language Chatbot for DIU FAQ',category:'AI/ML',svId:1,supervisor:'Dr. Md. Ariful Islam',difficulty:'Intermediate',views:254,slots:2,tags:['Rasa','Python','NLP']},
+  {id:50,title:'Attendance System using Face Recognition',category:'AI/ML',svId:2,supervisor:'Dr. Shawkat Ali',difficulty:'Intermediate',views:267,slots:3,tags:['OpenCV','CNN','Python']},
+];
+
+const VIDEOS = [
+  {id:1,title:'How to Write a Research Proposal — Step by Step',duration:'18:32',category:'Research Methods',views:12400,color:'#7c3aed',url:'https://www.youtube.com/watch?v=pv52sHb0bpo',thumb:'https://img.youtube.com/vi/pv52sHb0bpo/mqdefault.jpg'},
+  {id:2,title:'LaTeX for Thesis Writing — Beginners Guide',duration:'24:10',category:'Tools',views:9830,color:'#0284c7',url:'https://www.youtube.com/watch?v=VhmkLrOjLsw',thumb:'https://img.youtube.com/vi/VhmkLrOjLsw/mqdefault.jpg'},
+  {id:3,title:'Research Methodology — Complete Course',duration:'1:12:45',category:'Research Methods',views:15600,color:'#059669',url:'https://www.youtube.com/watch?v=d7h6HlZo8Cc',thumb:'https://img.youtube.com/vi/d7h6HlZo8Cc/mqdefault.jpg'},
+  {id:4,title:'How to Choose Your Research Topic',duration:'15:22',category:'Planning',views:21040,color:'#d97706',url:'https://www.youtube.com/watch?v=Lf2XS1ZHU04',thumb:'https://img.youtube.com/vi/Lf2XS1ZHU04/mqdefault.jpg'},
+  {id:5,title:'Literature Review — How to Write Perfectly',duration:'22:08',category:'Research Methods',views:18760,color:'#db2777',url:'https://www.youtube.com/watch?v=hkHN7H0n52s',thumb:'https://img.youtube.com/vi/hkHN7H0n52s/mqdefault.jpg'},
+  {id:6,title:'Python for Machine Learning — Full Tutorial',duration:'3:45:10',category:'Programming',views:93400,color:'#7c3aed',url:'https://www.youtube.com/watch?v=7eh4d6sabA0',thumb:'https://img.youtube.com/vi/7eh4d6sabA0/mqdefault.jpg'},
+  {id:7,title:'Deep Learning with TensorFlow — Crash Course',duration:'2:30:00',category:'AI/ML',views:67200,color:'#0284c7',url:'https://www.youtube.com/watch?v=tPYj3fFJGjk',thumb:'https://img.youtube.com/vi/tPYj3fFJGjk/mqdefault.jpg'},
+  {id:8,title:'Thesis Defense Presentation Tips',duration:'19:55',category:'Presentation',views:18320,color:'#059669',url:'https://www.youtube.com/watch?v=htb7aBqUJ3w',thumb:'https://img.youtube.com/vi/htb7aBqUJ3w/mqdefault.jpg'},
+  {id:9,title:'Git & GitHub for Research Projects',duration:'32:14',category:'Tools',views:44300,color:'#d97706',url:'https://www.youtube.com/watch?v=RGOj5yH7evk',thumb:'https://img.youtube.com/vi/RGOj5yH7evk/mqdefault.jpg'},
+  {id:10,title:'How to Read Research Papers Effectively',duration:'11:52',category:'Research Methods',views:37600,color:'#db2777',url:'https://www.youtube.com/watch?v=SHTOI0KtZnU',thumb:'https://img.youtube.com/vi/SHTOI0KtZnU/mqdefault.jpg'},
+  {id:11,title:'Machine Learning Full Course — Stanford',duration:'6:12:00',category:'AI/ML',views:128000,color:'#7c3aed',url:'https://www.youtube.com/watch?v=jGwO_UgTS7I',thumb:'https://img.youtube.com/vi/jGwO_UgTS7I/mqdefault.jpg'},
+  {id:12,title:'Data Structures & Algorithms — Full Course',duration:'5:22:00',category:'Programming',views:89700,color:'#0284c7',url:'https://www.youtube.com/watch?v=8hly31xKli0',thumb:'https://img.youtube.com/vi/8hly31xKli0/mqdefault.jpg'},
+  {id:13,title:'Academic Writing — How to Write Journal Papers',duration:'28:30',category:'Research Methods',views:23400,color:'#059669',url:'https://www.youtube.com/watch?v=pMBQXMiLGkA',thumb:'https://img.youtube.com/vi/pMBQXMiLGkA/mqdefault.jpg'},
+  {id:14,title:'React.js Full Course for Beginners',duration:'4:24:00',category:'Programming',views:76500,color:'#d97706',url:'https://www.youtube.com/watch?v=bMknfKXIFA8',thumb:'https://img.youtube.com/vi/bMknfKXIFA8/mqdefault.jpg'},
+  {id:15,title:'Docker & Kubernetes — Crash Course',duration:'1:45:00',category:'Tools',views:52300,color:'#db2777',url:'https://www.youtube.com/watch?v=bhBSlnQcq2k',thumb:'https://img.youtube.com/vi/bhBSlnQcq2k/mqdefault.jpg'},
+];
+
+const NOTIFS = {
+  student:[
+    {title:'Welcome to Smart Thesis Hub!',body:'Start exploring supervisors and project ideas.',time:'Just now',unread:true},
+    {title:'New Projects Added',body:'12 new CSE projects added this week.',time:'1 hour ago',unread:true},
+    {title:'Profile Tip',body:'Complete your profile to get better supervisor recommendations.',time:'Yesterday',unread:false},
+  ],
+  supervisor:[
+    {title:'New Student Request',body:'Nadia Islam has sent a supervision request.',time:'30 min ago',unread:true},
+    {title:'New Student Request',body:'Arman Hossain is interested in your supervision.',time:'2 hours ago',unread:true},
+    {title:'System Update',body:'Your supervisor profile has been verified.',time:'Yesterday',unread:false},
+  ],
+  admin:[
+    {title:'New Users Registered',body:'8 new student accounts pending approval.',time:'1 hour ago',unread:true},
+    {title:'System Backup',body:'Database backup completed successfully.',time:'3 hours ago',unread:false},
+    {title:'Monthly Report',body:'January activity report is ready.',time:'Yesterday',unread:false},
+  ]
+};
+
+const NAV = {
+  student:[
+    {id:'dashboard',icon:'📊',label:'Dashboard'},
+    {id:'supervisors',icon:'👨‍🏫',label:'Find Supervisors'},
+    {id:'projects',icon:'📁',label:'Project Ideas'},
+    {id:'resources',icon:'🎬',label:'Video Resources'},
+    {id:'requests',icon:'📨',label:'My Requests'},
+    {id:'feedback',icon:'💬',label:'Feedback'},
+    {id:'profile',icon:'👤',label:'My Profile'},
+  ],
+  supervisor:[
+    {id:'dashboard',icon:'📊',label:'Dashboard'},
+    {id:'requests',icon:'📨',label:'Student Requests',badge:'2'},
+    {id:'students',icon:'🎓',label:'My Students'},
+    {id:'projects',icon:'📁',label:'Project Topics'},
+    {id:'profile',icon:'👤',label:'My Profile'},
+    {id:'feedback',icon:'💬',label:'Feedback'},
+  ],
+  admin:[
+    {id:'dashboard',icon:'📊',label:'Dashboard'},
+    {id:'users',icon:'👥',label:'User Management'},
+    {id:'supervisors',icon:'👨‍🏫',label:'Supervisors'},
+    {id:'students',icon:'🎓',label:'Students'},
+    {id:'projects',icon:'📁',label:'Project Topics'},
+    {id:'categories',icon:'🏷️',label:'Categories'},
+    {id:'requests',icon:'📨',label:'All Requests'},
+    {id:'feedback',icon:'💬',label:'Feedback'},
+  ]
+};
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let STATE = {role:'student', currentPage:'dashboard', notifOpen:false, notifications:[], loginRole:'student'};
+
+// ══════════════════════════════════════════
+// LOGIN SYSTEM
+// ══════════════════════════════════════════
+window.onload = function(){
+  setRole('student', document.querySelector('.role-tabs button'));
+};
+
+function setRole(role, btn){
+  STATE.loginRole = role;
+  document.querySelectorAll('.role-tabs button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const f = document.getElementById('login-fields');
+  const h = document.getElementById('demo-hint');
+  if(role==='student'){
+    f.innerHTML = `
+      <div class="form-group"><label>Full Name</label><input id="l-name" type="text" placeholder="e.g. Rafiq Hasan"></div>
+      <div class="form-group"><label>Student Roll / Email</label><input id="l-email" type="text" placeholder="191-35-1001 or @s.diu.edu.bd"></div>
+      <div class="form-group"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"></div>`;
+    h.innerHTML = '<b>Demo Student Login:</b>Name: Rafiq Hasan · Roll: 191-35-1001 · Password: any';
+  } else if(role==='supervisor'){
+    f.innerHTML = `
+      <div class="form-group"><label>Full Name</label><input id="l-name" type="text" placeholder="e.g. Dr. Md. Ariful Islam"></div>
+      <div class="form-group"><label>University Email</label><input id="l-email" type="email" placeholder="yourname@diu.edu.bd"></div>
+      <div class="form-group"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"></div>
+      <div class="form-group"><label>Teacher Access Code <span style="color:var(--rose-d)">*</span></label><input id="l-code" type="password" placeholder="Enter your supervisor access code">
+      <div class="teacher-code-note">🔐 This code is provided by the DIU admin. Only verified faculty can access the supervisor panel.</div></div>`;
+    h.innerHTML = '<b>Demo Supervisor Login:</b>Name: Dr. Md. Ariful Islam · Code: DIU@2024 · Password: any';
+  } else {
+    f.innerHTML = `
+      <div class="form-group"><label>Admin Username</label><input id="l-email" type="text" placeholder="admin@diu.edu.bd"></div>
+      <div class="form-group"><label>Password</label><input id="l-pass" type="password" placeholder="••••••••"></div>
+      <div class="form-group"><label>Admin Code</label><input id="l-code" type="password" placeholder="Admin access code"></div>`;
+    h.innerHTML = '<b>Demo Admin Login:</b>Username: admin@diu.edu.bd · Code: ADMIN#DIU · Password: any';
+  }
+}
+
+function doLogin(){
+  const role = STATE.loginRole;
+  const nameEl = document.getElementById('l-name');
+  const emailEl = document.getElementById('l-email');
+  const passEl = document.getElementById('l-pass');
+  const codeEl = document.getElementById('l-code');
+  const name = nameEl ? nameEl.value.trim() : '';
+  const email = emailEl ? emailEl.value.trim() : '';
+  const pass = passEl ? passEl.value : '';
+  const code = codeEl ? codeEl.value.trim() : '';
+
+  if(role==='student'){
+    if(!name){showToast('Please enter your full name','error');return;}
+    if(!email){showToast('Please enter your roll number or email','error');return;}
+    if(!pass){showToast('Please enter your password','error');return;}
+    currentStudentName = name;
+    loginAs('student');
+  } else if(role==='supervisor'){
+    if(!name){showToast('Please enter your full name','error');return;}
+    if(!pass){showToast('Please enter your password','error');return;}
+    if(code !== SUPERVISOR_CODE){showToast('Invalid teacher access code. Contact admin.','error');return;}
+    // find matching supervisor
+    const sv = SUPERVISORS.find(s=>s.name.toLowerCase().includes(name.split(' ').pop().toLowerCase()) || name.toLowerCase().includes(s.name.split(' ').pop().toLowerCase()));
+    currentSupervisorId = sv ? sv.id : 1;
+    currentStudentName = name;
+    loginAs('supervisor');
+  } else {
+    if(!pass){showToast('Please fill all fields','error');return;}
+    if(code !== ADMIN_CODE){showToast('Invalid admin access code','error');return;}
+    loginAs('admin');
+  }
+}
+
+function loginAs(role){
+  STATE.role = role;
+  showScreen('app');
+  initApp();
+}
+
+// ══════════════════════════════════════════
+// APP INIT
+// ══════════════════════════════════════════
+function initApp(){
+  const role = STATE.role;
+  const sv = SUPERVISORS.find(s=>s.id===currentSupervisorId);
+  const names = {
+    student: currentStudentName || 'Rafiq Hasan',
+    supervisor: sv ? sv.name : 'Dr. Md. Ariful Islam',
+    admin: 'Admin — DIU'
+  };
+  const emojis = {student:'🎓',supervisor:'👨‍🏫',admin:'🛠️'};
+  const colors = {student:'var(--lav-100)',supervisor:'#fdf4ff',admin:'#f0fdf4'};
+
+  document.getElementById('user-name-display').textContent = names[role];
+  document.getElementById('user-role-display').textContent = role==='admin'?'Administrator':role.charAt(0).toUpperCase()+role.slice(1);
+  const ava = document.getElementById('user-ava');
+  ava.textContent = emojis[role];
+  ava.style.background = colors[role];
+
+  // Nav
+  const nav = document.getElementById('nav-items');
+  nav.innerHTML = '';
+  NAV[role].forEach(item=>{
+    const d = document.createElement('div');
+    d.className = 'nav-item'+(item.id==='dashboard'?' active':'');
+    d.id = 'nav-'+item.id;
+    d.onclick = ()=>showPage(item.id);
+    d.innerHTML = `<span class="nav-icon">${item.icon}</span>${item.label}${item.badge?`<span class="nav-badge">${item.badge}</span>`:''}`;
+    nav.appendChild(d);
+  });
+
+  STATE.notifications = (NOTIFS[role]||[]).map(n=>({...n}));
+  renderNotifs();
+  showPage('dashboard');
+}
+
+function showPage(id){
+  STATE.currentPage = id;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const page = document.getElementById('page-'+id);
+  const nav = document.getElementById('nav-'+id);
+  if(page) page.classList.add('active');
+  if(nav) nav.classList.add('active');
+  document.getElementById('topbar-title').textContent = {
+    dashboard:'Dashboard',supervisors:'Find Supervisors',projects:'Project Ideas',
+    resources:'Video Resources',requests:STATE.role==='student'?'My Requests':'Student Requests',
+    students:'My Students',profile:'My Profile',feedback:'Feedback & Support',
+    users:'User Management',categories:'Project Categories',
+  }[id]||id;
+  const renders = {
+    dashboard:renderDashboard,supervisors:renderSupervisors,projects:renderProjects,
+    resources:renderResources,requests:renderRequests,students:renderStudents,
+    profile:renderProfile,feedback:renderFeedback,users:renderUsers,categories:renderCategories
+  };
+  if(renders[id]) renders[id]();
+  document.getElementById('notif-panel').classList.remove('open');
+  closeSidebar();
+}
+
+// ══════════════════════════════════════════
+// NOTIFICATIONS
+// ══════════════════════════════════════════
+function renderNotifs(){
+  const list = document.getElementById('notif-list');
+  list.innerHTML = '';
+  const unread = STATE.notifications.filter(n=>n.unread).length;
+  document.getElementById('notif-dot').style.display = unread?'block':'none';
+  if(!STATE.notifications.length){list.innerHTML='<div style="padding:18px;text-align:center;color:var(--text-muted);font-size:13px">No notifications</div>';return;}
+  STATE.notifications.forEach(n=>{
+    const d = document.createElement('div');
+    d.className = 'notif-item'+(n.unread?' unread':'');
+    d.innerHTML = `<div class="ni-title">${n.title}</div><div class="ni-body">${n.body}</div><div class="ni-time">${n.time}</div>`;
+    d.onclick = ()=>{n.unread=false;renderNotifs();};
+    list.appendChild(d);
+  });
+}
+function toggleNotif(){STATE.notifOpen=!STATE.notifOpen;document.getElementById('notif-panel').classList.toggle('open',STATE.notifOpen);}
+function clearNotifs(){STATE.notifications.forEach(n=>n.unread=false);renderNotifs();}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal(title,body,footer=''){
+  document.getElementById('modal-title').textContent=title;
+  document.getElementById('modal-body').innerHTML=body;
+  document.getElementById('modal-footer').innerHTML=footer;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+function closeModalOut(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+
+// ══════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast show '+(type||'');
+  setTimeout(()=>t.className='toast',3000);
+}
+
+// ══════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function doLogout(){showScreen('landing');showToast('Signed out successfully');}
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sb-overlay').classList.add('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-overlay').classList.remove('open');}
+function handleSearch(v){if(v.length>1&&(STATE.currentPage==='supervisors'||STATE.currentPage==='projects'))showPage(STATE.currentPage);}
+function $(id){return document.getElementById(id);}
+
+// ══════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard(){
+  const role = STATE.role;
+  const page = $('page-dashboard');
+  if(role==='student') page.innerHTML = studentDashboard();
+  else if(role==='supervisor') page.innerHTML = supervisorDashboard();
+  else page.innerHTML = adminDashboard();
+}
+
+function studentDashboard(){
+  const sv = SUPERVISORS[0];
+  const pendingCount = STUDENT_REQUESTS.filter(r=>r.status==='pending').length;
+  const myRequestsSv = STUDENT_REQUESTS.length>0 ? STUDENT_REQUESTS[STUDENT_REQUESTS.length-1] : null;
+
+  // Recommendations: top 3 with available slots
+  const recs = SUPERVISORS.filter(s=>s.maxSlots-s.students.length>0).slice(0,3);
+
+  return `<div class="page-header">
+    <h2>Welcome back, ${currentStudentName||'Student'} 👋</h2>
+    <p>Your thesis journey at Daffodil International University starts here</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card" style="border-color:var(--lav-200);cursor:pointer" onclick="showPage('requests')">
+      <div class="stat-card-icon">📨</div><div class="stat-card-val">${STUDENT_REQUESTS.length}</div>
+      <div class="stat-card-lbl">Pending Requests</div>
+      <div class="stat-card-trend trend-up">Click to view all</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer" onclick="showPage('projects')">
+      <div class="stat-card-icon">📁</div><div class="stat-card-val">${SAVED_PROJECTS.length}</div>
+      <div class="stat-card-lbl">Saved Projects</div>
+      <div class="stat-card-trend trend-up">Click to browse 50 ideas</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer" onclick="showPage('supervisors')">
+      <div class="stat-card-icon">👨‍🏫</div><div class="stat-card-val">${SUPERVISORS.filter(s=>s.maxSlots-s.students.length>0).length}</div>
+      <div class="stat-card-lbl">Available Supervisors</div>
+      <div class="stat-card-trend">Click to find yours</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer" onclick="showPage('resources')">
+      <div class="stat-card-icon">🎬</div><div class="stat-card-val">${VIDEOS.length}</div>
+      <div class="stat-card-lbl">Video Resources</div>
+      <div class="stat-card-trend trend-up">Click to watch now</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px" class="two-col">
+    <div>
+      <div class="section-title">My Request Status <span class="see-all" onclick="showPage('requests')">View all</span></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px">
+        ${myRequestsSv ? `
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div style="font-size:28px">${myRequestsSv.status==='pending'?'🟡':myRequestsSv.status==='accepted'?'✅':'❌'}</div>
+          <div><div style="font-weight:600;color:var(--text)">${myRequestsSv.status==='pending'?'Request Pending':myRequestsSv.status==='accepted'?'Request Accepted!':'Request Rejected'}</div>
+          <div style="font-size:12.5px;color:var(--text-muted)">Sent to ${myRequestsSv.supervisor}</div></div>
+        </div>
+        <span class="status-pill sp-${myRequestsSv.status}">${myRequestsSv.status.charAt(0).toUpperCase()+myRequestsSv.status.slice(1)}</span>
+        ` : `<div style="text-align:center;padding:16px;color:var(--text-muted);font-size:13.5px">
+          <div style="font-size:32px;margin-bottom:8px">📭</div>
+          No requests sent yet. <span style="color:var(--lav-600);cursor:pointer;font-weight:500" onclick="showPage('supervisors')">Find a supervisor →</span>
+        </div>`}
+      </div>
+    </div>
+    <div>
+      <div class="section-title">Recommended Supervisors <span class="rec-badge">✦ For You</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${recs.map(sv=>`
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:10px" onclick="openSupervisorModal(${sv.id})" onmouseover="this.style.borderColor='var(--lav-400)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:22px">${sv.avatar}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:600;color:var(--text)">${sv.name}</div>
+            <div style="font-size:11.5px;color:var(--text-muted)">${sv.dept} · ${sv.areas[0]}</div>
+          </div>
+          <div style="font-size:11.5px;color:var(--mint-d);font-weight:600;background:#f0fdf4;padding:3px 8px;border-radius:20px">${sv.maxSlots-sv.students.length} slot${sv.maxSlots-sv.students.length>1?'s':''}</div>
+        </div>`).join('')}
+        <button class="btn-sm outline" style="width:100%;text-align:center;margin-top:4px" onclick="showPage('supervisors')">View All Supervisors →</button>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Quick Actions</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:22px">
+    <div onclick="showPage('supervisors')" style="background:var(--lav-100);border:1px solid var(--lav-200);border-radius:var(--r);padding:18px;cursor:pointer;transition:all .2s;text-align:center" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:26px;margin-bottom:8px">👨‍🏫</div><div style="font-weight:600;color:var(--lav-800);font-size:13.5px">Find Supervisor</div></div>
+    <div onclick="showPage('projects')" style="background:#fff0f6;border:1px solid #fbcfe8;border-radius:var(--r);padding:18px;cursor:pointer;transition:all .2s;text-align:center" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:26px;margin-bottom:8px">📁</div><div style="font-weight:600;color:var(--rose-d);font-size:13.5px">Browse 50 Projects</div></div>
+    <div onclick="showPage('resources')" style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--r);padding:18px;cursor:pointer;transition:all .2s;text-align:center" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:26px;margin-bottom:8px">🎬</div><div style="font-weight:600;color:var(--mint-d);font-size:13.5px">Watch 15 Videos</div></div>
+    <div onclick="showPage('requests')" style="background:#fffbeb;border:1px solid #fde68a;border-radius:var(--r);padding:18px;cursor:pointer;transition:all .2s;text-align:center" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+      <div style="font-size:26px;margin-bottom:8px">📨</div><div style="font-weight:600;color:var(--amber-d);font-size:13.5px">My Requests (${STUDENT_REQUESTS.length})</div></div>
+  </div>
+  <style>.two-col{grid-template-columns:1fr 1fr}@media(max-width:640px){.two-col{grid-template-columns:1fr}}</style>`;
+}
+
+function supervisorDashboard(){
+  const sv = SUPERVISORS.find(s=>s.id===currentSupervisorId)||SUPERVISORS[0];
+  const mySt = STUDENTS_DB.filter(s=>s.supervisor===sv.id);
+  const myReqs = REQUESTS.filter(r=>r.svId===sv.id&&r.status==='pending');
+  const avgRating = (mySt.reduce((a,s)=>a+(STUDENT_RATINGS[s.id]||4.5),0)/Math.max(mySt.length,1)).toFixed(1);
+
+  return `<div class="page-header">
+    <h2>Good morning, ${sv.name} 🌟</h2>
+    <p>${sv.dept} · Daffodil International University · ${myReqs.length} pending request${myReqs.length!==1?'s':''} today</p>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card" style="cursor:pointer" onclick="showPage('students')">
+      <div class="stat-card-icon">🎓</div><div class="stat-card-val">${mySt.length}</div>
+      <div class="stat-card-lbl">Active Students</div>
+      <div class="stat-card-trend">${sv.maxSlots-mySt.length} slots available · Click to view</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer;position:relative" onclick="showPage('requests')">
+      <div class="stat-card-icon">📨</div><div class="stat-card-val">${myReqs.length}</div>
+      <div class="stat-card-lbl">Pending Requests</div>
+      <div class="stat-card-trend trend-up">Click to review</div>
+      ${myReqs.length>0?`<div style="position:absolute;top:14px;right:14px;background:var(--rose);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px">NEW</div>`:''}
+    </div>
+    <div class="stat-card" style="cursor:pointer" onclick="showStudentRatings()">
+      <div class="stat-card-icon">⭐</div><div class="stat-card-val">${avgRating}</div>
+      <div class="stat-card-lbl">Average Rating</div>
+      <div class="stat-card-trend trend-up">Click to see ratings</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer" onclick="showSlotModal()">
+      <div class="stat-card-icon">🪑</div><div class="stat-card-val">${sv.maxSlots-mySt.length}</div>
+      <div class="stat-card-lbl">Available Slots</div>
+      <div class="stat-card-trend">of ${sv.maxSlots} total · Click to manage</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:18px" class="sv-grid">
+    <div>
+      <div class="section-title">Pending Requests <span class="see-all" onclick="showPage('requests')">View all</span></div>
+      ${myReqs.length===0?`<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;text-align:center;color:var(--text-muted);font-size:13.5px"><div style="font-size:32px;margin-bottom:8px">✅</div>No pending requests right now!</div>`:''}
+      ${myReqs.map(r=>`
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-header">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:40px;height:40px;background:var(--lav-100);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px">🎓</div>
+            <div><div class="card-title">${r.studentName}</div><div class="card-sub">${r.area} · ${r.date}</div></div>
+          </div>
+          <span class="status-pill sp-pending">Pending</span>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;font-style:italic;background:var(--bg2);padding:10px;border-radius:8px">"${r.msg}"</p>
+        <div class="card-actions">
+          <button class="btn-sm success" onclick="updateRequest(${r.id},'accepted')">✓ Accept</button>
+          <button class="btn-sm danger" onclick="updateRequest(${r.id},'rejected')">✕ Reject</button>
+          <button class="btn-sm outline" onclick="viewStudentProfile('${r.studentName}')">👁 Profile</button>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div>
+      <div class="section-title">My Students</div>
+      ${mySt.slice(0,5).map(s=>`
+      <div class="student-mini-card" onclick="viewStudentProfile('${s.name}')">
+        <div class="smc-ava">🎓</div>
+        <div style="flex:1;min-width:0">
+          <div class="smc-name">${s.name}</div>
+          <div class="smc-sub">${s.dept} · Year ${s.year}</div>
+        </div>
+        <div style="font-size:11px;font-weight:600;color:var(--mint-d)">GPA ${s.gpa}</div>
+      </div>`).join('')}
+      ${mySt.length>5?`<button class="btn-sm outline" style="width:100%;margin-top:6px;text-align:center" onclick="showPage('students')">View All ${mySt.length} Students</button>`:''}
+    </div>
+  </div>
+  <style>.sv-grid{grid-template-columns:2fr 1fr}@media(max-width:640px){.sv-grid{grid-template-columns:1fr}}</style>`;
+}
+
+function showStudentRatings(){
+  const sv = SUPERVISORS.find(s=>s.id===currentSupervisorId)||SUPERVISORS[0];
+  const mySt = STUDENTS_DB.filter(s=>s.supervisor===sv.id);
+  openModal('Student Ratings',
+    mySt.map(s=>`
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+      <div style="width:36px;height:36px;background:var(--lav-100);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px">🎓</div>
+      <div style="flex:1"><div style="font-size:13.5px;font-weight:600">${s.name}</div><div style="font-size:12px;color:var(--text-muted)">${s.dept} · Year ${s.year}</div></div>
+      <div class="rating-stars" id="stars-${s.id}">
+        ${[1,2,3,4,5].map(i=>`<span class="star ${i<=(STUDENT_RATINGS[s.id]||0)?'filled':''}" onclick="setStudentRating(${s.id},${i})">★</span>`).join('')}
+      </div>
+    </div>`).join('')||'<p style="color:var(--text-muted)">No students assigned yet.</p>',
+    `<button class="btn-sm outline" onclick="closeModal()">Close</button>`
+  );
+}
+
+function setStudentRating(sid, val){
+  STUDENT_RATINGS[sid] = val;
+  const stars = document.querySelectorAll(`#stars-${sid} .star`);
+  stars.forEach((s,i)=>{s.classList.toggle('filled',i<val);});
+  showToast('Rating saved ✓','success');
+}
+
+function showSlotModal(){
+  const sv = SUPERVISORS.find(s=>s.id===currentSupervisorId)||SUPERVISORS[0];
+  openModal('Manage Available Slots',`
+    <p style="color:var(--text-muted);font-size:13.5px;margin-bottom:16px">Currently accepting <b>${sv.maxSlots-sv.students.length}</b> more student(s). Adjust your maximum slots below.</p>
+    <div class="form-group"><label>Maximum Students You Can Supervise</label>
+    <input type="number" id="slot-input" value="${sv.maxSlots}" min="1" max="15" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:var(--r2);font-size:14px"></div>
+    <div style="background:var(--lav-50);border-radius:var(--r2);padding:12px;font-size:13px;color:var(--lav-700);margin-top:8px">
+      Current students: <b>${sv.students.length}</b> · After change: <b>${sv.students.length}</b> assigned, remaining calculated automatically.
+    </div>`,
+    `<button class="btn-sm outline" onclick="closeModal()">Cancel</button>
+     <button class="btn-sm primary" onclick="updateSlots()">Save Changes</button>`
+  );
+}
+function updateSlots(){
+  const val = parseInt(document.getElementById('slot-input')?.value||5);
+  const sv = SUPERVISORS.find(s=>s.id===currentSupervisorId);
+  if(sv){sv.maxSlots=val;}
+  closeModal();showToast('Slots updated successfully ✓','success');
+  renderDashboard();
+}
+
+function adminDashboard(){
+  const bars=[40,65,50,80,70,90,60].map(h=>`<div style="flex:1;height:${h}%;background:linear-gradient(to top,var(--lav-500),var(--lav-300));border-radius:4px 4px 0 0;min-width:8px"></div>`).join('');
+  return `<div class="page-header"><h2>Admin Dashboard 🛠️</h2><p>Full system overview — Smart Thesis Hub · Daffodil International University</p></div>
+  <div class="stats-grid">
+    <div class="stat-card" onclick="showPage('students')">
+      <div class="stat-card-icon">🎓</div><div class="stat-card-val">2,411</div>
+      <div class="stat-card-lbl">Total Students</div><div class="stat-card-trend trend-up">↑ 12% this month</div>
+    </div>
+    <div class="stat-card" onclick="showPage('supervisors')">
+      <div class="stat-card-icon">👨‍🏫</div><div class="stat-card-val">${SUPERVISORS.length}</div>
+      <div class="stat-card-lbl">Supervisors</div><div class="stat-card-trend trend-up">Across all depts</div>
+    </div>
+    <div class="stat-card" onclick="showPage('projects')">
+      <div class="stat-card-icon">📁</div><div class="stat-card-val">${PROJECTS.length}</div>
+      <div class="stat-card-lbl">Active Projects</div><div class="stat-card-trend">Across 12 domains</div>
+    </div>
+    <div class="stat-card" onclick="showPage('requests')">
+      <div class="stat-card-icon">📨</div><div class="stat-card-val">${REQUESTS.length}</div>
+      <div class="stat-card-lbl">Total Requests</div><div class="stat-card-trend">${REQUESTS.filter(r=>r.status==='pending').length} pending</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:22px" class="ad-grid">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px">
+      <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Weekly Student Signups</div>
+      <div style="display:flex;align-items:flex-end;gap:6px;height:80px">${bars}</div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px"><span>Mon</span><span>Sun</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;flex:1">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">Match Rate</div>
+        <div style="font-family:var(--ff2);font-size:36px;font-weight:500;color:var(--lav-700)">94%</div>
+        <div style="font-size:12px;color:var(--text-muted)">Student-Supervisor matches</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;flex:1">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px">System Health</div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Uptime</span><span style="color:var(--mint-d);font-weight:600">99.9%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px"><span>DB Status</span><span style="color:var(--mint-d);font-weight:600">Healthy</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Recent Activity</div>
+  <div class="table-wrap"><table>
+    <tr><th>User</th><th>Action</th><th>Time</th><th>Status</th></tr>
+    ${REQUESTS.slice(0,5).map(r=>`<tr>
+      <td><b>${r.studentName}</b></td>
+      <td>Sent request to ${r.supervisor}</td>
+      <td>${r.date}</td>
+      <td><span class="status-pill sp-${r.status}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
+    </tr>`).join('')}
+  </table></div>
+  <style>.ad-grid{grid-template-columns:2fr 1fr}@media(max-width:640px){.ad-grid{grid-template-columns:1fr}}</style>`;
+}
+
+// ══════════════════════════════════════════
+// SUPERVISORS PAGE
+// ══════════════════════════════════════════
+function renderSupervisors(){
+  const q = $('global-search').value.toLowerCase();
+  const activeDept = window._svFilter||'All';
+  let filtered = SUPERVISORS.filter(sv=>
+    (!q||(sv.name.toLowerCase().includes(q)||sv.dept.toLowerCase().includes(q)||sv.areas.some(a=>a.toLowerCase().includes(q))))
+    &&(activeDept==='All'||sv.dept===activeDept)
+  );
+  const depts = ['All',...new Set(SUPERVISORS.map(s=>s.dept))];
+  $('page-supervisors').innerHTML = `
+  <div class="page-header"><h2>Find Your Supervisor</h2>
+    <p>${SUPERVISORS.length} expert supervisors across DIU departments — ${SUPERVISORS.filter(s=>s.maxSlots-s.students.length>0).length} with open slots</p>
+  </div>
+  <div class="filter-bar">
+    <span style="font-size:12.5px;color:var(--text-muted);font-weight:500">Department:</span>
+    ${depts.map(d=>`<div class="filter-chip${d===activeDept?' active':''}" onclick="filterSv('${d}',this)">${d}</div>`).join('')}
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    ${filtered.map(sv=>{
+      const avail = sv.maxSlots - sv.students.length;
+      return `<div class="sv-card" onclick="openSupervisorModal(${sv.id})">
+        <div class="sv-avatar" style="background:var(--lav-100)">${sv.avatar}</div>
+        <div style="flex:1;min-width:0">
+          <div class="sv-name">${sv.name}</div>
+          <div class="sv-dept">${sv.title} · ${sv.dept} · Daffodil International University</div>
+          <div class="sv-stats">
+            <span><span class="stars">★</span> ${sv.rating}</span>
+            <span>📚 ${sv.pubs} publications</span>
+            <span>🎓 ${sv.students.length}/${sv.maxSlots} students</span>
+            <span>⏳ ${sv.exp}y experience</span>
+          </div>
+          <div class="tags">${sv.areas.map(a=>`<span class="tag lav">${a}</span>`).join('')}</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+            <div style="flex:1">
+              <div class="progress-bar"><div class="progress-fill" style="width:${(sv.students.length/sv.maxSlots)*100}%"></div></div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Capacity: ${sv.students.length}/${sv.maxSlots}</div>
+            </div>
+            <span class="tag ${avail>0?'mint':'rose'}" style="flex-shrink:0">${avail>0?avail+' slot'+(avail>1?'s':'')+' open':'Full'}</span>
+          </div>
+        </div>
+      </div>`;
+    }).join('')||'<div style="padding:32px;text-align:center;color:var(--text-muted)">No supervisors found for this filter.</div>'}
+  </div>`;
+}
+
+function filterSv(dept,el){
+  window._svFilter=dept;
+  document.querySelectorAll('#page-supervisors .filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderSupervisors();
+}
+
+function openSupervisorModal(id){
+  const sv = SUPERVISORS.find(s=>s.id===id);
+  if(!sv)return;
+  const avail = sv.maxSlots - sv.students.length;
+  const alreadySent = STUDENT_REQUESTS.find(r=>r.svId===id);
+  openModal(sv.name,`
+    <div style="display:flex;gap:14px;margin-bottom:18px;align-items:flex-start">
+      <div style="width:60px;height:60px;background:var(--lav-100);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">${sv.avatar}</div>
+      <div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:2px">${sv.name}</div>
+        <div style="color:var(--text-muted);font-size:13px">${sv.title} · ${sv.dept} · DIU</div>
+        <div style="margin-top:4px"><span class="stars">★★★★★</span> <span style="font-size:12.5px;color:var(--text-muted)">${sv.rating} rating</span></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;text-align:center"><div style="font-family:var(--ff2);font-size:20px;color:var(--lav-700)">${sv.pubs}</div><div style="font-size:11px;color:var(--text-muted)">Publications</div></div>
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;text-align:center"><div style="font-family:var(--ff2);font-size:20px;color:var(--lav-700)">${sv.exp}y</div><div style="font-size:11px;color:var(--text-muted)">Experience</div></div>
+      <div style="background:${avail>0?'#f0fdf4':'#fff0f0'};border-radius:var(--r2);padding:12px;text-align:center"><div style="font-family:var(--ff2);font-size:20px;color:${avail>0?'var(--mint-d)':'#dc2626'}">${avail}</div><div style="font-size:11px;color:var(--text-muted)">Open Slots</div></div>
+    </div>
+    <div style="margin-bottom:14px"><div style="font-size:11.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:7px">Research Areas</div><div class="tags">${sv.areas.map(a=>`<span class="tag lav">${a}</span>`).join('')}</div></div>
+    <div style="margin-bottom:16px"><div style="font-size:11.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:7px">Contact</div>
+      <div style="font-size:13px;color:var(--text-muted)">📧 ${sv.email} · 📞 ${sv.phone}</div></div>
+    ${STATE.role==='student'&&avail>0&&!alreadySent?`
+      <div class="form-group"><label>Your Message to ${sv.name}</label>
+      <textarea id="req-msg" placeholder="Describe your project idea and why you are interested in this supervisor's research area…" style="min-height:100px"></textarea></div>
+      <div class="form-group"><label>Your Research Interest Area</label>
+      <input id="req-area" type="text" placeholder="e.g. Machine Learning, IoT, Blockchain…"></div>
+    `:''}
+    ${alreadySent?`<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--r2);padding:12px;font-size:13px;color:var(--mint-d)">✅ You already sent a request to this supervisor. Status: <b>${alreadySent.status}</b></div>`:''}
+    ${avail===0&&!alreadySent?`<div style="background:#fff0f0;border:1px solid #fca5a5;border-radius:var(--r2);padding:12px;font-size:13px;color:#dc2626">⚠️ This supervisor's slots are full. Choose another supervisor.</div>`:''}
+  `,
+  STATE.role==='student'&&avail>0&&!alreadySent?
+    `<button class="btn-sm outline" onclick="closeModal()">Cancel</button><button class="btn-sm primary" onclick="sendRequest(${sv.id})">📨 Send Request</button>`:
+    `<button class="btn-sm primary" onclick="closeModal()">Close</button>`
+  );
+}
+
+function sendRequest(svId){
+  const sv = SUPERVISORS.find(s=>s.id===svId);
+  const msg = document.getElementById('req-msg')?.value||'';
+  const area = document.getElementById('req-area')?.value||sv?.areas[0]||'General';
+  if(msg.trim().length<15){showToast('Please write a message (min 15 characters)','error');return;}
+  const req = {
+    id:REQUESTS.length+STUDENT_REQUESTS.length+1,
+    studentName:currentStudentName||'Current Student',
+    supervisor:sv.name,svId:svId,
+    area,date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}),
+    status:'pending',msg
+  };
+  STUDENT_REQUESTS.push(req);
+  REQUESTS.push(req);
+  closeModal();
+  showToast(`Request sent to ${sv.name}! ✓`,'success');
+  STATE.notifications.unshift({title:'Request Sent!',body:`Your request to ${sv.name} is pending.`,time:'Just now',unread:true});
+  renderNotifs();
+}
+
+// ══════════════════════════════════════════
+// PROJECTS PAGE
+// ══════════════════════════════════════════
+function renderProjects(){
+  const q = $('global-search').value.toLowerCase();
+  const activeCat = window._projFilter||'All';
+  const cats = ['All',...new Set(PROJECTS.map(p=>p.category))];
+  let filtered = PROJECTS.filter(p=>
+    (!q||(p.title.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)||p.supervisor.toLowerCase().includes(q)||p.tags.some(t=>t.toLowerCase().includes(q))))
+    &&(activeCat==='All'||p.category===activeCat)
+  );
+  $('page-projects').innerHTML = `
+  <div class="page-header"><h2>Project Ideas</h2>
+    <p>${PROJECTS.length} project ideas across CSE, SWE, ICT, ICE and more — ${SAVED_PROJECTS.length} saved by you</p>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+    <div class="filter-bar" style="margin-bottom:0;flex:1">
+      ${cats.map(c=>`<div class="filter-chip${c===activeCat?' active':''}" onclick="filterProj('${c}',this)">${c}</div>`).join('')}
+    </div>
+    ${STATE.role==='admin'?`<button class="btn-sm primary" onclick="addProjectModal()">+ Add</button>`:''}
+  </div>
+  <div class="card-grid">
+  ${filtered.map(p=>`
+  <div class="card" style="cursor:default">
+    <div class="card-header">
+      <div style="min-width:0">
+        <div class="card-title">${p.title}</div>
+        <div class="card-sub" style="cursor:pointer;color:var(--lav-600)" onclick="openSupervisorModal(${p.svId})">👨‍🏫 ${p.supervisor} →</div>
+      </div>
+      <span class="tag ${p.difficulty==='Advanced'?'rose':p.difficulty==='Intermediate'?'amber':'mint'}" style="flex-shrink:0">${p.difficulty}</span>
+    </div>
+    <div class="tags">${p.tags.map(t=>`<span class="tag lav">${t}</span>`).join('')}</div>
+    <div class="card-meta">
+      <span>👁 ${p.views}</span>
+      <span>👥 ${p.slots} slots</span>
+      <span class="tag sky">${p.category}</span>
+    </div>
+    <div class="card-actions">
+      ${STATE.role==='student'?`
+        <button class="btn-sm ${SAVED_PROJECTS.includes(p.id)?'success':'primary'}" onclick="saveProject(${p.id},this)">${SAVED_PROJECTS.includes(p.id)?'✓ Saved':'📌 Save'}</button>
+        <button class="btn-sm outline" onclick="openSupervisorModal(${p.svId})">Request Supervisor</button>
+      `:''}
+      ${STATE.role==='supervisor'?`<button class="btn-sm outline" onclick="viewProjectDetail(${p.id})">View Details</button>`:''}
+      ${STATE.role==='admin'?`<button class="btn-sm outline">✏️ Edit</button><button class="btn-sm danger" onclick="showToast('Project removed','')">🗑</button>`:''}
+    </div>
+  </div>`).join('')||'<div style="padding:32px;text-align:center;color:var(--text-muted);grid-column:1/-1">No projects found.</div>'}
+  </div>`;
+}
+
+function filterProj(cat,el){
+  window._projFilter=cat;
+  document.querySelectorAll('#page-projects .filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderProjects();
+}
+
+function saveProject(id,btn){
+  if(SAVED_PROJECTS.includes(id)){
+    SAVED_PROJECTS=SAVED_PROJECTS.filter(x=>x!==id);
+    btn.textContent='📌 Save';btn.className='btn-sm primary';
+    showToast('Project removed from saved list');
+  } else {
+    SAVED_PROJECTS.push(id);
+    btn.textContent='✓ Saved';btn.className='btn-sm success';
+    showToast('Project saved ✓','success');
+  }
+}
+
+function viewProjectDetail(id){
+  const p = PROJECTS.find(x=>x.id===id);
+  if(!p)return;
+  openModal(p.title,`
+    <div class="tags" style="margin-bottom:12px">${p.tags.map(t=>`<span class="tag lav">${t}</span>`).join('')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Category</div><div style="font-size:13.5px;font-weight:600">${p.category}</div></div>
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Difficulty</div><div style="font-size:13.5px;font-weight:600">${p.difficulty}</div></div>
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Supervisor</div><div style="font-size:13.5px;font-weight:600">${p.supervisor}</div></div>
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Open Slots</div><div style="font-size:13.5px;font-weight:600">${p.slots}</div></div>
+    </div>`,
+    `<button class="btn-sm outline" onclick="closeModal()">Close</button>`
+  );
+}
+
+function addProjectModal(){
+  openModal('Add New Project',`
+    <div class="form-group"><label>Project Title</label><input type="text" id="np-title" placeholder="e.g. AI-based Traffic Management"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Category</label><select id="np-cat">${['AI/ML','IoT','Blockchain','Web Dev','Mobile Dev','Cybersecurity','Robotics','Networks','Big Data','AR/VR'].map(c=>`<option>${c}</option>`).join('')}</select></div>
+      <div class="form-group"><label>Difficulty</label><select id="np-diff"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div>
+    </div>
+    <div class="form-group"><label>Supervisor</label><select id="np-sv">${SUPERVISORS.map(sv=>`<option value="${sv.id}">${sv.name}</option>`).join('')}</select></div>
+    <div class="form-group"><label>Available Slots</label><input type="number" id="np-slots" value="3" min="1" max="10"></div>
+    <div class="form-group"><label>Tags (comma separated)</label><input id="np-tags" placeholder="Python, ML, Flask"></div>`,
+    `<button class="btn-sm outline" onclick="closeModal()">Cancel</button>
+     <button class="btn-sm primary" onclick="addProject()">Add Project</button>`
+  );
+}
+
+function addProject(){
+  const title = document.getElementById('np-title')?.value;
+  if(!title){showToast('Enter a project title','error');return;}
+  const svId = parseInt(document.getElementById('np-sv')?.value||1);
+  const sv = SUPERVISORS.find(s=>s.id===svId);
+  PROJECTS.push({id:PROJECTS.length+1,title,category:document.getElementById('np-cat')?.value||'AI/ML',svId,supervisor:sv?.name||'',difficulty:document.getElementById('np-diff')?.value||'Intermediate',views:0,slots:parseInt(document.getElementById('np-slots')?.value||3),tags:document.getElementById('np-tags')?.value.split(',').map(t=>t.trim()).filter(Boolean)||[]});
+  closeModal();showToast('Project added ✓','success');renderProjects();
+}
+
+// ══════════════════════════════════════════
+// VIDEO RESOURCES
+// ══════════════════════════════════════════
+function renderResources(){
+  const cats = ['All',...new Set(VIDEOS.map(v=>v.category))];
+  const activeCat = window._vidFilter||'All';
+  const filtered = VIDEOS.filter(v=>activeCat==='All'||v.category===activeCat);
+  $('page-resources').innerHTML = `
+  <div class="page-header"><h2>Video Resources</h2>
+    <p>${VIDEOS.length} real YouTube videos on research, programming, and thesis writing — click to watch</p>
+  </div>
+  <div class="filter-bar">
+    ${cats.map(c=>`<div class="filter-chip${c===activeCat?' active':''}" onclick="filterVid('${c}',this)">${c}</div>`).join('')}
+  </div>
+  <div class="card-grid">
+    ${filtered.map(v=>`
+    <div class="video-card" onclick="openVideo('${v.url}','${v.title.replace(/'/g,"\\'")}')">
+      <div class="video-thumb" style="background:linear-gradient(135deg,${v.color}33,${v.color}88)">
+        <img src="${v.thumb}" alt="${v.title}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7" onerror="this.style.display='none'">
+        <div class="play-btn" style="position:relative;z-index:1">▶</div>
+        <div class="video-duration">${v.duration}</div>
+      </div>
+      <div class="video-info">
+        <div class="video-title">${v.title}</div>
+        <div class="video-meta">
+          <span class="tag sky" style="font-size:10.5px">${v.category}</span>
+          <span>👁 ${v.views.toLocaleString()} views</span>
+        </div>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function filterVid(cat,el){
+  window._vidFilter=cat;
+  document.querySelectorAll('#page-resources .filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderResources();
+}
+
+function openVideo(url,title){
+  openModal(`▶ ${title}`,`
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--r2)">
+      <iframe src="${url.replace('watch?v=','embed/')}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:var(--r2)" allowfullscreen allow="autoplay"></iframe>
+    </div>
+    <div style="margin-top:12px;text-align:center"><a href="${url}" target="_blank" style="color:var(--lav-600);font-size:13px;text-decoration:none">🔗 Open on YouTube</a></div>`,
+    `<button class="btn-sm outline" onclick="closeModal()">Close</button>`
+  );
+}
+
+// ══════════════════════════════════════════
+// REQUESTS PAGE
+// ══════════════════════════════════════════
+function renderRequests(){
+  const page = $('page-requests');
+  const role = STATE.role;
+  if(role==='student'){
+    page.innerHTML = `<div class="page-header"><h2>My Requests</h2><p>Track all supervision requests you have sent</p></div>
+    ${STUDENT_REQUESTS.length===0?`
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:36px;text-align:center">
+        <div style="font-size:40px;margin-bottom:12px">📭</div>
+        <div style="font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px">No requests sent yet</div>
+        <div style="font-size:13.5px;color:var(--text-muted);margin-bottom:18px">Find a supervisor and send your first request!</div>
+        <button class="btn-sm primary" onclick="showPage('supervisors')">Find Supervisors →</button>
+      </div>
+    `:`
+    <div class="table-wrap"><table>
+      <tr><th>Supervisor</th><th>Dept</th><th>Research Area</th><th>Date</th><th>Status</th><th>Action</th></tr>
+      ${STUDENT_REQUESTS.map(r=>{
+        const sv=SUPERVISORS.find(s=>s.id===r.svId);
+        return `<tr>
+          <td><b>${r.supervisor}</b></td>
+          <td>${sv?.dept||'CSE'}</td>
+          <td>${r.area}</td>
+          <td>${r.date}</td>
+          <td><span class="status-pill sp-${r.status}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
+          <td><button class="btn-sm outline" onclick="viewMyRequest(${r.id})">View</button></td>
+        </tr>`;
+      }).join('')}
+    </table></div>`}
+    <div style="margin-top:18px;background:var(--lav-50);border:1px solid var(--lav-200);border-radius:var(--r);padding:16px">
+      <div style="font-size:13.5px;font-weight:600;color:var(--lav-800);margin-bottom:5px">💡 Tip</div>
+      <div style="font-size:13px;color:var(--lav-700)">You can send requests to multiple supervisors. The first to accept becomes your assigned supervisor.</div>
+    </div>`;
+  } else {
+    const reqs = STATE.role==='supervisor'
+      ? REQUESTS.filter(r=>r.svId===currentSupervisorId)
+      : REQUESTS;
+    page.innerHTML = `<div class="page-header"><h2>${role==='admin'?'All Requests':'Student Requests'}</h2>
+      <p>${reqs.length} total requests · ${reqs.filter(r=>r.status==='pending').length} pending review</p>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Student</th><th>Supervisor</th><th>Area</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+      ${reqs.map(r=>`<tr>
+        <td><b>${r.studentName}</b></td>
+        <td>${r.supervisor}</td><td>${r.area}</td><td>${r.date}</td>
+        <td><span class="status-pill sp-${r.status}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
+        <td><div style="display:flex;gap:5px">
+          ${r.status==='pending'&&(role==='supervisor'||role==='admin')?`
+            <button class="btn-sm success" onclick="updateRequest(${r.id},'accepted')">Accept</button>
+            <button class="btn-sm danger" onclick="updateRequest(${r.id},'rejected')">Reject</button>
+          `:`<button class="btn-sm outline" onclick="viewRequestDetail(${r.id})">View</button>`}
+        </div></td>
+      </tr>`).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:24px">No requests found</td></tr>'}
+    </table></div>`;
+  }
+}
+
+function updateRequest(id,status){
+  const r = REQUESTS.find(r=>r.id===id);
+  if(r){
+    r.status=status;
+    STATE.notifications.unshift({title:`Request ${status==='accepted'?'Accepted':'Rejected'}`,body:`${r.studentName}'s request has been ${status}.`,time:'Just now',unread:true});
+    renderNotifs();
+    renderRequests();
+    showToast(`Request ${status} ✓`,status==='accepted'?'success':'');
+    if(STATE.currentPage==='dashboard') renderDashboard();
+  }
+}
+
+function viewMyRequest(id){
+  const r = REQUESTS.find(x=>x.id===id)||STUDENT_REQUESTS.find(x=>x.id===id);
+  if(!r)return;
+  openModal(`Request to ${r.supervisor}`,`
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <span class="status-pill sp-${r.status}" style="font-size:12px">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span>
+      <span style="font-size:12px;color:var(--text-muted)">Sent on ${r.date}</span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px">Your Message</div>
+    <div style="background:var(--bg2);border-radius:var(--r2);padding:14px;font-size:13.5px;color:var(--text-muted);line-height:1.65;font-style:italic">"${r.msg}"</div>
+    <div style="margin-top:14px;font-size:13.5px;color:var(--text-muted)"><b>Research Area:</b> ${r.area}</div>`,
+    `<button class="btn-sm primary" onclick="closeModal()">Close</button>`
+  );
+}
+
+function viewRequestDetail(id){
+  viewMyRequest(id);
+}
+
+// ══════════════════════════════════════════
+// STUDENTS PAGE (Supervisor/Admin)
+// ══════════════════════════════════════════
+function renderStudents(){
+  const sv = SUPERVISORS.find(s=>s.id===currentSupervisorId)||SUPERVISORS[0];
+  const students = STATE.role==='supervisor'
+    ? STUDENTS_DB.filter(s=>s.supervisor===currentSupervisorId)
+    : STUDENTS_DB;
+  $('page-students').innerHTML = `
+  <div class="page-header"><h2>${STATE.role==='admin'?'All Students':'My Students'}</h2>
+    <p>${students.length} student${students.length!==1?'s':''} ${STATE.role==='supervisor'?`under your supervision (${sv.name})`:'in the system'}</p>
+  </div>
+  ${STATE.role==='admin'?`<div style="margin-bottom:14px;display:flex;gap:8px"><button class="btn-sm primary" onclick="addUserModal('student')">+ Add Student</button><button class="btn-sm outline">Export CSV</button></div>`:''}
+  <div class="table-wrap"><table>
+    <tr><th>Student</th><th>Roll No.</th><th>Dept</th><th>Year</th><th>GPA</th><th>Status</th>${STATE.role!=='student'?'<th>Actions</th>':''}</tr>
+    ${students.map(s=>`<tr>
+      <td><div style="display:flex;align-items:center;gap:8px">
+        <div style="width:30px;height:30px;background:var(--lav-100);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px">🎓</div>
+        <div><div style="font-weight:600;font-size:13px">${s.name}</div><div style="font-size:11px;color:var(--text-muted)">${s.email}</div></div>
+      </div></td>
+      <td style="font-family:monospace;font-size:12px">${s.roll}</td>
+      <td>${s.dept}</td>
+      <td>Year ${s.year}</td>
+      <td><b>${s.gpa}</b></td>
+      <td><span class="status-pill sp-accepted">Assigned</span></td>
+      <td><div style="display:flex;gap:5px">
+        <button class="btn-sm outline" onclick="viewStudentProfile('${s.name}')">View</button>
+        ${STATE.role==='supervisor'?`<div class="rating-stars" id="rs-${s.id}">${[1,2,3,4,5].map(i=>`<span class="star ${i<=(STUDENT_RATINGS[s.id]||0)?'filled':''}" onclick="setStudentRating(${s.id},${i})" title="Rate ${i} stars">★</span>`).join('')}</div>`:''}
+      </div></td>
+    </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-muted)">No students found</td></tr>'}
+  </table></div>`;
+}
+
+function viewStudentProfile(name){
+  const s = STUDENTS_DB.find(x=>x.name===name)||{name,dept:'CSE',year:4,gpa:3.7,roll:'N/A',email:'N/A',status:'assigned'};
+  openModal(`Student Profile — ${s.name}`,`
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px">
+      <div style="width:56px;height:56px;background:var(--lav-100);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px">🎓</div>
+      <div><div style="font-size:16px;font-weight:600">${s.name}</div>
+        <div style="font-size:12.5px;color:var(--text-muted)">${s.roll} · ${s.email}</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Department</div><div style="font-weight:600">${s.dept}</div></div>
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Academic Year</div><div style="font-weight:600">Year ${s.year}</div></div>
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">CGPA</div><div style="font-weight:600;color:var(--mint-d)">${s.gpa} / 4.00</div></div>
+      <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Status</div><span class="status-pill sp-accepted">Assigned</span></div>
+    </div>`,
+    `<button class="btn-sm primary" onclick="closeModal()">Close</button>`
+  );
+}
+
+// ══════════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════════
+function renderProfile(){
+  const role = STATE.role;
+  const sv = SUPERVISORS.find(s=>s.id===currentSupervisorId)||SUPERVISORS[0];
+  $('page-profile').innerHTML = `
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px">
+    <div class="profile-banner"></div>
+    <div style="padding:0 24px;display:flex;align-items:flex-end;gap:16px;margin-top:-28px">
+      <div style="width:64px;height:64px;background:var(--lav-100);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;border:4px solid var(--surface)">${role==='student'?'🎓':role==='supervisor'?sv.avatar:'🛠️'}</div>
+      <div style="padding-bottom:14px">
+        <div style="font-family:var(--ff2);font-size:20px;font-weight:500;color:var(--lav-900)">${role==='student'?currentStudentName:role==='supervisor'?sv.name:'Admin — DIU'}</div>
+        <div style="font-size:13px;color:var(--text-muted)">${role==='student'?'Student · Daffodil International University':role==='supervisor'?sv.title+' · '+sv.dept+' · DIU':'System Administrator'}</div>
+      </div>
+      <button class="btn-sm primary" style="margin-left:auto;margin-bottom:14px" onclick="editProfile()">✏️ Edit</button>
+    </div>
+    <div style="padding:0 24px 22px">
+      ${role==='supervisor'?`
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px">
+          <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;text-align:center"><div style="font-family:var(--ff2);font-size:20px;color:var(--lav-700)">${sv.pubs}</div><div style="font-size:11px;color:var(--text-muted)">Publications</div></div>
+          <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;text-align:center"><div style="font-family:var(--ff2);font-size:20px;color:var(--lav-700)">${sv.exp}y</div><div style="font-size:11px;color:var(--text-muted)">Experience</div></div>
+          <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;text-align:center"><div style="font-family:var(--ff2);font-size:20px;color:var(--lav-700)">${sv.rating}</div><div style="font-size:11px;color:var(--text-muted)">Rating</div></div>
+          <div style="background:var(--bg2);border-radius:var(--r2);padding:12px;text-align:center"><div style="font-family:var(--ff2);font-size:20px;color:var(--lav-700)">${sv.students.length}</div><div style="font-size:11px;color:var(--text-muted)">Students</div></div>
+        </div>
+        <div style="margin-top:14px"><div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:7px">Research Areas</div><div class="tags">${sv.areas.map(a=>`<span class="tag lav">${a}</span>`).join('')}</div></div>
+      `:`
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">
+          <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Saved Projects</div><div style="font-weight:600">${SAVED_PROJECTS.length}</div></div>
+          <div style="background:var(--bg2);border-radius:var(--r2);padding:12px"><div style="font-size:11px;color:var(--text-muted)">Requests Sent</div><div style="font-weight:600">${STUDENT_REQUESTS.length}</div></div>
+        </div>
+      `}
+    </div>
+  </div>`;
+}
+
+function editProfile(){
+  const role = STATE.role;
+  openModal('Edit Profile',`
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input value="${currentStudentName.split(' ')[0]||'Name'}"></div>
+      <div class="form-group"><label>Last Name</label><input value="${currentStudentName.split(' ').slice(1).join(' ')||''}"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" value="user@diu.edu.bd"></div>
+    <div class="form-group"><label>Phone</label><input value="+880 17XX-XXXXXX"></div>
+    ${role==='student'?`<div class="form-group"><label>Research Interests</label><input value="Machine Learning, NLP"></div>`:''}`,
+    `<button class="btn-sm outline" onclick="closeModal()">Cancel</button>
+     <button class="btn-sm primary" onclick="closeModal();showToast('Profile updated ✓','success')">Save Changes</button>`
+  );
+}
+
+// ══════════════════════════════════════════
+// FEEDBACK
+// ══════════════════════════════════════════
+function renderFeedback(){
+  $('page-feedback').innerHTML = `
+  <div class="page-header"><h2>Feedback & Support</h2><p>Help us improve Smart Thesis Hub for Daffodil International University</p></div>
+  <div style="max-width:600px">
+    <div class="card" style="margin-bottom:16px">
+      <div style="font-size:14.5px;font-weight:600;margin-bottom:4px">Send Feedback</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Your feedback directly helps improve this platform.</div>
+      <div class="form-group"><label>Category</label><select><option>General</option><option>Bug Report</option><option>Feature Request</option><option>Supervisor Issue</option><option>Technical Problem</option></select></div>
+      <div class="form-group"><label>Subject</label><input placeholder="Brief description"></div>
+      <div class="form-group"><label>Message</label><textarea style="min-height:110px" placeholder="Describe your experience or issue in detail…"></textarea></div>
+      <div class="form-group"><label>Rating</label>
+        <div style="display:flex;gap:8px;margin-top:4px" id="fb-stars">${[1,2,3,4,5].map(i=>`<span class="star" onclick="setFbRating(${i})" style="font-size:26px;cursor:pointer;color:#d1d5db">★</span>`).join('')}</div>
+      </div>
+      <button class="btn-sm primary" style="padding:9px 24px;margin-top:4px" onclick="submitFeedback()">Send Feedback</button>
+    </div>
+    <div class="card">
+      <div style="font-size:14.5px;font-weight:600;margin-bottom:14px">Contact DIU Support</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;background:var(--lav-100);border-radius:10px;display:flex;align-items:center;justify-content:center">📧</div><div><div style="font-size:13.5px;font-weight:500">Email</div><div style="font-size:12.5px;color:var(--text-muted)">sth-support@diu.edu.bd</div></div></div>
+        <div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;background:#fff0f6;border-radius:10px;display:flex;align-items:center;justify-content:center">📞</div><div><div style="font-size:13.5px;font-weight:500">Help Desk</div><div style="font-size:12.5px;color:var(--text-muted)">+880-2-9130039 (9AM–5PM BDT)</div></div></div>
+        <div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:36px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center">🌐</div><div><div style="font-size:13.5px;font-weight:500">Website</div><div style="font-size:12.5px;color:var(--text-muted)">www.daffodilvarsity.edu.bd</div></div></div>
+      </div>
+    </div>
+  </div>`;
+}
+function setFbRating(n){document.querySelectorAll('#fb-stars .star').forEach((s,i)=>{s.style.color=i<n?'var(--amber)':'#d1d5db';});}
+function submitFeedback(){showToast('Feedback submitted. Thank you! ✓','success');}
+
+// ══════════════════════════════════════════
+// ADMIN PAGES
+// ══════════════════════════════════════════
+function renderUsers(){
+  $('page-users').innerHTML = `
+  <div class="page-header"><h2>User Management</h2><p>Manage all platform users — students and supervisors</p></div>
+  <div style="display:flex;gap:8px;margin-bottom:18px">
+    <button class="btn-sm primary" onclick="addUserModal('student')">+ Add Student</button>
+    <button class="btn-sm primary" onclick="addUserModal('supervisor')">+ Add Supervisor</button>
+    <button class="btn-sm outline">Export</button>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="ug-grid">
+    <div><div class="section-title">Supervisors (${SUPERVISORS.length})</div>
+      ${SUPERVISORS.map(sv=>`
+      <div class="card" style="margin-bottom:8px;padding:13px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="font-size:18px">${sv.avatar}</div>
+            <div><div style="font-size:13px;font-weight:600">${sv.name}</div><div style="font-size:11.5px;color:var(--text-muted)">${sv.dept} · ${sv.email}</div></div>
+          </div>
+          <button class="btn-sm danger" style="font-size:11px;padding:4px 9px" onclick="showToast('Removed from system','')">Remove</button>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div><div class="section-title">Recent Students (${STUDENTS_DB.length})</div>
+      ${STUDENTS_DB.slice(0,8).map(s=>`
+      <div class="card" style="margin-bottom:8px;padding:13px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="width:30px;height:30px;background:var(--lav-100);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px">🎓</div>
+            <div><div style="font-size:13px;font-weight:600">${s.name}</div><div style="font-size:11.5px;color:var(--text-muted)">${s.roll} · ${s.dept}</div></div>
+          </div>
+          <button class="btn-sm danger" style="font-size:11px;padding:4px 9px" onclick="showToast('Removed from system','')">Remove</button>
+        </div>
+      </div>`).join('')}
+      <button class="btn-sm outline" style="width:100%;text-align:center;margin-top:4px" onclick="showPage('students')">View All Students</button>
+    </div>
+  </div>
+  <style>.ug-grid{grid-template-columns:1fr 1fr}@media(max-width:640px){.ug-grid{grid-template-columns:1fr}}</style>`;
+}
+
+function addUserModal(type){
+  openModal(`Add New ${type.charAt(0).toUpperCase()+type.slice(1)}`,`
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input placeholder="First name"></div>
+      <div class="form-group"><label>Last Name</label><input placeholder="Last name"></div>
+    </div>
+    <div class="form-group"><label>University Email</label><input type="email" placeholder="${type==='student'?'roll@s.diu.edu.bd':'name@diu.edu.bd'}"></div>
+    <div class="form-group"><label>Department</label><select><option>CSE</option><option>SWE</option><option>ICT</option><option>ICE</option><option>ETE</option><option>MCT</option></select></div>
+    ${type==='student'?`<div class="form-row"><div class="form-group"><label>Year</label><select><option>1</option><option>2</option><option>3</option><option>4</option></select></div><div class="form-group"><label>Roll No.</label><input placeholder="191-35-XXXX"></div></div>`:`<div class="form-group"><label>Designation</label><select><option>Professor</option><option>Associate Professor</option><option>Assistant Professor</option></select></div>`}
+    <div class="form-group"><label>Temporary Password</label><input type="password" value="DIU@Temp123"></div>`,
+    `<button class="btn-sm outline" onclick="closeModal()">Cancel</button>
+     <button class="btn-sm primary" onclick="closeModal();showToast('Account created & credentials emailed ✓','success')">Create Account</button>`
+  );
+}
+
+function renderCategories(){
+  const cats = [
+    {name:'Artificial Intelligence / ML',icon:'🤖',count:PROJECTS.filter(p=>p.category==='AI/ML').length,color:'lav'},
+    {name:'Internet of Things',icon:'📡',count:PROJECTS.filter(p=>p.category==='IoT').length,color:'sky'},
+    {name:'Blockchain',icon:'⛓️',count:PROJECTS.filter(p=>p.category==='Blockchain').length,color:'amber'},
+    {name:'Web Development',icon:'🌐',count:PROJECTS.filter(p=>p.category==='Web Dev').length,color:'mint'},
+    {name:'Mobile Development',icon:'📱',count:PROJECTS.filter(p=>p.category==='Mobile Dev').length,color:'rose'},
+    {name:'Cybersecurity',icon:'🔐',count:PROJECTS.filter(p=>p.category==='Cybersecurity').length,color:'lav'},
+    {name:'Robotics',icon:'🦾',count:PROJECTS.filter(p=>p.category==='Robotics').length,color:'amber'},
+    {name:'Networks',icon:'🕸️',count:PROJECTS.filter(p=>p.category==='Networks').length,color:'sky'},
+    {name:'Big Data & Cloud',icon:'☁️',count:PROJECTS.filter(p=>p.category==='Big Data').length,color:'mint'},
+    {name:'AR / VR',icon:'🥽',count:PROJECTS.filter(p=>p.category==='AR/VR').length,color:'rose'},
+    {name:'Smart City',icon:'🏙️',count:PROJECTS.filter(p=>p.category==='Smart City').length,color:'lav'},
+    {name:'Healthcare Tech',icon:'🏥',count:PROJECTS.filter(p=>p.category==='Healthcare').length,color:'mint'},
+  ];
+  $('page-categories').innerHTML = `
+  <div class="page-header"><h2>Project Categories</h2><p>Manage research domains across DIU departments</p></div>
+  <div style="margin-bottom:16px"><button class="btn-sm primary" onclick="showToast('Add category modal — coming soon','')">+ Add Category</button></div>
+  <div class="card-grid">
+    ${cats.map(cat=>`
+    <div class="card" style="cursor:pointer" onclick="window._projFilter='${cat.name.split(' ')[0]}';showPage('projects')">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="width:42px;height:42px;background:var(--lav-100);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px">${cat.icon}</div>
+        <div><div style="font-size:14px;font-weight:600">${cat.name}</div><div style="font-size:12px;color:var(--text-muted)">${cat.count} project${cat.count!==1?'s':''}</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${Math.min((cat.count/12)*100,100)}%"></div></div>
+      <div style="display:flex;gap:7px;margin-top:10px">
+        <button class="btn-sm outline" style="font-size:11px" onclick="event.stopPropagation();showToast('Edit mode — coming soon','')">Edit</button>
+        <button class="btn-sm danger" style="font-size:11px" onclick="event.stopPropagation();showToast('Category removed','')">Remove</button>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+</script>
+</body>
+</html>

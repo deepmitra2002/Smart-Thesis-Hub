@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SRS — Smart Thesis Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --lav-50:#f5f3ff;--lav-100:#ede9fe;--lav-200:#ddd6fe;--lav-300:#c4b5fd;
+  --lav-400:#a78bfa;--lav-500:#8b5cf6;--lav-600:#7c3aed;--lav-700:#6d28d9;
+  --lav-800:#5b21b6;--lav-900:#4c1d95;
+  --rose:#f472b6;--rose-l:#fdf2f8;--rose-d:#be185d;
+  --mint:#34d399;--mint-l:#ecfdf5;--mint-d:#065f46;
+  --amber:#fbbf24;--amber-l:#fffbeb;--amber-d:#92400e;
+  --sky:#38bdf8;--sky-l:#f0f9ff;--sky-d:#0c4a6e;
+  --coral-l:#fff7ed;--coral-d:#9a3412;
+  --bg:#faf9ff;--bg2:#f1eeff;--bg3:#e8e2ff;
+  --surface:#ffffff;
+  --text:#1e1b4b;--text-muted:#6b7280;--text-light:#9ca3af;
+  --border:#e5e7eb;--border-lav:#ddd6fe;
+  --r:12px;--r2:8px;
+  --ff:"DM Sans",sans-serif;--ff2:"Fraunces",serif;--ffc:"JetBrains Mono",monospace;
+  --sidebar-w:280px;
+}
+
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--lav-300);border-radius:4px}
+
+/* ─── SIDEBAR TOC ─── */
+.toc{
+  width:var(--sidebar-w);min-height:100vh;background:var(--surface);
+  border-right:1px solid var(--border-lav);
+  position:fixed;top:0;left:0;overflow-y:auto;
+  display:flex;flex-direction:column;z-index:50;
+}
+.toc-header{
+  padding:24px 20px 16px;border-bottom:1px solid var(--border-lav);
+  background:linear-gradient(160deg,var(--lav-50),var(--surface));
+}
+.toc-logo{font-family:var(--ff2);font-size:17px;font-weight:500;color:var(--lav-800)}
+.toc-logo span{color:var(--lav-500)}
+.toc-subtitle{font-size:11px;color:var(--text-muted);margin-top:3px;letter-spacing:.3px}
+.toc-badge{display:inline-flex;align-items:center;gap:5px;margin-top:10px;background:var(--lav-100);color:var(--lav-700);font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.2px}
+.toc-search{margin:12px 16px;position:relative}
+.toc-search input{width:100%;padding:7px 12px 7px 30px;border:1.5px solid var(--border-lav);border-radius:20px;font-family:var(--ff);font-size:12.5px;color:var(--text);background:var(--bg);outline:none;transition:border-color .18s}
+.toc-search input:focus{border-color:var(--lav-400)}
+.toc-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-muted)}
+.toc-nav{padding:8px 0 24px;flex:1}
+.toc-section{padding:4px 16px 2px}
+.toc-section-lbl{font-size:9.5px;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);font-weight:600;margin-bottom:4px;padding:6px 4px 2px}
+.toc-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--r2);cursor:pointer;transition:all .15s;color:var(--text-muted);font-size:13px;font-weight:400;text-decoration:none;margin-bottom:1px}
+.toc-item:hover{background:var(--lav-50);color:var(--lav-700)}
+.toc-item.active{background:var(--lav-100);color:var(--lav-700);font-weight:500}
+.toc-item-num{font-size:10px;font-weight:700;color:var(--lav-400);min-width:18px;font-family:var(--ffc)}
+.toc-divider{height:1px;background:var(--border-lav);margin:8px 16px}
+.toc-progress{padding:14px 16px;border-top:1px solid var(--border-lav);background:var(--bg)}
+.progress-lbl{font-size:11px;color:var(--text-muted);margin-bottom:6px;display:flex;justify-content:space-between}
+.progress-track{height:4px;background:var(--lav-100);border-radius:2px;overflow:hidden}
+.progress-fill-bar{height:100%;background:linear-gradient(90deg,var(--lav-400),var(--lav-600));border-radius:2px;transition:width .3s}
+
+/* ─── MAIN CONTENT ─── */
+.content{margin-left:var(--sidebar-w);flex:1;max-width:calc(100% - var(--sidebar-w));min-width:0}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(250,249,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-lav);padding:12px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.topbar-doc{font-size:13.5px;color:var(--text-muted)}
+.topbar-doc strong{color:var(--lav-800)}
+.topbar-actions{display:flex;gap:8px}
+.btn-action{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:20px;border:1.5px solid var(--border-lav);background:var(--surface);color:var(--lav-700);font-family:var(--ff);font-size:12.5px;font-weight:500;cursor:pointer;transition:all .18s;text-decoration:none}
+.btn-action:hover{background:var(--lav-50);border-color:var(--lav-400)}
+.btn-action.primary{background:var(--lav-600);color:#fff;border-color:var(--lav-600)}
+.btn-action.primary:hover{background:var(--lav-700)}
+
+/* ─── HERO SECTION ─── */
+.doc-hero{background:linear-gradient(135deg,#f5f3ff 0%,#ede9fe 50%,#fdf4ff 100%);padding:56px 40px 40px;border-bottom:1px solid var(--border-lav);position:relative;overflow:hidden}
+.doc-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(167,139,250,.25) 0%,transparent 70%);pointer-events:none}
+.doc-type{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--lav-500);font-weight:600;margin-bottom:10px}
+.doc-title{font-family:var(--ff2);font-size:clamp(28px,4vw,44px);font-weight:500;color:var(--lav-900);line-height:1.1;margin-bottom:8px}
+.doc-title em{font-style:italic;color:var(--lav-500)}
+.doc-subtitle{font-size:16px;color:var(--text-muted);font-weight:300;margin-bottom:28px;line-height:1.6}
+.doc-meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;max-width:700px}
+.doc-meta-item{background:rgba(255,255,255,.7);border:1px solid var(--border-lav);border-radius:var(--r2);padding:12px 14px}
+.doc-meta-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);font-weight:600;margin-bottom:3px}
+.doc-meta-value{font-size:13.5px;color:var(--text);font-weight:500}
+
+/* ─── SECTIONS ─── */
+.doc-body{padding:0 40px 80px;max-width:900px}
+.section{padding-top:48px}
+.section-anchor{display:block;height:0;visibility:hidden;margin-top:-80px;padding-top:80px}
+
+.section-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--lav-100)}
+.section-num{font-family:var(--ffc);font-size:12px;font-weight:500;color:var(--lav-400);background:var(--lav-50);border:1px solid var(--lav-200);padding:4px 10px;border-radius:6px;white-space:nowrap;margin-top:4px}
+.section-title-text{font-family:var(--ff2);font-size:clamp(20px,3vw,27px);font-weight:500;color:var(--lav-900);line-height:1.2}
+.section-desc{font-size:14px;color:var(--text-muted);margin-top:4px;line-height:1.6}
+
+/* ─── CONTENT BLOCKS ─── */
+.prose{font-size:14.5px;color:#374151;line-height:1.8;margin-bottom:16px}
+.prose strong{color:var(--text);font-weight:600}
+
+.highlight-box{border-radius:var(--r);padding:18px 20px;margin-bottom:18px;border-left:4px solid;font-size:14px;line-height:1.7}
+.hb-info{background:var(--sky-l);border-color:var(--sky);color:var(--sky-d)}
+.hb-success{background:var(--mint-l);border-color:var(--mint);color:var(--mint-d)}
+.hb-warning{background:var(--amber-l);border-color:var(--amber);color:var(--amber-d)}
+.hb-purple{background:var(--lav-50);border-color:var(--lav-400);color:var(--lav-800)}
+.hb-label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:6px;opacity:.7}
+
+/* ─── REQ TABLE ─── */
+.req-table{width:100%;border-collapse:collapse;margin-bottom:8px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.req-table th{background:var(--lav-700);color:#fff;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;text-align:left}
+.req-table td{padding:11px 14px;font-size:13.5px;vertical-align:top;border-bottom:1px solid var(--border)}
+.req-table tr:last-child td{border-bottom:none}
+.req-table tr:nth-child(even) td{background:#fafafa}
+.req-table tr:hover td{background:var(--lav-50)}
+.req-id{font-family:var(--ffc);font-size:11.5px;font-weight:500;color:var(--lav-600);white-space:nowrap}
+.req-text{color:#374151;line-height:1.6}
+.req-priority{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:600;white-space:nowrap}
+.p-high{background:#fff0f0;color:#dc2626}
+.p-med{background:var(--amber-l);color:var(--amber-d)}
+.p-low{background:var(--mint-l);color:var(--mint-d)}
+
+/* ─── CARDS ─── */
+.card-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.info-card{background:var(--surface);border:1px solid var(--border-lav);border-radius:var(--r);padding:18px;transition:all .2s}
+.info-card:hover{border-color:var(--lav-300);box-shadow:0 4px 20px rgba(109,40,217,.08)}
+.ic-icon{font-size:24px;margin-bottom:10px}
+.ic-title{font-size:13.5px;font-weight:600;color:var(--text);margin-bottom:4px}
+.ic-desc{font-size:12.5px;color:var(--text-muted);line-height:1.6}
+
+/* ─── ACTOR CARDS ─── */
+.actor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px}
+.actor-card{background:var(--surface);border:1px solid var(--border-lav);border-radius:var(--r);overflow:hidden}
+.actor-header{padding:16px;border-bottom:1px solid var(--border-lav);display:flex;align-items:center;gap:12px}
+.actor-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.actor-name{font-size:15px;font-weight:600;color:var(--text)}
+.actor-role{font-size:12px;color:var(--text-muted)}
+.actor-body{padding:14px 16px}
+.uc-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:#374151;border-bottom:1px solid var(--border);line-height:1.5}
+.uc-item:last-child{border-bottom:none}
+.uc-item::before{content:'→';color:var(--lav-400);font-size:12px;margin-top:2px;flex-shrink:0}
+
+/* ─── FLOW DIAGRAM ─── */
+.flow-diagram{background:var(--surface);border:1px solid var(--border-lav);border-radius:var(--r);padding:24px;margin-bottom:20px}
+.flow-title{font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:18px}
+.flow-steps{display:flex;flex-wrap:wrap;gap:0;align-items:center}
+.flow-step{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.flow-node{background:var(--lav-100);border:1.5px solid var(--lav-300);color:var(--lav-800);font-size:12.5px;font-weight:500;padding:8px 14px;border-radius:8px;white-space:nowrap}
+.flow-node.decision{background:var(--amber-l);border-color:var(--amber);color:var(--amber-d);border-radius:20px}
+.flow-node.start{background:var(--lav-700);color:#fff;border-color:var(--lav-700);border-radius:20px}
+.flow-node.end-node{background:#1e1b4b;color:#fff;border-color:#1e1b4b;border-radius:20px}
+.flow-node.action{background:var(--mint-l);border-color:var(--mint);color:var(--mint-d)}
+.flow-node.notify{background:#fff0f6;border-color:var(--rose);color:var(--rose-d)}
+.flow-arrow{color:var(--lav-400);font-size:16px;font-weight:300;margin:0 2px}
+.flow-label{font-size:10.5px;color:var(--text-muted);margin-top:3px}
+.flow-row{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+
+/* ─── CLASS DIAGRAM ─── */
+.class-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:20px}
+.class-box{background:var(--surface);border:2px solid var(--border-lav);border-radius:var(--r);overflow:hidden}
+.class-header{background:var(--lav-700);color:#fff;padding:10px 14px}
+.class-name{font-family:var(--ffc);font-size:13px;font-weight:500}
+.class-type{font-size:10px;color:rgba(255,255,255,.6);margin-top:1px}
+.class-body{padding:12px 14px}
+.class-field{font-family:var(--ffc);font-size:11.5px;color:#374151;padding:3px 0;border-bottom:1px solid var(--border);display:flex;gap:6px}
+.class-field:last-child{border-bottom:none}
+.field-type{color:var(--lav-500);flex-shrink:0}
+.class-methods{padding:10px 14px;background:var(--lav-50);border-top:1px solid var(--border-lav)}
+.class-method{font-family:var(--ffc);font-size:11px;color:var(--lav-700);padding:2px 0}
+
+/* ─── CODE BLOCK ─── */
+.code-block{background:#1a1033;border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.code-header{background:#2d1f5e;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.code-lang{font-size:11px;font-weight:600;color:var(--lav-300);text-transform:uppercase;letter-spacing:.5px}
+.code-copy{font-size:11px;color:rgba(255,255,255,.5);cursor:pointer;background:none;border:none;font-family:var(--ff);transition:color .18s}
+.code-copy:hover{color:#fff}
+.code-body{padding:18px 20px;overflow-x:auto}
+.code-body pre{font-family:var(--ffc);font-size:12.5px;line-height:1.9;color:#e2d9f3;white-space:pre}
+.kw{color:#c084fc}.cm{color:#6b7280;font-style:italic}.st{color:#86efac}.tp{color:#67e8f9}.fn{color:#fbbf24}
+.num{color:#f9a8d4}
+
+/* ─── SEQUENCE DIAGRAM ─── */
+.seq-diagram{background:var(--surface);border:1px solid var(--border-lav);border-radius:var(--r);padding:20px;margin-bottom:20px;overflow-x:auto}
+.seq-actors{display:flex;gap:0;margin-bottom:0}
+.seq-actor{flex:1;text-align:center;min-width:100px}
+.seq-actor-box{display:inline-block;background:var(--lav-100);border:1.5px solid var(--lav-300);color:var(--lav-800);font-size:12px;font-weight:600;padding:7px 12px;border-radius:8px;margin-bottom:0}
+.seq-lifeline{width:2px;background:var(--border-lav);margin:0 auto;position:relative}
+.seq-rows{margin-top:8px}
+.seq-row{display:flex;align-items:center;margin-bottom:4px;position:relative;min-height:36px}
+.seq-msg{position:absolute;font-size:11.5px;font-weight:500;color:var(--lav-800);background:var(--lav-50);border:1px solid var(--lav-200);padding:3px 10px;border-radius:20px;white-space:nowrap;transform:translateX(-50%) translateY(-50%);top:50%;z-index:2}
+.seq-line{position:absolute;height:2px;background:var(--lav-300);top:50%}
+.seq-note{font-size:11px;color:var(--text-muted);text-align:center;margin:4px 0 8px;font-style:italic}
+
+/* ─── NFR GRID ─── */
+.nfr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+.nfr-card{background:var(--surface);border:1px solid var(--border-lav);border-radius:var(--r);padding:18px;position:relative;overflow:hidden}
+.nfr-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.nfr-perf::before{background:linear-gradient(90deg,var(--lav-400),var(--lav-600))}
+.nfr-sec::before{background:linear-gradient(90deg,var(--rose),#f472b6)}
+.nfr-scale::before{background:linear-gradient(90deg,var(--mint),#10b981)}
+.nfr-avail::before{background:linear-gradient(90deg,var(--sky),#06b6d4)}
+.nfr-use::before{background:linear-gradient(90deg,var(--amber),#f59e0b)}
+.nfr-maint::before{background:linear-gradient(90deg,#a78bfa,#7c3aed)}
+.nfr-priv::before{background:linear-gradient(90deg,#f9a8d4,var(--rose))}
+.nfr-icon{font-size:22px;margin-bottom:10px}
+.nfr-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.nfr-desc{font-size:13px;color:var(--text-muted);line-height:1.65}
+.nfr-metric{margin-top:10px;display:flex;align-items:center;gap:6px;font-size:12px}
+.nfr-metric-val{font-family:var(--ffc);font-weight:500;color:var(--lav-700);background:var(--lav-50);padding:2px 8px;border-radius:6px}
+
+/* ─── TECH STACK ─── */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.tech-card{background:var(--surface);border:1px solid var(--border-lav);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:12px}
+.tech-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.tech-name{font-size:13.5px;font-weight:600;color:var(--text)}
+.tech-role{font-size:12px;color:var(--text-muted)}
+
+/* ─── SCHEMA TABLE ─── */
+.schema-section{margin-bottom:20px}
+.schema-title{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.schema-name{font-family:var(--ffc);font-size:14px;font-weight:500;color:var(--lav-700)}
+.schema-badge{font-size:10px;background:var(--lav-100);color:var(--lav-600);padding:2px 8px;border-radius:10px;font-weight:600}
+.schema-table{width:100%;border-collapse:collapse;border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.schema-table th{background:var(--lav-800);color:#fff;font-family:var(--ffc);font-size:11px;padding:8px 12px;text-align:left;letter-spacing:.3px}
+.schema-table td{padding:9px 12px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top}
+.schema-table tr:last-child td{border-bottom:none}
+.schema-table tr:nth-child(even) td{background:var(--lav-50)}
+.field-name{font-family:var(--ffc);font-weight:500;color:var(--lav-700)}
+.field-type-badge{font-size:10.5px;background:#f0f9ff;color:var(--sky-d);padding:1px 7px;border-radius:8px;font-family:var(--ffc)}
+.field-pk{font-size:10px;background:#fff7ed;color:var(--coral-d);padding:1px 6px;border-radius:8px;font-weight:700}
+.field-fk{font-size:10px;background:var(--mint-l);color:var(--mint-d);padding:1px 6px;border-radius:8px;font-weight:700}
+.field-desc{font-size:12.5px;color:var(--text-muted)}
+
+/* ─── API TABLE ─── */
+.api-table{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+.api-table th{background:#1a1033;color:#e2d9f3;font-family:var(--ffc);font-size:11px;padding:9px 14px;text-align:left;letter-spacing:.3px}
+.api-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
+.api-table tr:last-child td{border-bottom:none}
+.api-table tr:hover td{background:var(--lav-50)}
+.method{font-family:var(--ffc);font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.m-get{background:#dbeafe;color:#1d4ed8}
+.m-post{background:#dcfce7;color:#15803d}
+.m-patch{background:#fef9c3;color:#854d0e}
+.m-delete{background:#fee2e2;color:#dc2626}
+.api-endpoint{font-family:var(--ffc);font-size:12.5px;color:var(--lav-700)}
+.api-desc{font-size:13px;color:#374151}
+.api-auth{font-size:10.5px;padding:2px 7px;border-radius:8px;background:var(--lav-100);color:var(--lav-700);font-weight:600}
+
+/* ─── LIMITATIONS ─── */
+.limit-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.limit-item:last-child{border-bottom:none}
+.limit-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:1px}
+.limit-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px}
+.limit-desc{font-size:13px;color:var(--text-muted);line-height:1.6}
+
+/* ─── BACK TO TOP ─── */
+.back-top{position:fixed;bottom:24px;right:24px;width:40px;height:40px;background:var(--lav-600);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(109,40,217,.3);transition:all .2s;opacity:0;pointer-events:none}
+.back-top.visible{opacity:1;pointer-events:all}
+.back-top:hover{background:var(--lav-700);transform:translateY(-2px)}
+
+/* ─── MOBILE ─── */
+.hamburger-toc{display:none;position:fixed;top:12px;left:12px;z-index:100;width:36px;height:36px;background:var(--surface);border:1px solid var(--border-lav);border-radius:8px;align-items:center;justify-content:center;cursor:pointer;font-size:16px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.toc-close{display:none;position:absolute;top:12px;right:12px;font-size:18px;cursor:pointer;color:var(--text-muted)}
+@media(max-width:900px){
+  .toc{transform:translateX(-100%);transition:transform .28s;z-index:200}
+  .toc.open{transform:none;box-shadow:8px 0 40px rgba(0,0,0,.15)}
+  .toc-close{display:block}
+  .content{margin-left:0;max-width:100%}
+  .hamburger-toc{display:flex}
+  .doc-body{padding:0 20px 60px}
+  .doc-hero{padding:40px 20px 30px}
+  .topbar{padding:10px 16px}
+  .req-table{font-size:12.5px}
+  .class-grid{grid-template-columns:1fr}
+}
+@media print{
+  .toc,.topbar,.back-top,.hamburger-toc{display:none!important}
+  .content{margin-left:0;max-width:100%}
+  .section{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── SIDEBAR TOC ─── -->
+<aside class="toc" id="toc">
+  <button class="toc-close" onclick="closeToc()">✕</button>
+  <div class="toc-header">
+    <div class="toc-logo">Smart<span>Thesis</span>Hub</div>
+    <div class="toc-subtitle">Software Requirements Specification</div>
+    <div class="toc-badge">📄 Version 1.0 · January 2024</div>
+  </div>
+  <div class="toc-search">
+    <span class="toc-search-icon">🔍</span>
+    <input type="text" id="toc-search-input" placeholder="Search sections…" oninput="filterToc(this.value)">
+  </div>
+  <nav class="toc-nav" id="toc-nav">
+    <div class="toc-section">
+      <div class="toc-section-lbl">Overview</div>
+      <a class="toc-item active" href="#s1" onclick="setActive(this)"><span class="toc-item-num">01</span>Introduction</a>
+      <a class="toc-item" href="#s2" onclick="setActive(this)"><span class="toc-item-num">02</span>System Overview</a>
+      <a class="toc-item" href="#s3" onclick="setActive(this)"><span class="toc-item-num">03</span>Technology Stack</a>
+    </div>
+    <div class="toc-divider"></div>
+    <div class="toc-section">
+      <div class="toc-section-lbl">Requirements</div>
+      <a class="toc-item" href="#s4" onclick="setActive(this)"><span class="toc-item-num">04</span>Functional Requirements</a>
+      <a class="toc-item" href="#s5" onclick="setActive(this)"><span class="toc-item-num">05</span>Non-Functional Requirements</a>
+      <a class="toc-item" href="#s6" onclick="setActive(this)"><span class="toc-item-num">06</span>Constraints & Assumptions</a>
+    </div>
+    <div class="toc-divider"></div>
+    <div class="toc-section">
+      <div class="toc-section-lbl">System Design</div>
+      <a class="toc-item" href="#s7" onclick="setActive(this)"><span class="toc-item-num">07</span>Use Case Diagram</a>
+      <a class="toc-item" href="#s8" onclick="setActive(this)"><span class="toc-item-num">08</span>Activity Diagram</a>
+      <a class="toc-item" href="#s9" onclick="setActive(this)"><span class="toc-item-num">09</span>Sequence Diagram</a>
+      <a class="toc-item" href="#s10" onclick="setActive(this)"><span class="toc-item-num">10</span>Class Diagram</a>
+    </div>
+    <div class="toc-divider"></div>
+    <div class="toc-section">
+      <div class="toc-section-lbl">Implementation</div>
+      <a class="toc-item" href="#s11" onclick="setActive(this)"><span class="toc-item-num">11</span>Database Schema</a>
+      <a class="toc-item" href="#s12" onclick="setActive(this)"><span class="toc-item-num">12</span>API Endpoints</a>
+      <a class="toc-item" href="#s13" onclick="setActive(this)"><span class="toc-item-num">13</span>Security & Ethics</a>
+      <a class="toc-item" href="#s14" onclick="setActive(this)"><span class="toc-item-num">14</span>Limitations & Challenges</a>
+    </div>
+  </nav>
+  <div class="toc-progress">
+    <div class="progress-lbl"><span>Reading progress</span><span id="progress-pct">0%</span></div>
+    <div class="progress-track"><div class="progress-fill-bar" id="progress-bar" style="width:0%"></div></div>
+  </div>
+</aside>
+
+<!-- ─── HAMBURGER ─── -->
+<button class="hamburger-toc" onclick="openToc()">☰</button>
+
+<!-- ─── MAIN ─── -->
+<div class="content">
+  <div class="topbar">
+    <div class="topbar-doc"><strong>SRS</strong> — Smart Thesis Hub · v1.0</div>
+    <div class="topbar-actions">
+      <button class="btn-action" onclick="window.print()">🖨 Print</button>
+      <a class="btn-action primary" href="smart-thesis-hub.html">← Back to App</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="doc-hero">
+    <div class="doc-type">Software Requirements Specification</div>
+    <h1 class="doc-title">Smart Thesis Hub<br><em>Intelligent University Project &amp;<br>Supervisor Management System</em></h1>
+    <p class="doc-subtitle">A complete, production-level SRS covering all functional and non-functional requirements, system design diagrams, database schema, and API definitions.</p>
+    <div class="doc-meta-grid">
+      <div class="doc-meta-item"><div class="doc-meta-label">Document Version</div><div class="doc-meta-value">1.0 (Final)</div></div>
+      <div class="doc-meta-item"><div class="doc-meta-label">Date</div><div class="doc-meta-value">January 2024</div></div>
+      <div class="doc-meta-item"><div class="doc-meta-label">Standard</div><div class="doc-meta-value">IEEE Std 830-1998</div></div>
+      <div class="doc-meta-item"><div class="doc-meta-label">Status</div><div class="doc-meta-value" style="color:var(--mint-d)">✓ Approved</div></div>
+      <div class="doc-meta-item"><div class="doc-meta-label">Total Sections</div><div class="doc-meta-value">14 Sections</div></div>
+      <div class="doc-meta-item"><div class="doc-meta-label">User Roles</div><div class="doc-meta-value">Student · Supervisor · Admin</div></div>
+    </div>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- ══════════ SECTION 1 ══════════ -->
+    <div class="section" id="s1">
+      <span class="section-anchor" id="anchor-s1"></span>
+      <div class="section-header">
+        <div class="section-num">§ 01</div>
+        <div><div class="section-title-text">Introduction</div><div class="section-desc">Purpose, scope, definitions, and document overview</div></div>
+      </div>
+
+      <div class="highlight-box hb-purple"><div class="hb-label">Purpose</div>This SRS defines all requirements for Smart Thesis Hub (STH) — a web and mobile-friendly platform that replaces manual, fragmented thesis management processes in universities with a unified digital system. This document serves as the foundation for design, development, testing, and maintenance.</div>
+
+      <p class="prose"><strong>1.1 Scope:</strong> STH digitizes the entire thesis workflow including student registration, supervisor discovery, project browsing, request management, real-time notifications, video resources, and administrative oversight. The system serves three primary user roles: Student, Supervisor, and Admin (System Administrator).</p>
+
+      <p class="prose"><strong>1.2 Problem Statement:</strong> Currently, students must navigate Google Sites, email threads, or physical notice boards to find supervisors. There is no centralized system for submitting requests, tracking their status, or matching students to the best supervisors based on research interests. Smart Thesis Hub solves all of these pain points.</p>
+
+      <div class="card-row">
+        <div class="info-card"><div class="ic-icon">📋</div><div class="ic-title">Document Standard</div><div class="ic-desc">IEEE Std 830-1998 — IEEE Recommended Practice for SRS</div></div>
+        <div class="info-card"><div class="ic-icon">🔒</div><div class="ic-title">Data Standard</div><div class="ic-desc">GDPR Data Privacy Guidelines for user data protection</div></div>
+        <div class="info-card"><div class="ic-icon">🏫</div><div class="ic-title">Regulations</div><div class="ic-desc">University Thesis Regulations 2024 — Academic compliance</div></div>
+      </div>
+
+      <p class="prose"><strong>1.3 Key Definitions:</strong></p>
+      <table class="req-table">
+        <tr><th style="width:140px">Term</th><th>Definition</th></tr>
+        <tr><td class="req-id">STH</td><td class="req-text">Smart Thesis Hub — the system described in this document</td></tr>
+        <tr><td class="req-id">JWT</td><td class="req-text">JSON Web Token — used for stateless, secure authentication</td></tr>
+        <tr><td class="req-id">RBAC</td><td class="req-text">Role-Based Access Control — restricts system access per user role</td></tr>
+        <tr><td class="req-id">SRS</td><td class="req-text">Software Requirements Specification — this document</td></tr>
+        <tr><td class="req-id">API</td><td class="req-text">Application Programming Interface — RESTful HTTP endpoints</td></tr>
+        <tr><td class="req-id">Socket.io</td><td class="req-text">WebSocket library for real-time bidirectional communication</td></tr>
+        <tr><td class="req-id">CDN</td><td class="req-text">Content Delivery Network — for fast, globally distributed file serving</td></tr>
+      </table>
+    </div>
+
+    <!-- ══════════ SECTION 2 ══════════ -->
+    <div class="section" id="s2">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 02</div>
+        <div><div class="section-title-text">System Overview</div><div class="section-desc">What the system does and who it serves</div></div>
+      </div>
+
+      <p class="prose">Smart Thesis Hub replaces fragmented, manual thesis management with a unified digital platform. The system is designed for university environments where hundreds of students must each find a qualified supervisor, align on a project topic, and complete a structured thesis journey.</p>
+
+      <div class="highlight-box hb-success"><div class="hb-label">Core Goals</div>Replace Google-site-based systems · Automate supervisor-student matching · Provide real-time communication · Deliver admin analytics and oversight · Ensure mobile + desktop compatibility</div>
+
+      <div class="card-row">
+        <div class="info-card"><div class="ic-icon">🎓</div><div class="ic-title">Student Portal</div><div class="ic-desc">Discover supervisors, browse projects, send requests, watch video resources, track thesis progress</div></div>
+        <div class="info-card"><div class="ic-icon">👨‍🏫</div><div class="ic-title">Supervisor Portal</div><div class="ic-desc">Manage incoming requests, accept or reject groups, view assigned students, update availability</div></div>
+        <div class="info-card"><div class="ic-icon">🛠️</div><div class="ic-title">Admin Console</div><div class="ic-desc">Full oversight — users, projects, categories, activity logs, analytics, and system configuration</div></div>
+        <div class="info-card"><div class="ic-icon">✦</div><div class="ic-title">AI Recommendation</div><div class="ic-desc">Smart matching engine suggests best supervisors based on student research interests and GPA</div></div>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 3 ══════════ -->
+    <div class="section" id="s3">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 03</div>
+        <div><div class="section-title-text">Technology Stack</div><div class="section-desc">Recommended technologies for each system layer</div></div>
+      </div>
+
+      <div class="tech-grid">
+        <div class="tech-card"><div class="tech-icon" style="background:#e0f2fe">⚛️</div><div><div class="tech-name">React.js</div><div class="tech-role">Frontend — Component-based UI</div></div></div>
+        <div class="tech-card"><div class="tech-icon" style="background:#dcfce7">🟢</div><div><div class="tech-name">Node.js + Express</div><div class="tech-role">Backend — REST API server</div></div></div>
+        <div class="tech-card"><div class="tech-icon" style="background:#fef9c3">🍃</div><div><div class="tech-name">MongoDB Atlas</div><div class="tech-role">Database — NoSQL document store</div></div></div>
+        <div class="tech-card"><div class="tech-icon" style="background:var(--lav-100)">🔐</div><div><div class="tech-name">JWT + bcrypt</div><div class="tech-role">Authentication & password hashing</div></div></div>
+        <div class="tech-card"><div class="tech-icon" style="background:#fff0f6">⚡</div><div><div class="tech-name">Socket.io</div><div class="tech-role">Real-time notifications</div></div></div>
+        <div class="tech-card"><div class="tech-icon" style="background:#f0fdf4">📧</div><div><div class="tech-name">SendGrid</div><div class="tech-role">Transactional email service</div></div></div>
+        <div class="tech-card"><div class="tech-icon" style="background:#fff7ed">☁️</div><div><div class="tech-name">AWS S3</div><div class="tech-role">Video & file cloud storage</div></div></div>
+        <div class="tech-card"><div class="tech-icon" style="background:#f0f9ff">🐳</div><div><div class="tech-name">Docker + Kubernetes</div><div class="tech-role">Containerization & scaling</div></div></div>
+      </div>
+
+      <div class="highlight-box hb-info"><div class="hb-label">Mobile Strategy</div><strong>Phase 1:</strong> Fully responsive React web app (mobile + tablet + desktop). <strong>Phase 2:</strong> React Native mobile app for iOS and Android with offline support. The responsive web app covers 95% of mobile use cases immediately.</div>
+    </div>
+
+    <!-- ══════════ SECTION 4 ══════════ -->
+    <div class="section" id="s4">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 04</div>
+        <div><div class="section-title-text">Functional Requirements</div><div class="section-desc">All features and behaviors the system must perform</div></div>
+      </div>
+
+      <p class="prose" style="margin-bottom:20px"><strong>4.1 Student Module</strong> — Requirements for the student-facing portal</p>
+      <table class="req-table">
+        <tr><th style="width:100px">ID</th><th>Requirement</th><th style="width:80px">Priority</th></tr>
+        <tr><td class="req-id">STU-001</td><td class="req-text">User self-registration with university email and OTP verification</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-002</td><td class="req-text">Secure login with JWT session management and auto-expiry</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-003</td><td class="req-text">Profile creation: name, roll no., GPA, department, year, research interests, bio</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-004</td><td class="req-text">Search and filter supervisors by research area, experience, department, and slot availability</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-005</td><td class="req-text">View full supervisor profile: bio, publications, areas, rating, current students</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-006</td><td class="req-text">Browse project ideas with category filter, difficulty level, tags, and supervisor info</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-007</td><td class="req-text">Watch embedded video resources on thesis writing, research methods, and tools</td><td><span class="req-priority p-med">Medium</span></td></tr>
+        <tr><td class="req-id">STU-008</td><td class="req-text">Send supervision request with personalized message to selected supervisor</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-009</td><td class="req-text">Receive real-time and email notifications on request status (accepted / rejected)</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-010</td><td class="req-text">View assigned supervisor details, contact info, and meeting schedule</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">STU-011</td><td class="req-text">AI-powered supervisor recommendations based on profile and research interests</td><td><span class="req-priority p-med">Medium</span></td></tr>
+        <tr><td class="req-id">STU-012</td><td class="req-text">Submit feedback and support tickets via integrated contact form</td><td><span class="req-priority p-low">Low</span></td></tr>
+        <tr><td class="req-id">STU-013</td><td class="req-text">Save and bookmark projects to a personal wishlist for later reference</td><td><span class="req-priority p-low">Low</span></td></tr>
+      </table>
+
+      <p class="prose" style="margin:24px 0 16px"><strong>4.2 Supervisor Module</strong></p>
+      <table class="req-table">
+        <tr><th style="width:100px">ID</th><th>Requirement</th><th style="width:80px">Priority</th></tr>
+        <tr><td class="req-id">SUP-001</td><td class="req-text">Secure login with role-verified JWT authentication</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">SUP-002</td><td class="req-text">Profile management: title, department, research areas, publications, experience, bio</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">SUP-003</td><td class="req-text">Dashboard showing pending requests count, active students, and recent activity</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">SUP-004</td><td class="req-text">View detailed student request with profile, GPA, interests, and message</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">SUP-005</td><td class="req-text">Accept or reject student requests with optional feedback message</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">SUP-006</td><td class="req-text">View and manage list of all currently assigned students with progress indicators</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">SUP-007</td><td class="req-text">Set available student slots and toggle accepting/not accepting new requests</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">SUP-008</td><td class="req-text">Add and manage project topic suggestions visible to all students</td><td><span class="req-priority p-med">Medium</span></td></tr>
+        <tr><td class="req-id">SUP-009</td><td class="req-text">One-click email and call integration for communicating with students</td><td><span class="req-priority p-med">Medium</span></td></tr>
+      </table>
+
+      <p class="prose" style="margin:24px 0 16px"><strong>4.3 Admin Module</strong></p>
+      <table class="req-table">
+        <tr><th style="width:100px">ID</th><th>Requirement</th><th style="width:80px">Priority</th></tr>
+        <tr><td class="req-id">ADM-001</td><td class="req-text">Dashboard with real-time KPIs: total users, active requests, match rate, system health</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">ADM-002</td><td class="req-text">Create, read, update, and delete student and supervisor accounts</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">ADM-003</td><td class="req-text">Auto-generate and email login credentials upon new user account creation</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">ADM-004</td><td class="req-text">Manage project topics: add, edit, categorize, assign supervisor, set difficulty and slots</td><td><span class="req-priority p-high">High</span></td></tr>
+        <tr><td class="req-id">ADM-005</td><td class="req-text">Monitor all system activities — requests, logins, assignments — in a filterable activity log</td><td><span class="req-priority p-med">Medium</span></td></tr>
+        <tr><td class="req-id">ADM-006</td><td class="req-text">View and respond to user feedback submissions with status tracking</td><td><span class="req-priority p-med">Medium</span></td></tr>
+        <tr><td class="req-id">ADM-007</td><td class="req-text">Export user lists, request data, and activity reports in CSV and PDF formats</td><td><span class="req-priority p-med">Medium</span></td></tr>
+        <tr><td class="req-id">ADM-008</td><td class="req-text">Upload, categorize, and manage video resources accessible to students</td><td><span class="req-priority p-low">Low</span></td></tr>
+        <tr><td class="req-id">ADM-009</td><td class="req-text">Configure system settings: slot limits, approval policies, category management</td><td><span class="req-priority p-med">Medium</span></td></tr>
+      </table>
+    </div>
+
+    <!-- ══════════ SECTION 5 ══════════ -->
+    <div class="section" id="s5">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 05</div>
+        <div><div class="section-title-text">Non-Functional Requirements</div><div class="section-desc">Performance, security, scalability, and quality standards</div></div>
+      </div>
+
+      <div class="nfr-grid">
+        <div class="nfr-card nfr-perf"><div class="nfr-icon">⚡</div><div class="nfr-title">Performance</div><div class="nfr-desc">Page load must not exceed 2 seconds on standard broadband. API response ≤ 300ms for 95% of requests under normal load.</div><div class="nfr-metric"><span>Target:</span><span class="nfr-metric-val">≤ 300ms API</span><span class="nfr-metric-val">≤ 2s load</span></div></div>
+        <div class="nfr-card nfr-sec"><div class="nfr-icon">🔐</div><div class="nfr-title">Security</div><div class="nfr-desc">bcrypt password hashing (12 rounds). JWT tokens expire in 24h. HTTPS enforced. XSS + CSRF + SQL injection protection via Helmet.js and Joi validation.</div><div class="nfr-metric"><span>Bcrypt:</span><span class="nfr-metric-val">12 rounds</span></div></div>
+        <div class="nfr-card nfr-scale"><div class="nfr-icon">📈</div><div class="nfr-title">Scalability</div><div class="nfr-desc">Must support 5,000 concurrent users. Horizontal scaling via Docker containers orchestrated with Kubernetes. Stateless API for easy load balancing.</div><div class="nfr-metric"><span>Capacity:</span><span class="nfr-metric-val">5,000 users</span></div></div>
+        <div class="nfr-card nfr-avail"><div class="nfr-icon">🟢</div><div class="nfr-title">Availability</div><div class="nfr-desc">99.9% uptime SLA. Automated MongoDB Atlas backups every 6 hours. Health check endpoints for monitoring. Graceful degradation on partial failure.</div><div class="nfr-metric"><span>SLA:</span><span class="nfr-metric-val">99.9% uptime</span></div></div>
+        <div class="nfr-card nfr-use"><div class="nfr-icon">♿</div><div class="nfr-title">Usability</div><div class="nfr-desc">WCAG 2.1 AA accessibility compliance. Fully responsive: mobile, tablet, desktop. Usable by non-technical users with no training. Max 3 clicks to any primary action.</div><div class="nfr-metric"><span>Standard:</span><span class="nfr-metric-val">WCAG 2.1 AA</span></div></div>
+        <div class="nfr-card nfr-maint"><div class="nfr-icon">🔧</div><div class="nfr-title">Maintainability</div><div class="nfr-desc">MVC architecture. Swagger/OpenAPI documentation for all endpoints. ESLint enforced. Unit test coverage ≥ 80%. Git-based version control with CI/CD pipeline.</div><div class="nfr-metric"><span>Test coverage:</span><span class="nfr-metric-val">≥ 80%</span></div></div>
+        <div class="nfr-card nfr-priv"><div class="nfr-icon">🛡️</div><div class="nfr-title">Data Privacy</div><div class="nfr-desc">GDPR-compliant data handling. Personal data encrypted at rest (AES-256). Users can request full data export or deletion. No data sold to third parties.</div><div class="nfr-metric"><span>Standard:</span><span class="nfr-metric-val">GDPR / AES-256</span></div></div>
+        <div class="nfr-card nfr-perf" style="--c:var(--sky)"><div class="nfr-icon">🌐</div><div class="nfr-title">Compatibility</div><div class="nfr-desc">Supports Chrome 90+, Firefox 88+, Safari 14+, Edge 90+. Responsive down to 320px viewport width. No proprietary plugins required.</div><div class="nfr-metric"><span>Min viewport:</span><span class="nfr-metric-val">320px</span></div></div>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 6 ══════════ -->
+    <div class="section" id="s6">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 06</div>
+        <div><div class="section-title-text">Constraints &amp; Assumptions</div><div class="section-desc">Known limitations and baseline assumptions for development</div></div>
+      </div>
+
+      <p class="prose"><strong>6.1 Constraints</strong></p>
+      <table class="req-table" style="margin-bottom:24px">
+        <tr><th style="width:140px">Constraint</th><th>Description</th></tr>
+        <tr><td class="req-id">Integration</td><td class="req-text">Must integrate with the university's existing student database via secure API for identity verification of registered students</td></tr>
+        <tr><td class="req-id">Email Domain</td><td class="req-text">All user communications must use the university's official email domain (e.g., @uni.edu) for authentication and notifications</td></tr>
+        <tr><td class="req-id">File Size</td><td class="req-text">Video resources must not exceed 500MB per file; hosted on AWS S3 with CDN delivery for performance</td></tr>
+        <tr><td class="req-id">Infrastructure</td><td class="req-text">Phase 1 must operate within shared hosting with max 8GB RAM; vertical scaling before horizontal in Phase 1</td></tr>
+        <tr><td class="req-id">Phase Scope</td><td class="req-text">Native mobile app (React Native) is deferred to Phase 2; Phase 1 delivers a responsive web application only</td></tr>
+        <tr><td class="req-id">Language</td><td class="req-text">All UI text must support both English and Bangla (Bengali) for Bangladeshi university contexts</td></tr>
+      </table>
+
+      <p class="prose"><strong>6.2 Assumptions</strong></p>
+      <table class="req-table">
+        <tr><th style="width:140px">Assumption</th><th>Description</th></tr>
+        <tr><td class="req-id">Browser</td><td class="req-text">All users have access to a modern web browser (Chrome 90+, Firefox 88+, Safari 14+) on their device</td></tr>
+        <tr><td class="req-id">Internet</td><td class="req-text">Users have a stable internet connection of at least 5 Mbps for smooth video resource playback</td></tr>
+        <tr><td class="req-id">IT Access</td><td class="req-text">The university IT department provides API access to the student record system for verification</td></tr>
+        <tr><td class="req-id">SMTP</td><td class="req-text">University email server supports SMTP integration for system-generated notification emails</td></tr>
+        <tr><td class="req-id">Initial Data</td><td class="req-text">Existing supervisor profiles, student data, and project categories will be migrated by the admin team before launch</td></tr>
+        <tr><td class="req-id">Self-Service</td><td class="req-text">Supervisors are responsible for keeping their availability, slot count, and profile information up to date</td></tr>
+      </table>
+    </div>
+
+    <!-- ══════════ SECTION 7 ══════════ -->
+    <div class="section" id="s7">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 07</div>
+        <div><div class="section-title-text">Use Case Diagram</div><div class="section-desc">All actors and their interactions with the system</div></div>
+      </div>
+
+      <div class="highlight-box hb-purple"><div class="hb-label">Actors</div>Three primary actors interact with STH: <strong>Student</strong> (end user seeking supervision), <strong>Supervisor</strong> (faculty managing student groups), and <strong>Admin</strong> (system administrator with full access). Each actor has a distinct set of use cases mapped below.</div>
+
+      <div class="actor-grid">
+        <div class="actor-card">
+          <div class="actor-header">
+            <div class="actor-icon" style="background:var(--lav-100)">🎓</div>
+            <div><div class="actor-name">Student</div><div class="actor-role">Primary end user — seeking supervision</div></div>
+          </div>
+          <div class="actor-body">
+            <div class="uc-item">Register & verify university email</div>
+            <div class="uc-item">Create and edit personal profile</div>
+            <div class="uc-item">Search & filter supervisors</div>
+            <div class="uc-item">Browse project ideas by category</div>
+            <div class="uc-item">Watch educational video resources</div>
+            <div class="uc-item">Send supervision request with message</div>
+            <div class="uc-item">Receive real-time notifications</div>
+            <div class="uc-item">View assigned supervisor details</div>
+            <div class="uc-item">Submit feedback & support requests</div>
+          </div>
+        </div>
+        <div class="actor-card">
+          <div class="actor-header">
+            <div class="actor-icon" style="background:#fdf4ff">👨‍🏫</div>
+            <div><div class="actor-name">Supervisor</div><div class="actor-role">Faculty — managing student groups</div></div>
+          </div>
+          <div class="actor-body">
+            <div class="uc-item">Login with verified credentials</div>
+            <div class="uc-item">Manage profile & research areas</div>
+            <div class="uc-item">View incoming student requests</div>
+            <div class="uc-item">Accept or reject requests</div>
+            <div class="uc-item">View list of assigned students</div>
+            <div class="uc-item">Set available student slots</div>
+            <div class="uc-item">Suggest project topics</div>
+            <div class="uc-item">Communicate via email/call</div>
+          </div>
+        </div>
+        <div class="actor-card">
+          <div class="actor-header">
+            <div class="actor-icon" style="background:#f0fdf4">🛠️</div>
+            <div><div class="actor-name">Admin</div><div class="actor-role">System administrator — full access</div></div>
+          </div>
+          <div class="actor-body">
+            <div class="uc-item">View system analytics dashboard</div>
+            <div class="uc-item">Create & manage all user accounts</div>
+            <div class="uc-item">Assign login credentials</div>
+            <div class="uc-item">Manage project topics & categories</div>
+            <div class="uc-item">Monitor all request activity</div>
+            <div class="uc-item">Handle feedback submissions</div>
+            <div class="uc-item">Export reports (CSV / PDF)</div>
+            <div class="uc-item">Configure system settings</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 8 ══════════ -->
+    <div class="section" id="s8">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 08</div>
+        <div><div class="section-title-text">Activity Diagram</div><div class="section-desc">Step-by-step workflow for the core supervision request process</div></div>
+      </div>
+
+      <p class="prose">The activity diagram below models the complete workflow from a student logging in to being successfully assigned a supervisor. Decision points (Accept / Reject) determine the path taken.</p>
+
+      <div class="flow-diagram">
+        <div class="flow-title">Activity Flow — Student Supervisor Request</div>
+
+        <div class="flow-row"><div class="flow-node start">▶ Start</div><div class="flow-arrow">→</div><div class="flow-node">Student Logs In</div><div class="flow-arrow">→</div><div class="flow-node">Authentication Check</div></div>
+
+        <div class="flow-row" style="margin-left:32px"><div class="flow-node decision">Valid credentials?</div><div class="flow-arrow">→ Yes →</div><div class="flow-node">Load Student Dashboard</div></div>
+        <div style="font-size:12px;color:var(--rose-d);margin:4px 0 8px 32px">↓ No → Show Error → Return to Login</div>
+
+        <div class="flow-row"><div class="flow-node">Browse Supervisors</div><div class="flow-arrow">→</div><div class="flow-node">Apply Filters</div><div class="flow-arrow">→</div><div class="flow-node">View Supervisor Profile</div></div>
+
+        <div class="flow-row"><div class="flow-node decision">Slots available?</div><div class="flow-arrow">→ Yes →</div><div class="flow-node action">Write Request Message</div><div class="flow-arrow">→</div><div class="flow-node action">Submit Request</div></div>
+        <div style="font-size:12px;color:var(--rose-d);margin:4px 0 8px 0">↓ No → Show "Supervisor Full" · Choose another supervisor</div>
+
+        <div class="flow-row"><div class="flow-node notify">System: Save to DB</div><div class="flow-arrow">→</div><div class="flow-node notify">Email Supervisor</div><div class="flow-arrow">→</div><div class="flow-node notify">Push Notification</div></div>
+
+        <div class="flow-row"><div class="flow-node">Supervisor Reviews</div><div class="flow-arrow">→</div><div class="flow-node decision">Decision?</div></div>
+
+        <div class="flow-row" style="margin-left:32px"><div class="flow-node action">✓ Accept</div><div class="flow-arrow">→</div><div class="flow-node notify">Notify Student (Email + In-App)</div><div class="flow-arrow">→</div><div class="flow-node action">Decrement Slots</div><div class="flow-arrow">→</div><div class="flow-node end-node">✓ Assigned</div></div>
+        <div style="font-size:12px;color:var(--amber-d);margin:4px 0 8px 32px">↓ Reject → Notify Student → Student can send new request to another supervisor → Loop back</div>
+      </div>
+
+      <div class="highlight-box hb-info"><div class="hb-label">Note</div>A student may send requests to multiple supervisors simultaneously. Once one accepts, all other pending requests from that student are automatically cancelled by the system to prevent double-booking.</div>
+    </div>
+
+    <!-- ══════════ SECTION 9 ══════════ -->
+    <div class="section" id="s9">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 09</div>
+        <div><div class="section-title-text">Sequence Diagram</div><div class="section-desc">Object interactions for sending a supervision request</div></div>
+      </div>
+
+      <p class="prose">The sequence diagram shows how the system components interact when a student submits a supervision request — from the initial HTTP call through authentication, database operations, and real-time notification delivery.</p>
+
+      <div class="flow-diagram" style="overflow-x:auto">
+        <div class="flow-title">Sequence: POST /api/requests — Submit Supervision Request</div>
+        <table style="width:100%;border-collapse:collapse;font-size:12.5px;min-width:600px">
+          <tr>
+            <td style="width:16%;text-align:center;padding-bottom:8px"><div style="background:var(--lav-100);border:1.5px solid var(--lav-300);border-radius:8px;padding:6px;font-weight:600;color:var(--lav-800);font-size:11.5px">🎓 Student<br>Browser</div></td>
+            <td style="width:16%;text-align:center;padding-bottom:8px"><div style="background:var(--sky-l);border:1.5px solid var(--sky);border-radius:8px;padding:6px;font-weight:600;color:var(--sky-d);font-size:11.5px">🔀 API<br>Gateway</div></td>
+            <td style="width:16%;text-align:center;padding-bottom:8px"><div style="background:#fff7ed;border:1.5px solid var(--amber);border-radius:8px;padding:6px;font-weight:600;color:var(--amber-d);font-size:11.5px">🔐 Auth<br>Middleware</div></td>
+            <td style="width:16%;text-align:center;padding-bottom:8px"><div style="background:var(--lav-100);border:1.5px solid var(--lav-400);border-radius:8px;padding:6px;font-weight:600;color:var(--lav-700);font-size:11.5px">⚙️ Request<br>Controller</div></td>
+            <td style="width:16%;text-align:center;padding-bottom:8px"><div style="background:#fef9c3;border:1.5px solid var(--amber);border-radius:8px;padding:6px;font-weight:600;color:var(--amber-d);font-size:11.5px">🍃 MongoDB<br>Database</div></td>
+            <td style="width:16%;text-align:center;padding-bottom:8px"><div style="background:var(--mint-l);border:1.5px solid var(--mint);border-radius:8px;padding:6px;font-weight:600;color:var(--mint-d);font-size:11.5px">📧 Email +<br>Socket.io</div></td>
+          </tr>
+          ${[
+            ['POST /api/requests + JWT','→','','','',''],
+            ['','→ Verify JWT token','→','','',''],
+            ['','← 401 if invalid ←','←','','',''],
+            ['','','→ Token valid →','→ Check supervisor slots','',''],
+            ['','','','','→ Query supervisor',''],
+            ['','','','','← Return slot count ←',''],
+            ['','','','→ Save request doc →','',''],
+            ['','','','','← _id returned ←',''],
+            ['','','','→ Trigger notification →','','→ Email supervisor'],
+            ['','','','→ Emit socket event →','','→ In-app push'],
+            ['← 201 Created ←','← ←','← ←','','',''],
+          ].map(row=>`<tr>${row.map(cell=>`<td style="padding:5px 4px;text-align:center;font-size:11.5px;color:${cell.includes('←')?'var(--mint-d)':cell.includes('→')?'var(--lav-700)':'#374151'};font-weight:${cell.includes('POST')||cell.includes('201')?'600':'400'}">${cell||'<div style="border-right:1px dashed var(--border-lav);height:24px;margin:0 auto;width:1px"></div>'}</td>`).join('')}</tr>`).join('')}
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 10 ══════════ -->
+    <div class="section" id="s10">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 10</div>
+        <div><div class="section-title-text">Class Diagram</div><div class="section-desc">Object-oriented structure of the core system entities</div></div>
+      </div>
+
+      <p class="prose">The class diagram defines the OOP structure of the backend. <code style="background:var(--lav-50);padding:1px 6px;border-radius:4px;font-family:var(--ffc);font-size:12px">User</code> is the base class extended by <code style="background:var(--lav-50);padding:1px 6px;border-radius:4px;font-family:var(--ffc);font-size:12px">Student</code>, <code style="background:var(--lav-50);padding:1px 6px;border-radius:4px;font-family:var(--ffc);font-size:12px">Supervisor</code>, and <code style="background:var(--lav-50);padding:1px 6px;border-radius:4px;font-family:var(--ffc);font-size:12px">Admin</code>. Associated classes handle requests, projects, notifications, and feedback.</p>
+
+      <div class="class-grid">
+        <div class="class-box">
+          <div class="class-header"><div class="class-name">User</div><div class="class-type">Abstract Base Class</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">ObjectId</span> _id <span class="field-pk">PK</span></div>
+            <div class="class-field"><span class="field-type">String</span> name</div>
+            <div class="class-field"><span class="field-type">String</span> email</div>
+            <div class="class-field"><span class="field-type">String</span> passwordHash</div>
+            <div class="class-field"><span class="field-type">Enum</span> role</div>
+            <div class="class-field"><span class="field-type">Boolean</span> isActive</div>
+            <div class="class-field"><span class="field-type">Date</span> createdAt</div>
+          </div>
+          <div class="class-methods">
+            <div class="class-method">+ login(email, pass): JWT</div>
+            <div class="class-method">+ updateProfile(data): User</div>
+            <div class="class-method">+ getNotifications(): Notif[]</div>
+          </div>
+        </div>
+
+        <div class="class-box">
+          <div class="class-header" style="background:var(--lav-600)"><div class="class-name">Student</div><div class="class-type">extends User</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">String</span> rollNo</div>
+            <div class="class-field"><span class="field-type">String</span> department</div>
+            <div class="class-field"><span class="field-type">Number</span> year</div>
+            <div class="class-field"><span class="field-type">Float</span> gpa</div>
+            <div class="class-field"><span class="field-type">String[]</span> interests</div>
+            <div class="class-field"><span class="field-type">ObjectId</span> supervisorId <span class="field-fk">FK</span></div>
+            <div class="class-field"><span class="field-type">Enum</span> status</div>
+          </div>
+          <div class="class-methods">
+            <div class="class-method">+ sendRequest(svId, msg): Req</div>
+            <div class="class-method">+ searchSupervisors(f): Sv[]</div>
+            <div class="class-method">+ saveProject(pid): void</div>
+          </div>
+        </div>
+
+        <div class="class-box">
+          <div class="class-header" style="background:#7e22ce"><div class="class-name">Supervisor</div><div class="class-type">extends User</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">String</span> title</div>
+            <div class="class-field"><span class="field-type">String</span> department</div>
+            <div class="class-field"><span class="field-type">String[]</span> researchAreas</div>
+            <div class="class-field"><span class="field-type">Number</span> publications</div>
+            <div class="class-field"><span class="field-type">Number</span> experience</div>
+            <div class="class-field"><span class="field-type">Number</span> maxSlots</div>
+            <div class="class-field"><span class="field-type">Float</span> rating</div>
+          </div>
+          <div class="class-methods">
+            <div class="class-method">+ acceptRequest(id): void</div>
+            <div class="class-method">+ rejectRequest(id,msg): void</div>
+            <div class="class-method">+ getStudents(): Student[]</div>
+          </div>
+        </div>
+
+        <div class="class-box">
+          <div class="class-header" style="background:#059669"><div class="class-name">Admin</div><div class="class-type">extends User</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">String[]</span> permissions</div>
+            <div class="class-field"><span class="field-type">Date</span> lastLogin</div>
+          </div>
+          <div class="class-methods">
+            <div class="class-method">+ createUser(data): User</div>
+            <div class="class-method">+ deleteUser(id): void</div>
+            <div class="class-method">+ getAnalytics(): Stats</div>
+            <div class="class-method">+ exportReport(type): File</div>
+          </div>
+        </div>
+
+        <div class="class-box">
+          <div class="class-header" style="background:#b45309"><div class="class-name">Request</div><div class="class-type">Association Class</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">ObjectId</span> _id <span class="field-pk">PK</span></div>
+            <div class="class-field"><span class="field-type">ObjectId</span> studentId <span class="field-fk">FK</span></div>
+            <div class="class-field"><span class="field-type">ObjectId</span> supervisorId <span class="field-fk">FK</span></div>
+            <div class="class-field"><span class="field-type">String</span> message</div>
+            <div class="class-field"><span class="field-type">Enum</span> status</div>
+            <div class="class-field"><span class="field-type">String</span> adminNote</div>
+            <div class="class-field"><span class="field-type">Date</span> updatedAt</div>
+          </div>
+        </div>
+
+        <div class="class-box">
+          <div class="class-header" style="background:#0369a1"><div class="class-name">Project</div><div class="class-type">Content Entity</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">ObjectId</span> _id <span class="field-pk">PK</span></div>
+            <div class="class-field"><span class="field-type">String</span> title</div>
+            <div class="class-field"><span class="field-type">String</span> category</div>
+            <div class="class-field"><span class="field-type">ObjectId</span> supervisorId <span class="field-fk">FK</span></div>
+            <div class="class-field"><span class="field-type">Enum</span> difficulty</div>
+            <div class="class-field"><span class="field-type">Number</span> availableSlots</div>
+            <div class="class-field"><span class="field-type">String[]</span> tags</div>
+            <div class="class-field"><span class="field-type">Number</span> views</div>
+          </div>
+        </div>
+
+        <div class="class-box">
+          <div class="class-header" style="background:#be185d"><div class="class-name">Notification</div><div class="class-type">Event Entity</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">ObjectId</span> _id <span class="field-pk">PK</span></div>
+            <div class="class-field"><span class="field-type">ObjectId</span> userId <span class="field-fk">FK</span></div>
+            <div class="class-field"><span class="field-type">String</span> type</div>
+            <div class="class-field"><span class="field-type">String</span> title</div>
+            <div class="class-field"><span class="field-type">String</span> body</div>
+            <div class="class-field"><span class="field-type">Boolean</span> isRead</div>
+            <div class="class-field"><span class="field-type">Date</span> createdAt</div>
+          </div>
+        </div>
+
+        <div class="class-box">
+          <div class="class-header" style="background:#4338ca"><div class="class-name">Feedback</div><div class="class-type">Support Entity</div></div>
+          <div class="class-body">
+            <div class="class-field"><span class="field-type">ObjectId</span> _id <span class="field-pk">PK</span></div>
+            <div class="class-field"><span class="field-type">ObjectId</span> userId <span class="field-fk">FK</span></div>
+            <div class="class-field"><span class="field-type">String</span> category</div>
+            <div class="class-field"><span class="field-type">String</span> subject</div>
+            <div class="class-field"><span class="field-type">String</span> body</div>
+            <div class="class-field"><span class="field-type">Number</span> rating</div>
+            <div class="class-field"><span class="field-type">Date</span> createdAt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 11 ══════════ -->
+    <div class="section" id="s11">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 11</div>
+        <div><div class="section-title-text">Database Schema</div><div class="section-desc">Full MongoDB collection definitions with field types and keys</div></div>
+      </div>
+
+      <div class="schema-section">
+        <div class="schema-title"><span class="schema-name">users</span><span class="schema-badge">Base Collection</span></div>
+        <table class="schema-table">
+          <tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr>
+          <tr><td><span class="field-name">_id</span></td><td><span class="field-type-badge">ObjectId</span></td><td><span class="field-pk">PK</span></td><td class="field-desc">Auto-generated unique identifier</td></tr>
+          <tr><td><span class="field-name">name</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">Full name (required)</td></tr>
+          <tr><td><span class="field-name">email</span></td><td><span class="field-type-badge">String</span></td><td><span class="field-pk">UNIQUE</span></td><td class="field-desc">University email — used as login identifier</td></tr>
+          <tr><td><span class="field-name">passwordHash</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">bcrypt hash (12 rounds)</td></tr>
+          <tr><td><span class="field-name">role</span></td><td><span class="field-type-badge">Enum</span></td><td></td><td class="field-desc">'student' | 'supervisor' | 'admin'</td></tr>
+          <tr><td><span class="field-name">isActive</span></td><td><span class="field-type-badge">Boolean</span></td><td></td><td class="field-desc">Account active status (default: false until verified)</td></tr>
+          <tr><td><span class="field-name">profilePic</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">S3 URL for avatar image (nullable)</td></tr>
+          <tr><td><span class="field-name">createdAt / updatedAt</span></td><td><span class="field-type-badge">Date</span></td><td></td><td class="field-desc">Mongoose timestamps (auto-managed)</td></tr>
+        </table>
+      </div>
+
+      <div class="schema-section">
+        <div class="schema-title"><span class="schema-name">students</span><span class="schema-badge">Extends users</span></div>
+        <table class="schema-table">
+          <tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr>
+          <tr><td><span class="field-name">userId</span></td><td><span class="field-type-badge">ObjectId</span></td><td><span class="field-fk">FK → users</span></td><td class="field-desc">Reference to base user document</td></tr>
+          <tr><td><span class="field-name">rollNo</span></td><td><span class="field-type-badge">String</span></td><td><span class="field-pk">UNIQUE</span></td><td class="field-desc">University roll number</td></tr>
+          <tr><td><span class="field-name">department</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">e.g., "Computer Science Engineering"</td></tr>
+          <tr><td><span class="field-name">year</span></td><td><span class="field-type-badge">Number</span></td><td></td><td class="field-desc">Academic year (1–4)</td></tr>
+          <tr><td><span class="field-name">gpa</span></td><td><span class="field-type-badge">Float</span></td><td></td><td class="field-desc">CGPA on 4.0 scale</td></tr>
+          <tr><td><span class="field-name">interests</span></td><td><span class="field-type-badge">String[]</span></td><td></td><td class="field-desc">Research interest tags (used for AI matching)</td></tr>
+          <tr><td><span class="field-name">supervisorId</span></td><td><span class="field-type-badge">ObjectId</span></td><td><span class="field-fk">FK → supervisors</span></td><td class="field-desc">Assigned supervisor (null until accepted)</td></tr>
+          <tr><td><span class="field-name">status</span></td><td><span class="field-type-badge">Enum</span></td><td></td><td class="field-desc">'searching' | 'pending' | 'assigned'</td></tr>
+        </table>
+      </div>
+
+      <div class="schema-section">
+        <div class="schema-title"><span class="schema-name">supervisors</span><span class="schema-badge">Extends users</span></div>
+        <table class="schema-table">
+          <tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr>
+          <tr><td><span class="field-name">userId</span></td><td><span class="field-type-badge">ObjectId</span></td><td><span class="field-fk">FK → users</span></td><td class="field-desc">Reference to base user document</td></tr>
+          <tr><td><span class="field-name">title</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">e.g., "Professor", "Associate Professor"</td></tr>
+          <tr><td><span class="field-name">department</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">Academic department name</td></tr>
+          <tr><td><span class="field-name">researchAreas</span></td><td><span class="field-type-badge">String[]</span></td><td></td><td class="field-desc">List of specialization areas (for filtering & matching)</td></tr>
+          <tr><td><span class="field-name">publications</span></td><td><span class="field-type-badge">Number</span></td><td></td><td class="field-desc">Total number of published papers</td></tr>
+          <tr><td><span class="field-name">experience</span></td><td><span class="field-type-badge">Number</span></td><td></td><td class="field-desc">Years of academic experience</td></tr>
+          <tr><td><span class="field-name">maxSlots</span></td><td><span class="field-type-badge">Number</span></td><td></td><td class="field-desc">Maximum students allowed simultaneously</td></tr>
+          <tr><td><span class="field-name">currentSlots</span></td><td><span class="field-type-badge">Number</span></td><td></td><td class="field-desc">Currently filled slots (auto-updated)</td></tr>
+          <tr><td><span class="field-name">rating</span></td><td><span class="field-type-badge">Float</span></td><td></td><td class="field-desc">Average student rating (1.0–5.0)</td></tr>
+          <tr><td><span class="field-name">bio</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">Professional biography text</td></tr>
+        </table>
+      </div>
+
+      <div class="schema-section">
+        <div class="schema-title"><span class="schema-name">requests</span><span class="schema-badge">Core Workflow</span></div>
+        <table class="schema-table">
+          <tr><th>Field</th><th>Type</th><th>Key</th><th>Description</th></tr>
+          <tr><td><span class="field-name">studentId</span></td><td><span class="field-type-badge">ObjectId</span></td><td><span class="field-fk">FK → users</span></td><td class="field-desc">Student who sent the request</td></tr>
+          <tr><td><span class="field-name">supervisorId</span></td><td><span class="field-type-badge">ObjectId</span></td><td><span class="field-fk">FK → users</span></td><td class="field-desc">Supervisor being requested</td></tr>
+          <tr><td><span class="field-name">message</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">Student's personalized message (max 1000 chars)</td></tr>
+          <tr><td><span class="field-name">status</span></td><td><span class="field-type-badge">Enum</span></td><td></td><td class="field-desc">'pending' | 'accepted' | 'rejected' | 'cancelled'</td></tr>
+          <tr><td><span class="field-name">supervisorNote</span></td><td><span class="field-type-badge">String</span></td><td></td><td class="field-desc">Optional rejection reason from supervisor</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 12 ══════════ -->
+    <div class="section" id="s12">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 12</div>
+        <div><div class="section-title-text">API Endpoints</div><div class="section-desc">Full RESTful API reference for all system operations</div></div>
+      </div>
+
+      <p class="prose" style="margin-bottom:14px"><strong>Authentication</strong></p>
+      <table class="api-table">
+        <tr><th style="width:70px">Method</th><th>Endpoint</th><th>Description</th><th style="width:80px">Auth</th></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="api-endpoint">/api/auth/register</td><td class="api-desc">Register new user with email verification OTP</td><td>—</td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="api-endpoint">/api/auth/login</td><td class="api-desc">Login and receive JWT access + refresh token</td><td>—</td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="api-endpoint">/api/auth/refresh</td><td class="api-desc">Refresh expired access token using refresh token</td><td><span class="api-auth">Refresh</span></td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="api-endpoint">/api/auth/logout</td><td class="api-desc">Invalidate refresh token and end session</td><td><span class="api-auth">JWT</span></td></tr>
+      </table>
+
+      <p class="prose" style="margin:20px 0 14px"><strong>Supervisors</strong></p>
+      <table class="api-table">
+        <tr><th style="width:70px">Method</th><th>Endpoint</th><th>Description</th><th style="width:80px">Auth</th></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/supervisors</td><td class="api-desc">List all supervisors. Query: ?area=ML&minExp=5&hasSlots=true</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/supervisors/:id</td><td class="api-desc">Get full supervisor profile by ID</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-patch">PATCH</span></td><td class="api-endpoint">/api/supervisors/:id</td><td class="api-desc">Supervisor updates own profile (bio, slots, areas)</td><td><span class="api-auth">Supervisor</span></td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/supervisors/:id/students</td><td class="api-desc">Get all assigned students for a supervisor</td><td><span class="api-auth">Supervisor</span></td></tr>
+      </table>
+
+      <p class="prose" style="margin:20px 0 14px"><strong>Requests</strong></p>
+      <table class="api-table">
+        <tr><th style="width:70px">Method</th><th>Endpoint</th><th>Description</th><th style="width:80px">Auth</th></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="api-endpoint">/api/requests</td><td class="api-desc">Student creates new supervision request with message</td><td><span class="api-auth">Student</span></td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/requests</td><td class="api-desc">Get requests (student: own; supervisor: received; admin: all)</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/requests/:id</td><td class="api-desc">Get single request details</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-patch">PATCH</span></td><td class="api-endpoint">/api/requests/:id/status</td><td class="api-desc">Accept or reject request. Body: {status, note}</td><td><span class="api-auth">Supervisor</span></td></tr>
+        <tr><td><span class="method m-delete">DELETE</span></td><td class="api-endpoint">/api/requests/:id</td><td class="api-desc">Student cancels a pending request</td><td><span class="api-auth">Student</span></td></tr>
+      </table>
+
+      <p class="prose" style="margin:20px 0 14px"><strong>Projects</strong></p>
+      <table class="api-table">
+        <tr><th style="width:70px">Method</th><th>Endpoint</th><th>Description</th><th style="width:80px">Auth</th></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/projects</td><td class="api-desc">List all projects. Query: ?category=AI&difficulty=Advanced</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/projects/:id</td><td class="api-desc">Get project details including supervisor info</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="api-endpoint">/api/projects</td><td class="api-desc">Admin creates a new project topic</td><td><span class="api-auth">Admin</span></td></tr>
+        <tr><td><span class="method m-patch">PATCH</span></td><td class="api-endpoint">/api/projects/:id</td><td class="api-desc">Admin updates project details</td><td><span class="api-auth">Admin</span></td></tr>
+        <tr><td><span class="method m-delete">DELETE</span></td><td class="api-endpoint">/api/projects/:id</td><td class="api-desc">Admin permanently removes a project</td><td><span class="api-auth">Admin</span></td></tr>
+      </table>
+
+      <p class="prose" style="margin:20px 0 14px"><strong>Notifications, Feedback, AI</strong></p>
+      <table class="api-table">
+        <tr><th style="width:70px">Method</th><th>Endpoint</th><th>Description</th><th style="width:80px">Auth</th></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/notifications</td><td class="api-desc">Get current user's notifications (paginated)</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-patch">PATCH</span></td><td class="api-endpoint">/api/notifications/read-all</td><td class="api-desc">Mark all user's notifications as read</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="api-endpoint">/api/feedback</td><td class="api-desc">Submit feedback with category, subject, body, rating</td><td><span class="api-auth">JWT</span></td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/recommendations</td><td class="api-desc">AI-powered supervisor recommendations for student</td><td><span class="api-auth">Student</span></td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="api-endpoint">/api/admin/analytics</td><td class="api-desc">System-wide stats: users, requests, match rate</td><td><span class="api-auth">Admin</span></td></tr>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">JavaScript · Sample API Call</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+        <div class="code-body"><pre><span class="cm">// Send a supervision request (Student)</span>
+<span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="st">'/api/requests'</span>, {
+  method: <span class="st">'POST'</span>,
+  headers: {
+    <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span>,
+    <span class="st">'Authorization'</span>: <span class="st">`Bearer ${</span><span class="fn">getToken</span>()<span class="st">}`</span>
+  },
+  body: <span class="fn">JSON.stringify</span>({
+    supervisorId: <span class="st">'64b3f2a1c8d9e00012345678'</span>,
+    message: <span class="st">'I am interested in NLP-based thesis supervision...'</span>
+  })
+});
+
+<span class="kw">const</span> data = <span class="kw">await</span> response.<span class="fn">json</span>();
+<span class="cm">// Response: { _id, status: "pending", createdAt }</span></pre></div>
+      </div>
+    </div>
+
+    <!-- ══════════ SECTION 13 ══════════ -->
+    <div class="section" id="s13">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 13</div>
+        <div><div class="section-title-text">Security &amp; Ethics</div><div class="section-desc">How the system protects users and respects their data</div></div>
+      </div>
+
+      <div class="card-row">
+        <div class="info-card"><div class="ic-icon">🔒</div><div class="ic-title">Authentication</div><div class="ic-desc">bcrypt hashing (12 rounds), JWT with 24h expiry and refresh tokens, 5 failed attempts triggers lockout</div></div>
+        <div class="info-card"><div class="ic-icon">👮</div><div class="ic-title">Authorization</div><div class="ic-desc">RBAC enforced at every API route. Students cannot access supervisor or admin endpoints. Middleware validates role on each request.</div></div>
+        <div class="info-card"><div class="ic-icon">🛡️</div><div class="ic-title">Input Security</div><div class="ic-desc">All inputs sanitized via Joi schema. XSS protection via Helmet.js. CSRF tokens on state-changing operations. Rate limiting on all endpoints.</div></div>
+        <div class="info-card"><div class="ic-icon">🔐</div><div class="ic-title">Data Encryption</div><div class="ic-desc">AES-256 encryption at rest (MongoDB Atlas). TLS 1.3 in transit. Sensitive fields never logged or exposed in responses.</div></div>
+      </div>
+
+      <div class="highlight-box hb-success"><div class="hb-label">Ethical Commitments</div>No user data is sold or shared with third parties · AI recommendations are explainable and transparent · Feedback is anonymous by default · Users can request full data export or permanent deletion at any time · GDPR Article 17 (Right to Erasure) fully supported</div>
+    </div>
+
+    <!-- ══════════ SECTION 14 ══════════ -->
+    <div class="section" id="s14">
+      <span class="section-anchor"></span>
+      <div class="section-header">
+        <div class="section-num">§ 14</div>
+        <div><div class="section-title-text">Limitations &amp; Challenges</div><div class="section-desc">Known technical and real-world challenges with mitigation strategies</div></div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border-lav);border-radius:var(--r);padding:20px">
+        <div class="limit-item"><div class="limit-icon" style="background:var(--amber-l)">🤖</div><div><div class="limit-title">AI Recommendation — Cold Start Problem</div><div class="limit-desc"><strong>Challenge:</strong> New students with sparse profiles receive low-quality recommendations. <strong>Mitigation:</strong> Use department and research area as baseline matching signals. Improve accuracy as more interaction data accumulates over time.</div></div></div>
+        <div class="limit-item"><div class="limit-icon" style="background:var(--sky-l)">⚡</div><div><div class="limit-title">Real-Time at Scale — WebSocket Limits</div><div class="limit-desc"><strong>Challenge:</strong> Socket.io connections may become strained under very high concurrency (5,000+ users). <strong>Mitigation:</strong> Redis Pub/Sub adapter for Socket.io planned for Phase 2 to enable multi-server scaling.</div></div></div>
+        <div class="limit-item"><div class="limit-icon" style="background:var(--rose-l)">🔗</div><div><div class="limit-title">University ERP Integration Dependency</div><div class="limit-desc"><strong>Challenge:</strong> Integration relies on external API availability from the university's IT department. Delays in API access can block student verification. <strong>Mitigation:</strong> Manual admin verification fallback available.</div></div></div>
+        <div class="limit-item"><div class="limit-icon" style="background:var(--mint-l)">📱</div><div><div class="limit-title">No Native Mobile App (Phase 1)</div><div class="limit-desc"><strong>Challenge:</strong> The responsive web app lacks offline capability. Push notifications require the browser to be open. <strong>Mitigation:</strong> React Native app with offline sync and push notifications is scoped for Phase 2.</div></div></div>
+        <div class="limit-item"><div class="limit-icon" style="background:var(--amber-l)">🎬</div><div><div class="limit-title">Video Hosting Bandwidth Costs</div><div class="limit-desc"><strong>Challenge:</strong> AWS S3 bandwidth costs will increase significantly at scale. <strong>Mitigation:</strong> CloudFront CDN integration reduces origin costs by 70–80%. Video compression pipeline added to upload workflow.</div></div></div>
+        <div class="limit-item" style="border-bottom:none"><div class="limit-icon" style="background:var(--lav-100)">🏫</div><div><div class="limit-title">Single-Tenant Architecture</div><div class="limit-desc"><strong>Challenge:</strong> Current architecture is designed for one university. Multi-university SaaS deployment requires tenant isolation in the schema. <strong>Mitigation:</strong> Multi-tenancy via organizationId field is architected for Phase 3.</div></div></div>
+      </div>
+
+      <div class="highlight-box hb-purple" style="margin-top:20px"><div class="hb-label">Document End</div>This SRS document covers all 14 sections as specified. For implementation details, refer to the accompanying technical design document and API reference. Version 2.0 of this SRS is planned after Phase 1 user testing feedback is collected.</div>
+    </div>
+
+  </div><!-- /doc-body -->
+</div><!-- /content -->
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function openToc(){ document.getElementById('toc').classList.add('open'); }
+function closeToc(){ document.getElementById('toc').classList.remove('open'); }
+
+function setActive(el){
+  document.querySelectorAll('.toc-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  if(window.innerWidth<=900) closeToc();
+}
+
+function filterToc(v){
+  const q=v.toLowerCase();
+  document.querySelectorAll('.toc-item').forEach(item=>{
+    const match=item.textContent.toLowerCase().includes(q);
+    item.style.display=match?'':'none';
+  });
+}
+
+// Scroll progress
+window.addEventListener('scroll',()=>{
+  const doc=document.documentElement;
+  const scrolled=doc.scrollTop/(doc.scrollHeight-doc.clientHeight);
+  const pct=Math.round(scrolled*100);
+  document.getElementById('progress-bar').style.width=pct+'%';
+  document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('back-top').classList.toggle('visible',doc.scrollTop>400);
+
+  // Active TOC on scroll
+  const sections=document.querySelectorAll('[id^="s"]');
+  let current='s1';
+  sections.forEach(s=>{
+    if(s.getBoundingClientRect().top<=120) current=s.id;
+  });
+  document.querySelectorAll('.toc-item').forEach(item=>{
+    const href=item.getAttribute('href');
+    item.classList.toggle('active',href==='#'+current);
+  });
+});
+
+function copyCode(btn){
+  const code=btn.closest('.code-block').querySelector('pre').textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    setTimeout(()=>btn.textContent='Copy',2000);
+  });
+}
+</script>
+</body>
+</html>
